@@ -11,6 +11,7 @@ export default {
     extend: {
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],
+        doldam: ["var(--font-doldam)"],
       },
       colors: {
         background: "var(--background)",
