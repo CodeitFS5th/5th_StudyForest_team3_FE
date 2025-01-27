@@ -30,8 +30,8 @@ export default function RootLayout({
 }) {
     return (
         <html lang="ko" className={`${pretendard.variable} ${doldam.variable}`}>
-        <body className="bg-background font-pretendard">
-        <main className="pt-[100px]">
+        <body className="bg-[#F6F4EF] font-pretendard">
+        <main>
             <Header />
             {children}
         </main>
