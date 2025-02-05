@@ -11,6 +11,7 @@ export default {
     extend: {
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],
+        jeju: ["var(--font-jeju)"],
       },
       colors: {
         background: "var(--background)",
