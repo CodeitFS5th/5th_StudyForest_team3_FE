@@ -18,11 +18,6 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
-      screens: {
-        desktop: "1200px",
-        tablet: "744px",
-        mobile: "375px",
-      },
     },
   },
   plugins: [],

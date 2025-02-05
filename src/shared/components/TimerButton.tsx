@@ -32,10 +32,10 @@ const TimerButton: React.FC<TimerButtonProps> = ({
         rounded-[30.48px]
         
         // 태블릿 스타일
-        tablet:w-[333px] tablet:h-[64px]
-        tablet:pl-[78px] tablet:pr-[105px]
-        tablet:pt-[10px] tablet:pb-[11px]
-        tablet:rounded-[50px]
+        md:w-[333px] md:h-[64px]
+        md:pl-[78px] md:pr-[105px]
+        md:pt-[10px] md:pb-[11px]
+        md:rounded-[50px]
         
         // isActive 스타일 - 색상 및 그림자
         ${
@@ -50,9 +50,9 @@ const TimerButton: React.FC<TimerButtonProps> = ({
       <Image
         src={mode === "start" ? playIcon : stopIcon}
         alt={mode}
-        className="w-[24px] h-[24px] tablet:w-[44px] tablet:h-[44px]"
+        className="w-[24px] h-[24px] md:w-[44px] md:h-[44px]"
       />
-      <p className="text-[#FFFFFF] font-[800] text-[18px] tablet:text-[28px]">
+      <p className="text-[#FFFFFF] font-[800] text-[18px] md:text-[28px]">
         {mode[0].toUpperCase() + mode.slice(1)}!
       </p>
     </button>
