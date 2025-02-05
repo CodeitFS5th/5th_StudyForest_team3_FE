@@ -8,6 +8,13 @@ const pretendard = localFont({
     display: "swap",
     weight: "45 920",
     variable: "--font-pretendard",
+    //
+})
+
+const jeju = localFont({
+    src: "../assets/fonts/JejuDoldam.woff2",
+    display: "swap",
+    variable: "--font-jeju",
 })
 
 export const metadata: Metadata = {
@@ -21,7 +28,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="ko" className={`${pretendard.variable}`}>
+        <html lang="ko" className={`${pretendard.variable} ${jeju.variable}`}>
         <body className="bg-background font-pretendard">
         <main>
             <Header />
