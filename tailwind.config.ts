@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 export default {
   content: [
     "./src/widgets/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/shared/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/views/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -12,11 +12,35 @@ export default {
       fontFamily: {
         pretendard: ["var(--font-pretendard)"],
         jeju: ["var(--font-jeju)"],
-        //
       },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        customColor: {
+          background: '#F6F4EF',
+          brand: '#99C08E',
+          black: {
+            400: '#414141',
+            300: '#818181',
+            200: '#DDDDDD',
+            100: '#EEEEEE',
+          },
+          red: {
+            300: '#C41013',
+            200: '#F50E0E',
+            100: '#FFA3A5',
+          },
+          card: {
+            green: '#E1EDDE',
+            yellow: '#FFF1CC',
+            blue: '#E0F1F5',
+            pink: '#FDE0E9',
+          },
+          text: {
+            green: '#578246',
+            yellow: '#C18E1B',
+            blue: '#418099',
+            pink: '#BC3C6A',
+          }
+        },
       },
     },
   },
