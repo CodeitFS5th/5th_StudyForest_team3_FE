@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
-import { InputType, UseInputFieldProps } from "@/shared/components/core/types";
+import { InputType, UseInputFieldProps } from "./types";
 
-// inputField 컴포넌트(Input, Textarea)에서 사용하는 훅
 // 입력 필드 상태 관리
 export const useInputField = ({
-  initialValue,
+  initialValue = "",
   validate,
   isRequired = false,
 }: UseInputFieldProps) => {
   const [fieldStatus, setFieldStatus] = useState({
-    value: initialValue ?? "",
+    value: initialValue,
     isFocused: false, // 한 번이라도 포커스 되었었으면 true
-    isEmpty: false,
+    isEmpty: initialValue === "" ? true : false,
     isValid: false,
     errorType: "none",
   });
@@ -47,9 +46,9 @@ export const useInputField = ({
   useEffect(() => {
     let errorType = "none";
 
-    if (isRequired && fieldStatus.isEmpty) {
-      errorType = "blank";
-    } else if (!fieldStatus.isValid) {
+    if (fieldStatus.isEmpty && isRequired) {
+      errorType = "empty";
+    } else if (!fieldStatus.isValid && (isRequired || !fieldStatus.isEmpty)) {
       errorType = "invalid";
     }
 
@@ -73,18 +72,4 @@ export const useInputPasswordVisibility = (initialType: InputType) => {
   };
 
   return { inputType, isInputVisible, toggleVisibility };
-};
-
-// toast 컴포넌트에서 사용하는 훅
-export const useToastFade = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 2000);
-  }, []);
-
-  return { isVisible };
 };

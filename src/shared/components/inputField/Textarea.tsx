@@ -1,5 +1,5 @@
-import { TextareaProps } from "@/shared/components/core/types";
-import { useInputField } from "@/shared/components/core/hooks";
+import { TextareaProps } from "@/shared/components/inputField/core/types";
+import { useInputField } from "@/shared/components/inputField/core/hooks";
 import styles from "./textarea.module.css";
 
 const Textarea: React.FC<TextareaProps> = ({
@@ -13,16 +13,14 @@ const Textarea: React.FC<TextareaProps> = ({
   ...props
 }) => {
   const { fieldStatus, handleChange, handleFocus } = useInputField({
-    initialValue: value,
+    initialValue: value ?? "",
     validate,
     isRequired,
   });
 
   const textareaColorStyle: { [key: string]: string } = {
-    basic:
-      "border-[var(--color-custom-color-black-200)] text-[var(--color-custom-color-black-400)]",
-    error:
-      "border-[var(--color-custom-color-red-200)] text-[var(--color-custom-color-red-200)]",
+    basic: "border-custom-color-black-200 text-custom-color-black-400",
+    error: "border-custom-color-red-200 text-custom-color-red-200",
   };
 
   const textareaHeight = height ? `${height}px` : "98px";
@@ -30,7 +28,7 @@ const Textarea: React.FC<TextareaProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <p className="mb-[16px] text-[var(--color-custom-color-black-400)] text-[18px] font-[600]">
+        <p className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]">
           {label}
         </p>
       )}
@@ -45,7 +43,7 @@ const Textarea: React.FC<TextareaProps> = ({
           className={`
             w-full ${textareaHeight} pl-[20px] pr-[10px] py-[20px]
             border-[1px] outline-none rounded-[15px]
-            placeholder-[var(--color-custom-color-black-300)] text-[16px] font-[400]
+            placeholder-custom-color-black-300 text-[16px] font-[400]
             box-border overflow-auto scrollbar-rounded resize-none
 
             ${
@@ -59,24 +57,24 @@ const Textarea: React.FC<TextareaProps> = ({
             // focus
             ${
               fieldStatus.errorType !== "none"
-                ? "focus:border-[2px] focus:border-[var(--color-custom-color-red-200)]"
-                : "focus:border-[2px] focus:border-[var(--color-custom-color-text-green)]"
+                ? "focus:border-[2px] focus:border-custom-color-red-200"
+                : "focus:border-[2px] focus:border-custom-color-text-green"
             }
 
             // disabled
-            disabled:text-[var(--color-custom-color-black-300)]
+            disabled:text-custom-color-black-300
 
             // scrollbar
             ${styles["scrollbar-custom"]}
           `}
         />
-        {fieldStatus.errorType === "blank" && fieldStatus.isFocused && (
-          <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+        {fieldStatus.errorType === "empty" && fieldStatus.isFocused && (
+          <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
             *필수 입력 값입니다
           </p>
         )}
         {fieldStatus.errorType === "invalid" && fieldStatus.isFocused && (
-          <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+          <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
             *{invalidErrorMessage}
           </p>
         )}

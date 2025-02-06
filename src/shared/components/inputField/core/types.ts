@@ -22,15 +22,9 @@ export interface TextareaProps
   validate?: (value: string) => boolean;
 }
 
-export interface ToastProps {
-  point?: number;
-  position?: "top" | "bottom";
-  isVisible?: boolean;
-}
-
 export interface UseInputFieldProps {
-  initialValue?: string;
+  initialValue: string;
   validate?: (value: string) => boolean;
   isRequired?: boolean;
-  errorStatus?: "none" | "blank" | "invalid";
+  errorStatus?: "none" | "empty" | "invalid";
 }

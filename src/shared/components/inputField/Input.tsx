@@ -1,13 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import visibilityOnIcon from "@/assets/images/icon/btn_visibility_on_24px.png";
 import visibilityOffIcon from "@/assets/images/icon/btn_invisibility_on_24px.png";
-import Image from "next/image";
-import { InputProps } from "@/shared/components/core/types";
-import {
-  useInputPasswordVisibility,
-  useInputField,
-} from "@/shared/components/core/hooks";
+import { InputProps } from "./core/types";
+import { useInputPasswordVisibility, useInputField } from "./core/hooks";
 
 const Input: React.FC<InputProps> = ({
   label,
@@ -20,7 +17,7 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const { fieldStatus, handleChange, handleFocus } = useInputField({
-    initialValue: value,
+    initialValue: "",
     validate,
     isRequired,
   });
@@ -29,16 +26,14 @@ const Input: React.FC<InputProps> = ({
     useInputPasswordVisibility(type);
 
   const inputStyle: { [key: string]: string } = {
-    basic:
-      "border-[var(--color-custom-color-black-200)] text-[var(--color-custom-color-black-400)]",
-    error:
-      "border-[var(--color-custom-color-red-200)] text-[var(--color-custom-color-red-200)]",
+    basic: "border-custom-color-black-200 text-custom-color-black-400",
+    error: "border-custom-color-red-200 text-custom-color-red-200",
   };
 
   return (
     <div className="w-full">
       {label && (
-        <p className="mb-[16px] text-[var(--color-custom-color-black-400)] text-[18px] font-[600]">
+        <p className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]">
           {label}
         </p>
       )}
@@ -54,7 +49,7 @@ const Input: React.FC<InputProps> = ({
           className={`
             w-full h-[48px] p-[20px]
             border-[1px] outline-none rounded-[15px]
-            placeholder-[var(--color-custom-color-black-300)] text-[16px] font-[400]
+            placeholder-custom-color-black-300 text-[16px] font-[400]
 
             ${
               inputStyle[
@@ -67,12 +62,12 @@ const Input: React.FC<InputProps> = ({
             // focus
             ${
               fieldStatus.errorType !== "none"
-                ? "focus:border-[2px] focus:border-[var(--color-custom-color-red-200)]"
-                : "focus:border-[2px] focus:border-[var(--color-custom-color-text-green)]"
+                ? "focus:border-[2px] focus:border-custom-color-red-200"
+                : "focus:border-[2px] focus:border-custom-color-text-green"
             }
             
             // disabled
-            disabled:text-[var(--color-custom-color-black-300)]
+            disabled:text-custom-color-black-300
           `}
         />
         {type === "password" && (
@@ -89,13 +84,13 @@ const Input: React.FC<InputProps> = ({
           </button>
         )}
       </div>
-      {fieldStatus.errorType === "blank" && fieldStatus.isFocused && (
-        <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+      {fieldStatus.errorType === "empty" && fieldStatus.isFocused && (
+        <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
           *필수 입력 값입니다
         </p>
       )}
       {fieldStatus.errorType === "invalid" && fieldStatus.isFocused && (
-        <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+        <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
           *{invalidErrorMessage}
         </p>
       )}
