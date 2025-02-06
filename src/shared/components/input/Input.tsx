@@ -22,10 +22,18 @@ const Input: React.FC<InputProps> = ({
   const { inputStatus, handleChange, handleFocus } = useInputStatus({
     initialValue: value,
     validate,
+    isRequired,
   });
 
   const { inputType, isInputVisible, toggleVisibility } =
     useInputPasswordVisibility(type);
+
+  const inputStyle = {
+    basic:
+      "border-[var(--color-custom-color-black-200)] text-[var(--color-custom-color-black-400)]",
+    error:
+      "border-[var(--color-custom-color-red-200)] text-[var(--color-custom-color-red-200)]",
+  };
 
   return (
     <div className="w-full">
@@ -41,21 +49,25 @@ const Input: React.FC<InputProps> = ({
           value={inputStatus.value}
           onChange={handleChange}
           onFocus={handleFocus}
+          required={isRequired}
           {...props}
           className={`
-            peer w-full h-[48px] p-[20px]
-            border-[1px] outline-none rounded-[15px] border-[var(--color-custom-color-black-200)]
-            text-[var(--color-custom-color-black-400)] placeholder-[var(--color-custom-color-black-300)]
-            text-[16px] font-[400]
-            
-            // invalid
-            invalid:border-[var(--color-custom-color-red-200)] invalid:text-[var(--color-custom-color-red-200)]
+            w-full h-[48px] p-[20px]
+            border-[1px] outline-none rounded-[15px]
+            placeholder-[var(--color-custom-color-black-300)] text-[16px] font-[400]
+
+            ${
+              inputStyle[
+                inputStatus.isError && inputStatus.isFocused ? "error" : "basic"
+              ]
+            }
             
             // focus
-            focus:border-[2px] focus:border-[var(--color-custom-color-text-green)]
-
-            // invalid focus
-            invalid:focus:border-[2px] invalid:focus:border-[var(--color-custom-color-red-200)]
+            ${
+              inputStatus.isError
+                ? "focus:border-[2px] focus:border-[var(--color-custom-color-red-200)]"
+                : "focus:border-[2px] focus:border-[var(--color-custom-color-text-green)]"
+            }
             
             // disabled
             disabled:text-[var(--color-custom-color-black-300)]
@@ -74,9 +86,16 @@ const Input: React.FC<InputProps> = ({
             />
           </button>
         )}
-        <p className="hidden peer-invalid:block text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
-          *{invalidErrorMessage}
-        </p>
+        {isRequired && inputStatus.isBlank && (
+          <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+            *필수 입력 값입니다
+          </p>
+        )}
+        {!inputStatus.isBlank && !inputStatus.isValid && (
+          <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+            *{invalidErrorMessage}
+          </p>
+        )}
       </div>
     </div>
   );

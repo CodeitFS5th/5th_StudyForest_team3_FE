@@ -8,7 +8,7 @@ export interface InputProps
   value?: string;
   invalidErrorMessage?: string;
   isRequired?: boolean;
-  validate?: (value: string) => boolean;
+  validate: (value: string) => boolean;
 }
 
 export interface TextareaProps
@@ -30,4 +30,5 @@ export interface ToastProps {
 export interface UseInputStatusProps {
   initialValue?: string;
   validate?: (value: string) => boolean;
+  isRequired?: boolean;
 }
