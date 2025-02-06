@@ -42,7 +42,10 @@ const Modal = forwardRef<ModalHandle, IModalProps>(function Modal(
     const modalRoot = document.getElementById("modal-root");
     if (!modalRoot) return;
     setIsPortalReady(true); // modal-root가 존재하면 포탈 준비 완료
-    dialogRef.current?.scrollTo({ top: 0 });
+    dialogRef.current?.scrollTo({
+      top: 0,
+      left: dialogRef.current.scrollWidth,
+    });
   }, []);
 
   // 부모 컴포넌트에서 ref를 통해 handleClose를 호출할 수 있도록 설정
@@ -57,7 +60,7 @@ const Modal = forwardRef<ModalHandle, IModalProps>(function Modal(
     <dialog
       onClose={handleClose}
       ref={dialogRef}
-      className="bg-white rounded-2xl py-6 px-4 xl:py-10 xl:px-6 m-auto z-50 backdrop:bg-black/50"
+      className="bg-white rounded-2xl py-6 px-4 md:py-10 md:px-6 m-auto z-50 backdrop:bg-black/50 scrollbar-thin scrollbar-thumb-transparent scrollbar-track-transparent"
     >
       {children}
     </dialog>,
