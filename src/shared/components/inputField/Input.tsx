@@ -6,7 +6,7 @@ import Image from "next/image";
 import { InputProps } from "@/shared/components/core/types";
 import {
   useInputPasswordVisibility,
-  useInputStatus,
+  useInputField,
 } from "@/shared/components/core/hooks";
 
 const Input: React.FC<InputProps> = ({
@@ -19,7 +19,7 @@ const Input: React.FC<InputProps> = ({
   validate,
   ...props
 }) => {
-  const { inputStatus, handleChange, handleFocus } = useInputStatus({
+  const { fieldStatus, handleChange, handleFocus } = useInputField({
     initialValue: value,
     validate,
     isRequired,
@@ -28,7 +28,7 @@ const Input: React.FC<InputProps> = ({
   const { inputType, isInputVisible, toggleVisibility } =
     useInputPasswordVisibility(type);
 
-  const inputStyle = {
+  const inputStyle: { [key: string]: string } = {
     basic:
       "border-[var(--color-custom-color-black-200)] text-[var(--color-custom-color-black-400)]",
     error:
@@ -38,7 +38,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <p className="mb-[16px] text-[#414141] text-[18px] font-[600]">
+        <p className="mb-[16px] text-[var(--color-custom-color-black-400)] text-[18px] font-[600]">
           {label}
         </p>
       )}
@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = ({
         <input
           type={inputType}
           placeholder={placeholder}
-          value={inputStatus.value}
+          value={fieldStatus.value}
           onChange={handleChange}
           onFocus={handleFocus}
           required={isRequired}
@@ -58,13 +58,15 @@ const Input: React.FC<InputProps> = ({
 
             ${
               inputStyle[
-                inputStatus.isError && inputStatus.isFocused ? "error" : "basic"
+                fieldStatus.errorType !== "none" && fieldStatus.isFocused
+                  ? "error"
+                  : "basic"
               ]
             }
             
             // focus
             ${
-              inputStatus.isError
+              fieldStatus.errorType !== "none"
                 ? "focus:border-[2px] focus:border-[var(--color-custom-color-red-200)]"
                 : "focus:border-[2px] focus:border-[var(--color-custom-color-text-green)]"
             }
@@ -86,17 +88,17 @@ const Input: React.FC<InputProps> = ({
             />
           </button>
         )}
-        {isRequired && inputStatus.isBlank && (
-          <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
-            *필수 입력 값입니다
-          </p>
-        )}
-        {!inputStatus.isBlank && !inputStatus.isValid && (
-          <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
-            *{invalidErrorMessage}
-          </p>
-        )}
       </div>
+      {fieldStatus.errorType === "blank" && fieldStatus.isFocused && (
+        <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+          *필수 입력 값입니다
+        </p>
+      )}
+      {fieldStatus.errorType === "invalid" && fieldStatus.isFocused && (
+        <p className="text-[var(--color-custom-color-red-200)] text-[14px] mt-[8px]">
+          *{invalidErrorMessage}
+        </p>
+      )}
     </div>
   );
 };

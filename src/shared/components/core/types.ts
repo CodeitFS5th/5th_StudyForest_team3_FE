@@ -15,8 +15,7 @@ export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   placeholder?: string;
-  value?: string | number;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  value?: string;
   invalidErrorMessage?: string;
   height?: number;
   isRequired?: boolean;
@@ -25,10 +24,13 @@ export interface TextareaProps
 
 export interface ToastProps {
   point?: number;
+  position?: "top" | "bottom";
+  isVisible?: boolean;
 }
 
-export interface UseInputStatusProps {
+export interface UseInputFieldProps {
   initialValue?: string;
   validate?: (value: string) => boolean;
   isRequired?: boolean;
+  errorStatus?: "none" | "blank" | "invalid";
 }

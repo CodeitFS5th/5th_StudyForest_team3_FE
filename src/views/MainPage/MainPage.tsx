@@ -1,11 +1,15 @@
 "use client";
 
-import Input from "@/shared/components/input/Input";
-import Textarea from "@/shared/components/textarea/Textarea";
+import { useState } from "react";
+import Input from "@/shared/components/inputField/Input";
+import Textarea from "@/shared/components/inputField/Textarea";
 import Toast from "@/shared/components/toast/Toast";
 import { isValidPassword, isValidEmail } from "@/shared/components/utils/utils";
+import { useToastControl } from "@/shared/hooks/useToastControl";
 
 export default function MainPage() {
+  const { isToastVisible, showToast } = useToastControl();
+
   return (
     <div>
       <h1>메인페이지</h1>
@@ -29,9 +33,10 @@ export default function MainPage() {
         label="메모"
         placeholder="메모를 입력해주세요."
         invalidErrorMessage="메모를 입력해주세요."
+        isRequired={true}
       />
-      <Toast point={10} />
-      <Toast />
+      {isToastVisible && <Toast point={10} position="bottom" />}
+      <button onClick={showToast}>클릭</button>
     </div>
   );
 }
