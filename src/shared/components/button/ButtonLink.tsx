@@ -1,13 +1,15 @@
 import { ButtonLink } from "./core/hooks/LinkHooks";
+import { Category } from "./core/hooks/LinkHooks";
 
-export function ButtonLinkHome({
-  path,
-  pathName,
-}: {
+interface ButtonProps {
   path: string;
   pathName: string;
-}) {
-  return <ButtonLink type="home" path={path} pathName={pathName} />;
+}
+
+export function ButtonLinkHome({ path, pathName }: ButtonProps) {
+  return (
+    <ButtonLink category={Category.Home} path={path} pathName={pathName} />
+  );
 }
 
 export function ButtonLinkToday({
@@ -17,7 +19,9 @@ export function ButtonLinkToday({
   path: string;
   pathName: string;
 }) {
-  return <ButtonLink type="today" path={path} pathName={pathName} />;
+  return (
+    <ButtonLink category={Category.Today} path={path} pathName={pathName} />
+  );
 }
 
 //사용 예시

@@ -1,9 +1,12 @@
 "use client";
 
+import { ButtonLinkHome } from "@/shared/components/button/ButtonLink";
 import {
-  ButtonStart,
-  ButtonStop,
-} from "@/shared/components/button/ButtonRound";
+  ButtonCancel,
+  ButtonCheck,
+  ButtonMove,
+} from "@/shared/components/button/ButtonRectangle";
+import { ButtonStart } from "@/shared/components/button/ButtonRound";
 import formatDateTime from "@/shared/hooks/Time";
 import { useState, useEffect } from "react";
 
@@ -39,9 +42,20 @@ export default function HabitMain() {
             <h1 className="text-[32px] font-extrabold">
               연우의 개발공장{/* 스터니 네임 들어와야함 */}
             </h1>
-            <div className="flex gap-2">
-              <ButtonStart disabled={isPaused} onClick={handleStart} />
-              <ButtonStop disabled={!isPaused} onClick={handleStop} />
+            <div className="flex flex-col gap-2">
+              <ButtonCheck
+                type="button"
+                label="10시까지 자기"
+                onClick={handleStop}
+              />
+              <ButtonCancel type="button" label="취소" onClick={handleStop} />
+              <ButtonMove label="오늘의 습관" path="habit" />
+              <ButtonStart
+                type="button"
+                disabled={isPaused}
+                onClick={handleStart}
+              />
+              <ButtonLinkHome path="/" pathName="홈" />
             </div>
           </div>
           <div>

@@ -1,26 +1,27 @@
 import Image from "next/image";
-import Start from "../../../../../assets/images/icon/ic_play.png";
-import Stop from "../../../../../assets/images/icon/ic_stop.png";
+import StartIcon from "../../../../../assets/images/icon/ic_play.png";
+import StopIcon from "../../../../../assets/images/icon/ic_stop.png";
+
+export enum Category {
+  Start = "start",
+  Stop = "stop",
+}
 
 interface ButtonProps {
-  type: "start" | "stop";
+  type: "button" | "submit" | "reset";
+  category: Category;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-export function ButtonRound({ type, disabled = false, onClick }: ButtonProps) {
+export function ButtonRound({
+  type,
+  category,
+  disabled = false,
+  onClick,
+}: ButtonProps) {
   let bgColor: string;
   let shadowColor: string;
-  let imageSrc: any;
-
-  switch (type) {
-    case "start":
-      imageSrc = Start;
-      break;
-    case "stop":
-      imageSrc = Stop;
-      break;
-  }
 
   bgColor = disabled ? "bg-custom-color-black-400" : "bg-custom-color-brand";
   shadowColor = disabled
@@ -35,16 +36,17 @@ export function ButtonRound({ type, disabled = false, onClick }: ButtonProps) {
       className={`flex justify-center w-[333px] pt-[10px] pb-[10px] pl-[78px] pr-[105px] rounded-3xl ${bgColor} ${shadowColor}  max-sm:w-[48px] max-sm:p-[11px]`}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
+      type={type}
     >
       <Image
-        src={imageSrc}
-        alt={type === "start" ? "시작 버튼" : "정지 버튼"}
+        src={category === Category.Start ? StartIcon : StopIcon}
+        alt={category === Category.Start ? "시작 버튼" : "정지 버튼"}
         width={45}
         height={11}
         className="object-contain"
       />
       <p className="text-[28px] text-white ">
-        {type === "start" ? "Start" : "Stop"}!
+        {category === Category.Start ? "Start" : "Stop"}!
       </p>
     </button>
   );

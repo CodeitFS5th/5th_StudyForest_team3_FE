@@ -1,51 +1,52 @@
 import { ButtonRectangle } from "./core/hooks/RectangleHooks";
+import { Category } from "./core/hooks/RectangleHooks";
 
-export function ButtonCheck({
-  label,
-  path,
-  onClick,
-}: {
+interface BaseButtonProps {
   label: string;
-  path?: string;
-  onClick: () => void;
-}) {
-  return <ButtonRectangle type="check" label={label} onClick={onClick} />;
+  onClick?: () => void;
 }
 
-export function ButtonMake({
-  label,
-  path,
-  onClick,
-}: {
-  label: string;
-  path?: string;
-  onClick: () => void;
-}) {
-  return <ButtonRectangle type="make" label={label} onClick={onClick} />;
+interface ButtonProps extends BaseButtonProps {
+  type: "button" | "submit" | "reset";
 }
 
-export function ButtonMove({
-  label,
-  path,
-  onClick,
-}: {
-  label: string;
-  path: string;
-  onClick: () => void;
-}) {
+export function ButtonCheck({ type, label, onClick }: ButtonProps) {
   return (
-    <ButtonRectangle type="move" label={label} path={path} onClick={onClick} />
+    <ButtonRectangle
+      type={type}
+      category={Category.Check}
+      label={label}
+      onClick={onClick}
+    />
   );
 }
 
-export function ButtonCancel({
-  label,
-  path,
-  onClick,
-}: {
-  label: string;
-  path?: string;
-  onClick: () => void;
-}) {
-  return <ButtonRectangle type="cancel" label={label} onClick={onClick} />;
+export function ButtonMake({ type, label, onClick }: ButtonProps) {
+  return (
+    <ButtonRectangle
+      type={type}
+      category={Category.Make}
+      label={label}
+      onClick={onClick}
+    />
+  );
+}
+
+interface ButtonMovePros extends BaseButtonProps {
+  path: string;
+}
+
+export function ButtonMove({ path, label }: ButtonMovePros) {
+  return <ButtonRectangle category={Category.Move} label={label} path={path} />;
+}
+
+export function ButtonCancel({ type, label, onClick }: ButtonProps) {
+  return (
+    <ButtonRectangle
+      type={type}
+      category={Category.Cancel}
+      label={label}
+      onClick={onClick}
+    />
+  );
 }

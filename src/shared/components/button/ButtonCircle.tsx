@@ -1,25 +1,34 @@
 import { ButtonCircle } from "./core/hooks/CircleHooks";
+import { Category } from "./core/hooks/CircleHooks";
+
+interface ButtonProps {
+  type: "button" | "submit" | "reset";
+  disabled?: boolean;
+  onClick: () => void;
+}
 
 //Start! 버튼 고려해야함
 //restart 항상 사용할려면 disabled={false}
-export function ButtonPause({
-  disabled,
-  onClick,
-}: {
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return <ButtonCircle type="pause" disabled={disabled} onClick={onClick} />;
+export function ButtonPause({ type, disabled, onClick }: ButtonProps) {
+  return (
+    <ButtonCircle
+      type={type}
+      category={Category.Pause}
+      disabled={disabled}
+      onClick={onClick}
+    />
+  );
 }
 
-export function ButtonRestart({
-  disabled,
-  onClick,
-}: {
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return <ButtonCircle type="restart" disabled={disabled} onClick={onClick} />;
+export function ButtonRestart({ type, disabled, onClick }: ButtonProps) {
+  return (
+    <ButtonCircle
+      type={type}
+      category={Category.Restart}
+      disabled={disabled}
+      onClick={onClick}
+    />
+  );
 }
 
 //사용 예시

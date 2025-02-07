@@ -1,21 +1,30 @@
 import { ButtonRound } from "./core/hooks/RoundHooks";
+import { Category } from "./core/hooks/RoundHooks";
 
-export function ButtonStart({
-  disabled,
-  onClick,
-}: {
+interface ButtonProps {
+  type: "button" | "submit" | "reset";
   disabled?: boolean;
-  onClick: () => void;
-}) {
-  return <ButtonRound type="start" disabled={disabled} onClick={onClick} />;
+  onClick?: () => void;
 }
 
-export function ButtonStop({
-  disabled,
-  onClick,
-}: {
-  disabled?: boolean;
-  onClick: () => void;
-}) {
-  return <ButtonRound type="stop" disabled={disabled} onClick={onClick} />;
+export function ButtonStart({ type, disabled, onClick }: ButtonProps) {
+  return (
+    <ButtonRound
+      type={type}
+      category={Category.Start}
+      disabled={disabled}
+      onClick={onClick}
+    />
+  );
+}
+
+export function ButtonStop({ type, disabled, onClick }: ButtonProps) {
+  return (
+    <ButtonRound
+      type={type}
+      category={Category.Stop}
+      disabled={disabled}
+      onClick={onClick}
+    />
+  );
 }
