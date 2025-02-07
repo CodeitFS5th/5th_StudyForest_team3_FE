@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { InputType, UseInputFieldProps } from "./types";
+import {
+  InputType,
+  UseInputFieldProps,
+  FieldStatus,
+  InputErrorType,
+} from "./types";
 
 // 입력 필드 상태 관리
 export const useInputField = ({
@@ -7,11 +12,11 @@ export const useInputField = ({
   validate,
   isRequired = false,
 }: UseInputFieldProps) => {
-  const [fieldStatus, setFieldStatus] = useState({
+  const [fieldStatus, setFieldStatus] = useState<FieldStatus>({
     value: initialValue,
     isFocused: false, // 한 번이라도 포커스 되었었으면 true
     isEmpty: initialValue === "" ? true : false,
-    isValid: false,
+    isValid: false, // 보완이 필요해보임
     errorType: "none",
   });
 
@@ -44,7 +49,7 @@ export const useInputField = ({
 
   // errorType 결정
   useEffect(() => {
-    let errorType = "none";
+    let errorType: InputErrorType = "none";
 
     if (fieldStatus.isEmpty && isRequired) {
       errorType = "empty";
@@ -63,8 +68,8 @@ export const useInputField = ({
 
 // input type이 password일 경우 비밀번호 보이기/숨김 기능 훅
 export const useInputPasswordVisibility = (initialType: InputType) => {
-  const [inputType, setInputType] = useState(initialType);
-  const [isInputVisible, setIsInputVisible] = useState(false);
+  const [inputType, setInputType] = useState<InputType>(initialType);
+  const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => {
     setIsInputVisible(() => !isInputVisible);

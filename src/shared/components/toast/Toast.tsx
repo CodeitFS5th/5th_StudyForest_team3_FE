@@ -6,7 +6,7 @@ import { useToastFade } from "./core/hooks";
 export const Toast = ({ point, position = "bottom" }: ToastProps) => {
   const { isVisible } = useToastFade();
 
-  const text: string = point
+  const text = point
     ? `🎉 ${point}포인트를 획득했습니다!`
     : "🚨 집중이 중단되었습니다.";
 

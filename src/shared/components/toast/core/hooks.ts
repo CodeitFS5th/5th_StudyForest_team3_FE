@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export const useToastFade = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setIsVisible(true);

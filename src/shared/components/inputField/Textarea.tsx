@@ -14,7 +14,7 @@ const Textarea: React.FC<TextareaProps> = ({
 }) => {
   const { fieldStatus, handleChange, handleFocus } = useInputField({
     initialValue: value ?? "",
-    validate,
+    validate: validate ?? (() => true),
     isRequired,
   });
 

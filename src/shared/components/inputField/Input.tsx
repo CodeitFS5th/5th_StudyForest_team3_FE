@@ -7,7 +7,7 @@ import { InputProps } from "./core/types";
 import { useInputPasswordVisibility, useInputField } from "./core/hooks";
 
 const Input: React.FC<InputProps> = ({
-  label,
+  name,
   type,
   placeholder,
   value,
@@ -18,28 +18,33 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const { fieldStatus, handleChange, handleFocus } = useInputField({
     initialValue: "",
-    validate,
+    validate: validate ?? (() => true),
     isRequired,
   });
 
   const { inputType, isInputVisible, toggleVisibility } =
     useInputPasswordVisibility(type);
 
-  const inputStyle: { [key: string]: string } = {
+  const inputStyle = {
     basic: "border-custom-color-black-200 text-custom-color-black-400",
     error: "border-custom-color-red-200 text-custom-color-red-200",
   };
 
   return (
     <div className="w-full">
-      {label && (
-        <p className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]">
-          {label}
-        </p>
+      {name && (
+        <label
+          htmlFor={name}
+          className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]"
+        >
+          {name}
+        </label>
       )}
       <div className="w-full relative">
         <input
           type={inputType}
+          id={name}
+          name={name}
           placeholder={placeholder}
           value={fieldStatus.value}
           onChange={handleChange}

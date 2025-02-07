@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const useToastControl = () => {
-  const [isToastVisible, setIsToastVisible] = useState(false);
+  const [isToastVisible, setIsToastVisible] = useState<boolean>(false);
 
   const showToast = () => {
     setIsToastVisible(true);
