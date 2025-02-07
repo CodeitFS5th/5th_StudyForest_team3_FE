@@ -1,5 +1,5 @@
-import MainPage from "@/views/MainPage/MainPage";
+import HabitPage from "./HabitPage";
 
 export default function Home() {
-  return <MainPage />
+  return <HabitPage />;
 }
