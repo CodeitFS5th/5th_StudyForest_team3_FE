@@ -15,11 +15,47 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
+// layer, make, move
 export function ButtonRectangle({
   type,
   category,
   label,
   path,
+  onClick,
+}: ButtonProps) {
+  let shadowColor: string;
+
+  shadowColor =
+    category === Category.Check
+      ? ""
+      : "shadow-[0_3px] shadow-custom-color-text-green";
+
+  if (category === Category.Move) {
+    return (
+      <Link
+        href={`"/${path}"`}
+        className={`flex justify-center items-center w-[312px] h-[58px] md:w-[600px] xl:w-[600px] rounded-xl bg-custom-color-brand shadow-[0_3px] shadow-custom-color-text-green font-jeju`}
+      >
+        <p className="text-[18px] text-white">{label}</p>
+      </Link>
+    );
+  } else {
+    return (
+      <button
+        className={`flex justify-center w-[312px] h-[58px] md:w-[600px] xl:w-[600px] rounded-xl bg-custom-color-brand ${shadowColor} font-jeju`}
+        onClick={onClick}
+        type={type}
+      >
+        <p className="text-[18px] text-white ">{label}</p>
+      </button>
+    );
+  }
+}
+
+export function ButtonRectangleModal({
+  type,
+  category,
+  label,
   onClick,
 }: ButtonProps) {
   let bgColor: string;
@@ -31,27 +67,16 @@ export function ButtonRectangle({
       : "bg-custom-color-brand";
   shadowColor =
     category === Category.Cancel
-      ? "drop-shadow-[0_3px_bg-custom-color-black-300]"
-      : "drop-shadow-[0_3px_bg-custom-color-text-green]";
+      ? "shadow-[0_3px] shadow-custom-color-black-300"
+      : "shadow-[0_3px] shadow-custom-color-text-green";
 
-  if (category === Category.Move) {
-    return (
-      <Link
-        href={`"/${path}"`}
-        className={`flex justify-center w-[600px] h-[58px] pt-[10px] pb-[10px] pl-[78px] pr-[105px] rounded-xl ${bgColor} ${shadowColor} max-sm:w-[48px] max-sm:p-[11px]`}
-      >
-        <p className="text-[18px] text-white">{label}</p>
-      </Link>
-    );
-  } else {
-    return (
-      <button
-        className={`flex justify-center w-[600px] h-[58px] pt-[10px] pb-[10px] pl-[78px] pr-[105px] rounded-xl ${bgColor} ${shadowColor}  max-sm:w-[48px] max-sm:p-[11px]`}
-        onClick={onClick}
-        type={type}
-      >
-        <p className="text-[18px] text-white ">{label}</p>
-      </button>
-    );
-  }
+  return (
+    <button
+      className={`flex justify-center w-[140px] h-[58px] md:w-[288px] xl:w-[288px] rounded-xl ${bgColor} ${shadowColor} font-jeju`}
+      onClick={onClick}
+      type={type}
+    >
+      <p className="text-[18px] text-white ">{label}</p>
+    </button>
+  );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { ButtonLinkHome } from "@/shared/components/button/ButtonLink";
+import { ButtonRestart } from "@/shared/components/button/ButtonCircle";
+import { ButtonLink } from "@/shared/components/button/ButtonLink";
 import {
   ButtonCancel,
   ButtonCheck,
@@ -43,19 +44,14 @@ export default function HabitMain() {
               연우의 개발공장{/* 스터니 네임 들어와야함 */}
             </h1>
             <div className="flex flex-col gap-2">
-              <ButtonCheck
-                type="button"
-                label="10시까지 자기"
-                onClick={handleStop}
-              />
-              <ButtonCancel type="button" label="취소" onClick={handleStop} />
-              <ButtonMove label="오늘의 습관" path="habit" />
+              {/* <ButtonCancel type="button" label="취소" onClick={handleStop} />
+              
               <ButtonStart
                 type="button"
                 disabled={isPaused}
                 onClick={handleStart}
               />
-              <ButtonLinkHome path="/" pathName="홈" />
+               */}
             </div>
           </div>
           <div>
@@ -65,6 +61,25 @@ export default function HabitMain() {
             <p className="text-[16px] font-medium text-custom-color-black-400">
               {currentTime}
             </p>
+            <div>
+              <ButtonRestart
+                type="button"
+                disabled={isPaused}
+                onClick={handleStart}
+              />
+              <br></br>
+              <ButtonStart
+                type="button"
+                disabled={isPaused}
+                onClick={handleStart}
+              />
+              {/* <ButtonMove label="오늘의 습관으로 가기" path="habit" /> */}
+              {/* <ButtonCheck
+                type="button"
+                label="10시까지 자기"
+                onClick={handleStop}
+              /> */}
+            </div>
           </div>
         </div>
         {/*<div>습관 목록 부분</div>*/}

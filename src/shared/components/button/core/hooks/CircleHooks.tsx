@@ -29,14 +29,13 @@ export function ButtonCircle({
     ? "bg-custom-color-text-green"
     : "bg-custom-color-brand";
   shadowColor = disabled
-    ? "drop-shadow-[0_3px_bg-custom-color-black-400]"
+    ? ""
     : category === Category.Pause
-    ? "drop-shadow-[0_3px_bg-custom-color-brand]"
-    : "drop-shadow-[0_3px_bg-custom-color-text-green]";
+    ? "shadow-[0_3px] shadow-custom-color-brand"
+    : "shadow-[0_3px] shadow-custom-color-text-green";
   return (
-    //미디어 쿼리 w-64 모바일만 w-48
     <button
-      className={`flex justify-center w-[64px] p-[13.4px] rounded-full ${bgColor} ${shadowColor}  max-sm:w-[48px] max-sm:p-[11px]`}
+      className={`flex justify-center px-[11px] py-[9px] md:px-[13.4px] md:pt-[13.4px] md:pb-[12.4px] xl:px-[13.4px] xl:pt-[13.4px] xl:pb-[12.4px] rounded-full ${bgColor} ${shadowColor} `}
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       type={type}
@@ -44,6 +43,7 @@ export function ButtonCircle({
       <Image
         src={category === Category.Pause ? PauseIcon : ReStartIcon}
         alt={category === Category.Pause ? "정지 버튼" : "재시작 버튼"}
+        className="object-contain w-[26.4px] md:w-[35.2px] xl:w-[35.2px]"
       />
     </button>
   );

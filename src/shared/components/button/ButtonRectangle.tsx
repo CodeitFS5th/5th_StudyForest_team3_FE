@@ -1,4 +1,7 @@
-import { ButtonRectangle } from "./core/hooks/RectangleHooks";
+import {
+  ButtonRectangle,
+  ButtonRectangleModal,
+} from "./core/hooks/RectangleHooks";
 import { Category } from "./core/hooks/RectangleHooks";
 
 interface BaseButtonProps {
@@ -40,9 +43,20 @@ export function ButtonMove({ path, label }: ButtonMovePros) {
   return <ButtonRectangle category={Category.Move} label={label} path={path} />;
 }
 
-export function ButtonCancel({ type, label, onClick }: ButtonProps) {
+export function ButtonModalMake({ type, label, onClick }: ButtonProps) {
   return (
-    <ButtonRectangle
+    <ButtonRectangleModal
+      type={type}
+      category={Category.Check}
+      label={label}
+      onClick={onClick}
+    />
+  );
+}
+
+export function ButtonModalCancel({ type, label, onClick }: ButtonProps) {
+  return (
+    <ButtonRectangleModal
       type={type}
       category={Category.Cancel}
       label={label}
