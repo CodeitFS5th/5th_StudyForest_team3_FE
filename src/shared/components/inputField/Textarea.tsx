@@ -3,7 +3,7 @@ import { useInputField } from "@/shared/components/inputField/core/hooks";
 import styles from "./textarea.module.css";
 
 const Textarea: React.FC<TextareaProps> = ({
-  label,
+  name,
   placeholder,
   value,
   invalidErrorMessage,
@@ -27,10 +27,10 @@ const Textarea: React.FC<TextareaProps> = ({
 
   return (
     <div className="w-full">
-      {label && (
-        <p className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]">
-          {label}
-        </p>
+      {name && (
+        <label className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]">
+          {name}
+        </label>
       )}
       <div className="w-full relative">
         <textarea

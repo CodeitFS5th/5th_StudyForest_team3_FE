@@ -83,6 +83,7 @@ const Input: React.FC<InputProps> = ({
             <Image
               src={isInputVisible ? visibilityOnIcon : visibilityOffIcon}
               alt={isInputVisible ? "비밀번호 숨기기" : "비밀번호 보기"}
+              priority
               width={24}
               height={24}
             />
