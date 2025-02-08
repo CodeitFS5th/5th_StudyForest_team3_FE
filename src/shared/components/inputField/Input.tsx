@@ -34,8 +34,8 @@ const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   // input 상태 관리 - useInputField 커스텀 훅 사용
-  const { fieldStatus, handleFocus } = useInputFieldValidation({
-    value: value ?? "",
+  const { validationStatus } = useInputFieldValidation({
+    value,
     validate: validate ?? (() => true),
     isRequired,
   });
@@ -62,23 +62,18 @@ const Input: React.FC<InputProps> = ({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onFocus={handleFocus}
           required={isRequired}
           {...props}
           className={`
             ${inputStyleClassName.common}
             ${
               inputStyleClassName.nonFocus[
-                fieldStatus.errorType !== "none" && fieldStatus.isFocused
-                  ? "error"
-                  : "basic"
+                validationStatus.errorType !== "none" ? "error" : "basic"
               ]
             }
             ${
               inputStyleClassName.focus[
-                fieldStatus.errorType !== "none" && fieldStatus.isFocused
-                  ? "error"
-                  : "basic"
+                validationStatus.errorType !== "none" ? "error" : "basic"
               ]
             }
           `}
@@ -98,12 +93,12 @@ const Input: React.FC<InputProps> = ({
           </button>
         )}
       </div>
-      {fieldStatus.errorType === "empty" && fieldStatus.isFocused && (
+      {validationStatus.errorType === "empty" && (
         <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
           *필수 입력 값입니다
         </p>
       )}
-      {fieldStatus.errorType === "invalid" && fieldStatus.isFocused && (
+      {validationStatus.errorType === "invalid" && (
         <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
           *{invalidErrorMessage}
         </p>

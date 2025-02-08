@@ -2,13 +2,6 @@ export type InputType = "text" | "password" | "email" | "number";
 
 export type InputErrorType = "none" | "empty" | "invalid";
 
-export interface FieldStatus {
-  isFocused: boolean;
-  isValid: boolean;
-  isEmpty: boolean;
-  errorType: InputErrorType;
-}
-
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   type: InputType;
@@ -29,9 +22,15 @@ export interface TextareaProps
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export interface UseInputFieldProps {
+export interface UseInputFieldValidationProps {
   value: string;
   validate?: (value: string) => boolean;
   isRequired?: boolean;
   errorStatus?: "none" | "empty" | "invalid";
+}
+export interface InputFieldValidationProps {
+  isFocused: boolean;
+  isValid: boolean;
+  isEmpty: boolean;
+  errorType: InputErrorType;
 }

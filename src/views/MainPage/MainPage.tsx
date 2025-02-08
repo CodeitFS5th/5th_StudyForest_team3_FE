@@ -1,5 +1,6 @@
 "use client";
 import Input from "@/shared/components/inputField/Input";
+import Textarea from "@/shared/components/inputField/Textarea";
 import { isValidEmail, isValidPassword } from "@/shared/utils/inputValidation";
 import { useInputFieldValue } from "@/shared/hooks/useInputFieldValue";
 
@@ -8,7 +9,8 @@ export default function MainPage() {
     useInputFieldValue("");
   const { value: password, handleChange: handlePasswordChange } =
     useInputFieldValue("");
-
+  const { value: memo, handleChange: handleMemoChange } =
+    useInputFieldValue("");
   return (
     <div>
       <h1>메인페이지</h1>
@@ -20,6 +22,7 @@ export default function MainPage() {
         invalidErrorMessage="test"
         validate={isValidEmail}
         onChange={handleEmailChange}
+        isRequired={true}
       />
       <Input
         name="비밀번호"
@@ -29,6 +32,13 @@ export default function MainPage() {
         invalidErrorMessage="test"
         validate={isValidPassword}
         onChange={handlePasswordChange}
+      />
+      <Textarea
+        name="메모"
+        value={memo}
+        placeholder="메모를 입력해주세요"
+        invalidErrorMessage="test"
+        onChange={handleMemoChange}
       />
     </div>
   );

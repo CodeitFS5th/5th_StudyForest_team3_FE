@@ -2,78 +2,77 @@ import { TextareaProps } from "@/shared/components/inputField/core/types";
 import { useInputFieldValidation } from "@/shared/components/inputField/core/hooks";
 import styles from "./textarea.module.css";
 
+const textareaStyleClassName = {
+  common:
+    "w-full pl-[20px] pr-[10px] py-[20px] border-[1px] outline-none rounded-[15px] placeholder-custom-color-black-300 text-[16px] font-[400] box-border overflow-auto scrollbar-rounded resize-none",
+  nonFocus: {
+    basic: "border-custom-color-black-200 text-custom-color-black-400",
+    error: "border-custom-color-red-200 text-custom-color-red-200",
+  },
+  focus: {
+    basic: "focus:border-[2px] focus:border-custom-color-text-green",
+    error: "focus:border-[2px] focus:border-custom-color-red-200",
+  },
+};
+
 const Textarea: React.FC<TextareaProps> = ({
   name,
-  placeholder,
   value,
+  placeholder,
   invalidErrorMessage,
   isRequired = false,
   height,
   validate,
+  onChange,
   ...props
 }) => {
-  const { fieldStatus, handleChange, handleFocus } = useInputField({
-    initialValue: value ?? "",
+  const { validationStatus } = useInputFieldValidation({
+    value,
     validate: validate ?? (() => true),
     isRequired,
   });
-
-  const textareaColorStyle: { [key: string]: string } = {
-    basic: "border-custom-color-black-200 text-custom-color-black-400",
-    error: "border-custom-color-red-200 text-custom-color-red-200",
-  };
 
   const textareaHeight = height ? `${height}px` : "98px";
 
   return (
     <div className="w-full">
       {name && (
-        <label className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]">
+        <label
+          htmlFor={name}
+          className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]"
+        >
           {name}
         </label>
       )}
       <div className="w-full relative">
         <textarea
+          id={name}
           placeholder={placeholder}
-          value={fieldStatus.value}
-          onChange={handleChange}
-          onFocus={handleFocus}
+          value={value}
+          onChange={onChange}
           required={isRequired}
           {...props}
           className={`
-            w-full ${textareaHeight} pl-[20px] pr-[10px] py-[20px]
-            border-[1px] outline-none rounded-[15px]
-            placeholder-custom-color-black-300 text-[16px] font-[400]
-            box-border overflow-auto scrollbar-rounded resize-none
-
+            ${textareaStyleClassName.common}
             ${
-              textareaColorStyle[
-                fieldStatus.errorType !== "none" && fieldStatus.isFocused
-                  ? "error"
-                  : "basic"
+              textareaStyleClassName.nonFocus[
+                validationStatus.errorType !== "none" ? "error" : "basic"
               ]
             }
-
-            // focus
             ${
-              fieldStatus.errorType !== "none"
-                ? "focus:border-[2px] focus:border-custom-color-red-200"
-                : "focus:border-[2px] focus:border-custom-color-text-green"
+              textareaStyleClassName.focus[
+                validationStatus.errorType !== "none" ? "error" : "basic"
+              ]
             }
-
-            // disabled
-            disabled:text-custom-color-black-300
-
-            // scrollbar
-            ${styles["scrollbar-custom"]}
+            ${textareaHeight} ${styles["scrollbar-custom"]}
           `}
         />
-        {fieldStatus.errorType === "empty" && fieldStatus.isFocused && (
+        {validationStatus.errorType === "empty" && (
           <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
             *필수 입력 값입니다
           </p>
         )}
-        {fieldStatus.errorType === "invalid" && fieldStatus.isFocused && (
+        {validationStatus.errorType === "invalid" && (
           <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
             *{invalidErrorMessage}
           </p>

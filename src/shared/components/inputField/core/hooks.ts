@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import {
   InputType,
-  UseInputFieldProps,
-  FieldStatus,
+  UseInputFieldValidationProps,
+  InputFieldValidationProps,
   InputErrorType,
 } from "./types";
 
@@ -11,14 +11,15 @@ export const useInputFieldValidation = ({
   value,
   validate,
   isRequired = false,
-}: UseInputFieldProps) => {
-  const [fieldStatus, setFieldStatus] = useState<FieldStatus>({
-    // todo: isEmpty + isValid로 해보기
-    isFocused: false, // 한 번이라도 포커스 되었었으면 true
-    isEmpty: value === "" ? true : false,
-    isValid: false, // todo: 보완이 필요해보임
-    errorType: "none",
-  });
+}: UseInputFieldValidationProps) => {
+  const [validationStatus, setValidationStatus] =
+    useState<InputFieldValidationProps>({
+      // todo: isEmpty + isValid로 해보기
+      isFocused: false, // 한 번이라도 포커스 되었었으면 true
+      isEmpty: value === "" ? true : false,
+      isValid: false, // todo: 보완이 필요해보임
+      errorType: "none",
+    });
 
   const validateField = (value: string) => {
     const isEmpty = value === "";
@@ -27,22 +28,11 @@ export const useInputFieldValidation = ({
     return { isEmpty, isValid };
   };
 
-  const handleFocus = () => {
-    const { isEmpty, isValid } = validateField(value);
-
-    setFieldStatus((prev) => ({
-      ...prev,
-      isFocused: true,
-      isEmpty,
-      isValid,
-    }));
-  };
-
   // value가 변경될 때마다 유효성 검사 상태 업데이트
   useEffect(() => {
     const { isEmpty, isValid } = validateField(value);
 
-    setFieldStatus((prev) => ({
+    setValidationStatus((prev) => ({
       ...prev,
       isEmpty,
       isValid,
@@ -53,19 +43,22 @@ export const useInputFieldValidation = ({
   useEffect(() => {
     let errorType: InputErrorType = "none";
 
-    if (fieldStatus.isEmpty && isRequired) {
+    if (validationStatus.isEmpty && isRequired) {
       errorType = "empty";
-    } else if (!fieldStatus.isValid && (isRequired || !fieldStatus.isEmpty)) {
+    } else if (
+      !validationStatus.isValid &&
+      (isRequired || !validationStatus.isEmpty)
+    ) {
       errorType = "invalid";
     }
 
-    setFieldStatus((prev) => ({
+    setValidationStatus((prev) => ({
       ...prev,
       errorType,
     }));
-  }, [fieldStatus.isValid, fieldStatus.isEmpty]);
+  }, [validationStatus.isValid, validationStatus.isEmpty]);
 
-  return { fieldStatus, handleFocus };
+  return { validationStatus };
 };
 
 // input type이 password일 경우 비밀번호 보이기/숨김 기능 훅
