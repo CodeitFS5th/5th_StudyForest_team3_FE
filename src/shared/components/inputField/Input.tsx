@@ -4,31 +4,45 @@ import Image from "next/image";
 import visibilityOnIcon from "@/assets/images/icon/btn_visibility_on_24px.png";
 import visibilityOffIcon from "@/assets/images/icon/btn_invisibility_on_24px.png";
 import { InputProps } from "./core/types";
-import { useInputPasswordVisibility, useInputField } from "./core/hooks";
+import {
+  useInputPasswordVisibility,
+  useInputFieldValidation,
+} from "./core/hooks";
+
+const inputStyleClassName = {
+  common:
+    "w-full h-[48px] p-[20px] border-[1px] outline-none rounded-[15px] placeholder-custom-color-black-300 text-[16px] font-[400] disabled:text-custom-color-black-300",
+  nonFocus: {
+    basic: "border-custom-color-black-200 text-custom-color-black-400",
+    error: "border-custom-color-red-200 text-custom-color-red-200",
+  },
+  focus: {
+    basic: "focus:border-[2px] focus:border-custom-color-text-green",
+    error: "focus:border-[2px] focus:border-custom-color-red-200",
+  },
+};
 
 const Input: React.FC<InputProps> = ({
   name,
   type,
-  placeholder,
   value,
+  placeholder,
   invalidErrorMessage,
   isRequired = false,
   validate,
+  onChange,
   ...props
 }) => {
-  const { fieldStatus, handleChange, handleFocus } = useInputField({
-    initialValue: "",
+  // input 상태 관리 - useInputField 커스텀 훅 사용
+  const { fieldStatus, handleFocus } = useInputFieldValidation({
+    value: value ?? "",
     validate: validate ?? (() => true),
     isRequired,
   });
 
+  // 비밀번호 보기/숨김 기능 - useInputPasswordVisibility 커스텀 훅 사용
   const { inputType, isInputVisible, toggleVisibility } =
     useInputPasswordVisibility(type);
-
-  const inputStyle = {
-    basic: "border-custom-color-black-200 text-custom-color-black-400",
-    error: "border-custom-color-red-200 text-custom-color-red-200",
-  };
 
   return (
     <div className="w-full">
@@ -46,33 +60,27 @@ const Input: React.FC<InputProps> = ({
           id={name}
           name={name}
           placeholder={placeholder}
-          value={fieldStatus.value}
-          onChange={handleChange}
+          value={value}
+          onChange={onChange}
           onFocus={handleFocus}
           required={isRequired}
           {...props}
           className={`
-            w-full h-[48px] p-[20px]
-            border-[1px] outline-none rounded-[15px]
-            placeholder-custom-color-black-300 text-[16px] font-[400]
-
+            ${inputStyleClassName.common}
             ${
-              inputStyle[
+              inputStyleClassName.nonFocus[
                 fieldStatus.errorType !== "none" && fieldStatus.isFocused
                   ? "error"
                   : "basic"
               ]
             }
-            
-            // focus
             ${
-              fieldStatus.errorType !== "none"
-                ? "focus:border-[2px] focus:border-custom-color-red-200"
-                : "focus:border-[2px] focus:border-custom-color-text-green"
+              inputStyleClassName.focus[
+                fieldStatus.errorType !== "none" && fieldStatus.isFocused
+                  ? "error"
+                  : "basic"
+              ]
             }
-            
-            // disabled
-            disabled:text-custom-color-black-300
           `}
         />
         {type === "password" && (

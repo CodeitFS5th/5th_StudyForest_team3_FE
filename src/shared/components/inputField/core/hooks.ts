@@ -6,38 +6,29 @@ import {
   InputErrorType,
 } from "./types";
 
-// 입력 필드 상태 관리
-export const useInputField = ({
-  initialValue = "",
+// 입력 필드 유효성 검사 훅
+export const useInputFieldValidation = ({
+  value,
   validate,
   isRequired = false,
 }: UseInputFieldProps) => {
   const [fieldStatus, setFieldStatus] = useState<FieldStatus>({
-    value: initialValue,
+    // todo: isEmpty + isValid로 해보기
     isFocused: false, // 한 번이라도 포커스 되었었으면 true
-    isEmpty: initialValue === "" ? true : false,
-    isValid: false, // 보완이 필요해보임
+    isEmpty: value === "" ? true : false,
+    isValid: false, // todo: 보완이 필요해보임
     errorType: "none",
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const newValue = e.target.value;
-    const isEmpty = newValue === "";
-    const isValid = validate ? validate(newValue) : true;
+  const validateField = (value: string) => {
+    const isEmpty = value === "";
+    const isValid = validate ? validate(value) : true;
 
-    setFieldStatus((prev) => ({
-      ...prev,
-      value: newValue,
-      isEmpty,
-      isValid,
-    }));
+    return { isEmpty, isValid };
   };
 
   const handleFocus = () => {
-    const isEmpty = fieldStatus.value === "";
-    const isValid = validate ? validate(fieldStatus.value) : true;
+    const { isEmpty, isValid } = validateField(value);
 
     setFieldStatus((prev) => ({
       ...prev,
@@ -46,6 +37,17 @@ export const useInputField = ({
       isValid,
     }));
   };
+
+  // value가 변경될 때마다 유효성 검사 상태 업데이트
+  useEffect(() => {
+    const { isEmpty, isValid } = validateField(value);
+
+    setFieldStatus((prev) => ({
+      ...prev,
+      isEmpty,
+      isValid,
+    }));
+  }, [value]);
 
   // errorType 결정
   useEffect(() => {
@@ -61,9 +63,9 @@ export const useInputField = ({
       ...prev,
       errorType,
     }));
-  }, [fieldStatus.value, fieldStatus.isValid, fieldStatus.isEmpty]);
+  }, [fieldStatus.isValid, fieldStatus.isEmpty]);
 
-  return { fieldStatus, handleChange, handleFocus };
+  return { fieldStatus, handleFocus };
 };
 
 // input type이 password일 경우 비밀번호 보이기/숨김 기능 훅

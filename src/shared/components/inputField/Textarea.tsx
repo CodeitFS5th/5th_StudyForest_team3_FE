@@ -1,5 +1,5 @@
 import { TextareaProps } from "@/shared/components/inputField/core/types";
-import { useInputField } from "@/shared/components/inputField/core/hooks";
+import { useInputFieldValidation } from "@/shared/components/inputField/core/hooks";
 import styles from "./textarea.module.css";
 
 const Textarea: React.FC<TextareaProps> = ({
