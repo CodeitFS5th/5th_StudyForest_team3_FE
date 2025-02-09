@@ -1,66 +1,62 @@
 import {
   ButtonRectangle,
+  ButtonRectangleList,
   ButtonRectangleModal,
 } from "./core/hooks/RectangleHooks";
 import { Category } from "./core/hooks/RectangleHooks";
+import { Status } from "./core/hooks/RectangleHooks";
 
-interface BaseButtonProps {
+interface ButtonProps {
   label: string;
-  onClick?: () => void;
+  [key: string]: any;
 }
 
-interface ButtonProps extends BaseButtonProps {
-  type: "button" | "submit" | "reset";
+export function ButtonCheck({ label, ...props }: ButtonProps) {
+  return <ButtonRectangle category={Category.Check} label={label} {...props} />;
 }
 
-export function ButtonCheck({ type, label, onClick }: ButtonProps) {
+export function ButtonMake({ label, ...props }: ButtonProps) {
+  return <ButtonRectangle category={Category.Make} label={label} {...props} />;
+}
+
+interface ButtonListProps extends ButtonProps {
+  status: Status;
+}
+
+export function ButtonList({ label, status, ...props }: ButtonListProps) {
   return (
-    <ButtonRectangle
-      type={type}
-      category={Category.Check}
-      label={label}
-      onClick={onClick}
-    />
-  );
-}
-
-export function ButtonMake({ type, label, onClick }: ButtonProps) {
-  return (
-    <ButtonRectangle
-      type={type}
+    <ButtonRectangleList
       category={Category.Make}
+      status={status}
       label={label}
-      onClick={onClick}
+      {...props}
     />
   );
 }
 
-interface ButtonMovePros extends BaseButtonProps {
+interface ButtonMoveProps extends ButtonProps {
   path: string;
 }
 
-export function ButtonMove({ path, label }: ButtonMovePros) {
-  return <ButtonRectangle category={Category.Move} label={label} path={path} />;
-}
-
-export function ButtonModalMake({ type, label, onClick }: ButtonProps) {
+export function ButtonMove({ path, label, ...props }: ButtonMoveProps) {
   return (
-    <ButtonRectangleModal
-      type={type}
-      category={Category.Check}
+    <ButtonRectangle
+      category={Category.Move}
       label={label}
-      onClick={onClick}
+      path={path}
+      {...props}
     />
   );
 }
 
-export function ButtonModalCancel({ type, label, onClick }: ButtonProps) {
+export function ButtonModalMake({ label, ...props }: ButtonProps) {
   return (
-    <ButtonRectangleModal
-      type={type}
-      category={Category.Cancel}
-      label={label}
-      onClick={onClick}
-    />
+    <ButtonRectangleModal category={Category.Check} label={label} {...props} />
+  );
+}
+
+export function ButtonModalCancel({ label, ...props }: ButtonProps) {
+  return (
+    <ButtonRectangleModal category={Category.Cancel} label={label} {...props} />
   );
 }

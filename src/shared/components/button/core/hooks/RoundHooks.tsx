@@ -8,41 +8,40 @@ export enum Category {
 }
 
 interface ButtonProps {
-  type: "button" | "submit" | "reset";
   category: Category;
   disabled?: boolean;
-  onClick?: () => void;
+  // 다른 button 속성들을 전달 위해 추가
+  [key: string]: any;
 }
 
 export function ButtonRound({
-  type,
   category,
   disabled = false,
-  onClick,
+  ...props // 다른 속성들 받기
 }: ButtonProps) {
-  let bgColor: string;
-  let shadowColor: string;
-
-  bgColor = disabled ? "bg-custom-color-black-400" : "bg-custom-color-brand";
-  shadowColor = disabled ? "" : "shadow-[0_3px] shadow-custom-color-text-green";
+  const buttonStyles = {
+    bgColor: disabled ? "bg-custom-color-black-400" : "bg-custom-color-brand",
+    shadowColor: disabled
+      ? ""
+      : "shadow-[0_3px] shadow-custom-color-text-green",
+    imageSrc: category === Category.Start ? StartIcon : StopIcon,
+    altText: category === Category.Start ? "시작 버튼" : "정지 버튼",
+    buttonText: category === Category.Start ? "Start!" : "Stop!",
+  };
 
   return (
-    //미디어 쿼리 w-333px h-64px 모바일만 w-140px h-48px
-    //미디어 쿼리 pt-10px pb-10px pl-78px pr-105px 모바일만 pt-11px pb-13px pl-20px pr-28px
-    //폰트 사이즈 text-[28px] 모바일만 text-[18px]
     <button
-      className={`flex pt-[10px] pb-[7px] pl-[20px] pr-[28px] gap-[5px] md:gap-[16px] xl:gap-[16px] md:pl-[78px]  md:pr-[105px] xl:pl-[78px] xl:pr-[105px] rounded-3xl ${bgColor} ${shadowColor}`}
-      onClick={disabled ? undefined : onClick}
+      className={`flex justify-center items-center pt-[10px] pb-[7px] pl-[20px] pr-[28px] gap-[5px] md:gap-[16px] xl:gap-[16px] md:pl-[78px]  md:pr-[105px] xl:pl-[78px] xl:pr-[105px] rounded-3xl ${buttonStyles.bgColor} ${buttonStyles.shadowColor}`}
       disabled={disabled}
-      type={type}
+      {...props}
     >
       <Image
-        src={category === Category.Start ? StartIcon : StopIcon}
-        alt={category === Category.Start ? "시작 버튼" : "정지 버튼"}
+        src={buttonStyles.imageSrc}
+        alt={buttonStyles.altText}
         className="object-contain w-[28px] md:w-[44px] xl:w-[44px]"
       />
       <p className="text-[18px] md:text-[28px] xl:text-[28px] text-white ">
-        {category === Category.Start ? "Start" : "Stop"}
+        {buttonStyles.buttonText}
       </p>
     </button>
   );
