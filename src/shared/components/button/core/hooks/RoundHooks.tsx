@@ -1,23 +1,24 @@
 import Image from "next/image";
 import StartIcon from "../../../../../assets/images/icon/ic_play.png";
 import StopIcon from "../../../../../assets/images/icon/ic_stop.png";
+import { ButtonHTMLAttributes } from "react";
 
 export enum Category {
   Start = "start",
   Stop = "stop",
 }
 
-interface ButtonProps {
+interface BaseButtonProps {
   category: Category;
   disabled?: boolean;
-  // 다른 button 속성들을 전달 위해 추가
-  [key: string]: any;
 }
+
+type ButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ButtonRound({
   category,
   disabled = false,
-  ...props // 다른 속성들 받기
+  ...props
 }: ButtonProps) {
   const buttonStyles = {
     bgColor: disabled ? "bg-custom-color-black-400" : "bg-custom-color-brand",

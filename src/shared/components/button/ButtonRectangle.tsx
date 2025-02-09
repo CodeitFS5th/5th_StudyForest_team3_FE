@@ -8,7 +8,6 @@ import { Status } from "./core/hooks/RectangleHooks";
 
 interface ButtonProps {
   label: string;
-  [key: string]: any;
 }
 
 export function ButtonCheck({ label, ...props }: ButtonProps) {

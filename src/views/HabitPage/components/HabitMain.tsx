@@ -97,6 +97,7 @@ export default function HabitMain() {
                 label="10시까지 자기"
                 onClick={handleStop}
               />
+              <ButtonLink path="/" label="10시까지 자기" onClick={handleStop} />
             </div>
           </div>
         </div>

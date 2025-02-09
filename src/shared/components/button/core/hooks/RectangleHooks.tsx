@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
 
 export enum Category {
   Check = "check",
@@ -12,13 +13,24 @@ export enum Status {
   UnDone = "UNDONE",
 }
 
-interface ButtonProps {
+interface BaseButtonProps {
   category: Category;
   label: string;
-  path?: string;
-  // 다른 button 속성들을 전달 위해 추가
-  [key: string]: any;
 }
+
+interface LinkProps extends BaseButtonProps {
+  path?: string;
+}
+
+interface ListProps extends BaseButtonProps {
+  status: Status;
+}
+
+type ButtonProps = LinkProps &
+  ButtonHTMLAttributes<HTMLButtonElement> &
+  AnchorHTMLAttributes<HTMLAnchorElement>;
+
+type ButtonListProps = ListProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ButtonRectangle({
   category,
@@ -37,12 +49,13 @@ export function ButtonRectangle({
 
   if (category === Category.Move) {
     return (
-      <Link
-        href={`"/${path}"`}
-        className={`flex justify-center items-center w-[312px] h-[58px] md:w-[600px] xl:w-[600px] rounded-xl bg-custom-color-brand shadow-[0_3px] shadow-custom-color-text-green font-jeju`}
-        {...props}
-      >
-        <p className="text-[18px] text-white">{label}</p>
+      <Link href={`"${path}"`} legacyBehavior>
+        <a
+          className={`flex justify-center items-center w-[312px] h-[58px] md:w-[600px] xl:w-[600px] rounded-xl bg-custom-color-brand shadow-[0_3px] ${shadowColor} font-jeju`}
+          {...props}
+        >
+          <p className="text-[18px] text-white">{label}</p>
+        </a>
       </Link>
     );
   } else {
@@ -55,10 +68,6 @@ export function ButtonRectangle({
       </button>
     );
   }
-}
-
-interface ButtonListProps extends ButtonProps {
-  status: Status;
 }
 
 export function ButtonRectangleList({

@@ -3,7 +3,6 @@ import { Category } from "./core/hooks/CircleHooks";
 
 interface ButtonProps {
   disabled?: boolean;
-  [key: string]: any;
 }
 
 export function ButtonPause({ disabled, ...props }: ButtonProps) {

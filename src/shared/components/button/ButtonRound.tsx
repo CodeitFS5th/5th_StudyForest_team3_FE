@@ -3,7 +3,6 @@ import { Category } from "./core/hooks/RoundHooks";
 
 interface ButtonProps {
   disabled?: boolean;
-  [key: string]: any;
 }
 
 export function ButtonStart({ disabled, ...props }: ButtonProps) {

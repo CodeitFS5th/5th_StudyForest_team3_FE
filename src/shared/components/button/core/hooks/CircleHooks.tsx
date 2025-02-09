@@ -1,17 +1,18 @@
 import Image from "next/image";
 import PauseIcon from "../../../../../assets/images/icon/ic_pause.png";
 import ReStartIcon from "../../../../../assets/images/icon/ic_restart.png";
+import { ButtonHTMLAttributes } from "react";
 
 export enum Category {
   Pause = "pause",
   Restart = "restart",
 }
 
-interface ButtonProps {
+interface BaseButtonProps {
   category: Category;
-  disabled?: boolean;
-  [key: string]: any;
 }
+
+type ButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function ButtonCircle({
   category,
@@ -38,7 +39,6 @@ export function ButtonCircle({
   return (
     <button
       className={`flex justify-center px-[11px] py-[9px] md:px-[13.4px] md:pt-[13.4px] md:pb-[12.4px] xl:px-[13.4px] xl:pt-[13.4px] xl:pb-[12.4px] rounded-full ${buttonStyles.bgColor} ${buttonStyles.shadowColor} `}
-      disabled={disabled}
       {...props}
     >
       <Image
