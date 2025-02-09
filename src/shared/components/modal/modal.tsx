@@ -14,10 +14,7 @@ interface IModalProps {
   children: ReactNode;
 }
 
-export interface ModalHandle {
-  close: () => void;
-  show: () => void;
-}
+export type ModalHandle = Record<"close" | "show", () => void>;
 
 const Modal = forwardRef<ModalHandle, IModalProps>(function Modal(
   { children },
@@ -28,13 +25,6 @@ const Modal = forwardRef<ModalHandle, IModalProps>(function Modal(
 
   const handleClose = () => dialogRef.current?.close();
   const handleOpen = () => dialogRef.current?.showModal();
-
-  // modal-root가 렌더링이 되기전에 마운트 되어서 에러 발생) Error: Target container is not a DOM element.
-  // useEffect(() => {
-  //   // modal-root가 렌더링된 후 포탈을 생성
-  //   handleOpen(); // 모달 열기
-  //   dialogRef.current?.scrollTo({ top: 0 });
-  // }, []);
 
   // useEffect 대신 useLayoutEffect를 사용하여 렌더링 직후에 실행
   useLayoutEffect(() => {
