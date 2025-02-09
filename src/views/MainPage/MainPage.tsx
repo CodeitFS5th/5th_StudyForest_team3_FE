@@ -3,6 +3,8 @@ import Input from "@/shared/components/inputField/Input";
 import Textarea from "@/shared/components/inputField/Textarea";
 import { isValidEmail, isValidPassword } from "@/shared/utils/inputValidation";
 import { useInputFieldValue } from "@/shared/hooks/useInputFieldValue";
+import Toast from "@/shared/components/toast/Toast";
+import { useToastMount } from "@/shared/hooks/useToastMount";
 
 export default function MainPage() {
   const { value: email, handleChange: handleEmailChange } =
@@ -11,6 +13,8 @@ export default function MainPage() {
     useInputFieldValue("");
   const { value: memo, handleChange: handleMemoChange } =
     useInputFieldValue("");
+  const { isToastMounted, mountToast } = useToastMount();
+
   return (
     <div>
       <h1>메인페이지</h1>
@@ -40,6 +44,8 @@ export default function MainPage() {
         invalidErrorMessage="test"
         onChange={handleMemoChange}
       />
+      <button onClick={mountToast}>클릭!</button>
+      <Toast point={10} position="bottom" isMounted={isToastMounted} />
     </div>
   );
 }
