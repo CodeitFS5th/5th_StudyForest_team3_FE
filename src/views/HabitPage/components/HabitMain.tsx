@@ -7,6 +7,10 @@ import {
   ButtonStartDisabled,
 } from "@/shared/components/button/ButtonRound";
 import { ButtonHome } from "@/shared/components/button/ButtonNav";
+import SeeMoreButton from "@/shared/components/ButtonSeeMore/SeeMoreButton";
+import ButtonAddEmoji from "@/shared/components/ButtonAddEmoji/ButtonAddEmoji";
+import Chip from "@/shared/components/Chip/Chip";
+import Card from "@/shared/components/Card/Card";
 
 export default function HabitMain() {
   const [currentTime, setCurrentTime] = useState(formatDateTime);
@@ -54,6 +58,10 @@ export default function HabitMain() {
           <ButtonStart />
           <ButtonStartDisabled />
           <ButtonHome />
+          <SeeMoreButton />
+          <ButtonAddEmoji />
+          <Chip label="미라클모닝 6시 기상" isCompleted={true}/>
+          <Card bg='pink'/>
         </div>
         {/*<div>습관 목록 부분</div>*/}
       </div>
