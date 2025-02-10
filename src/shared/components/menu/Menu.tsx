@@ -56,22 +56,20 @@ const DropDownList = ({
   options: string[];
 }) => {
   return (
-    <div className="absolute left-0 mt-2 w-[180px] bg-white border border-gray-300 rounded-[15px] shadow-lg">
-      <ul className="list-none p-0 m-0">
-        {options.map((item, index) => (
-          <li key={index} className="relative">
-            <button
-              className="w-full h-[42px] px-4 py-2 text-black text-base cursor-pointer hover:bg-gray-100 text-left"
-              onClick={() => onSelect(item)}
-            >
-              {item}
-            </button>
-            {index < options.length - 1 && (
-              <div className="border-t border-gray-200"></div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="absolute left-0 mt-2 w-[180px] bg-white border border-gray-300 rounded-[15px] shadow-lg">
+      {options.map((item, index) => (
+        <li key={index} className="relative">
+          <button
+            className="w-full h-[42px] px-4 py-2 text-black text-base cursor-pointer hover:bg-gray-100 text-left"
+            onClick={() => onSelect(item)}
+          >
+            {item}
+          </button>
+          {index < options.length - 1 && (
+            <div className="border-t border-gray-200"></div>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 };
