@@ -14,8 +14,6 @@ export const useInputFieldValidation = ({
 }: UseInputFieldValidationProps) => {
   const [validationStatus, setValidationStatus] =
     useState<InputFieldValidationProps>({
-      // todo: isEmpty + isValid로 해보기
-      isFocused: false, // 한 번이라도 포커스 되었었으면 true
       isEmpty: value === "" ? true : false,
       isValid: false, // todo: 보완이 필요해보임
       errorType: "none",

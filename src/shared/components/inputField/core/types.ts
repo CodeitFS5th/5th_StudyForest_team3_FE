@@ -29,7 +29,6 @@ export interface UseInputFieldValidationProps {
   errorStatus?: "none" | "empty" | "invalid";
 }
 export interface InputFieldValidationProps {
-  isFocused: boolean;
   isValid: boolean;
   isEmpty: boolean;
   errorType: InputErrorType;
