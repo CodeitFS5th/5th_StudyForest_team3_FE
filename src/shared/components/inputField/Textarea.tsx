@@ -15,7 +15,7 @@ const textareaStyleClassName = {
   },
 };
 
-const Textarea: React.FC<TextareaProps> = ({
+const Textarea = ({
   name,
   value,
   placeholder,
@@ -25,7 +25,7 @@ const Textarea: React.FC<TextareaProps> = ({
   validate,
   onChange,
   ...props
-}) => {
+}: TextareaProps) => {
   const { validationStatus } = useInputFieldValidation({
     value,
     validate: validate ?? (() => true),

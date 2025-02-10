@@ -22,17 +22,17 @@ const inputStyleClassName = {
   },
 };
 
-const Input: React.FC<InputProps> = ({
+const Input = ({
   name,
   type,
-  value,
+  value = "",
   placeholder,
   invalidErrorMessage,
   isRequired = false,
   validate,
   onChange,
   ...props
-}) => {
+}: InputProps) => {
   // input 상태 관리 - useInputField 커스텀 훅 사용
   const { validationStatus } = useInputFieldValidation({
     value,
