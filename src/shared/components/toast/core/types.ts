@@ -1,5 +1,6 @@
 export interface ToastProps {
-  point?: number;
+  label: string;
+  color?: "green" | "red";
   position?: "top" | "bottom";
   isMounted?: boolean;
 }
