@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@modal/*": ["./src/shared/components/modal/*"],
-      "@habit/*": ["./src/shared/components/habit/*"]
+      "@habit/*": ["./src/shared/components/habit/*"],
+      "@popup/*": ["./src/shared/components/popup/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

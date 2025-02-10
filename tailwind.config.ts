@@ -18,6 +18,18 @@ export default {
         customColor: {
           background: "#F6F4EF",
           brand: "#99C08E",
+          green: {
+            facade: "var(--color-custom-color-brand)",
+            shadow: "var(--color-custom-color-text-green)",
+          },
+          darkGray: {
+            facade: "var(--color-custom-color-black-300)",
+            shadow: "var(--color-custom-color-black-400)",
+          },
+          gray: {
+            facade: "var(--color-custom-color-black-200)",
+            shadow: "var(--color-custom-color-black-300)",
+          },
           black: {
             400: "#414141",
             300: "#818181",
