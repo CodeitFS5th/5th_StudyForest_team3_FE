@@ -15,7 +15,7 @@ export const useInputFieldValidation = ({
   const [validationStatus, setValidationStatus] =
     useState<InputFieldValidationProps>({
       isEmpty: value === "" ? true : false,
-      isValid: false, // todo: 보완이 필요해보임
+      isValid: validate ? validate(value) : true,
       errorType: "none",
     });
 
