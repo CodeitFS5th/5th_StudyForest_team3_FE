@@ -27,7 +27,6 @@ const Input = ({
   type,
   value = "",
   placeholder,
-  invalidErrorMessage,
   isRequired = false,
   validate,
   onChange,
@@ -68,12 +67,12 @@ const Input = ({
             ${inputStyleClassName.common}
             ${
               inputStyleClassName.nonFocus[
-                validationStatus.errorType !== "none" ? "error" : "basic"
+                validationStatus.error.type !== "none" ? "error" : "basic"
               ]
             }
             ${
               inputStyleClassName.focus[
-                validationStatus.errorType !== "none" ? "error" : "basic"
+                validationStatus.error.type !== "none" ? "error" : "basic"
               ]
             }
           `}
@@ -93,14 +92,9 @@ const Input = ({
           </button>
         )}
       </div>
-      {validationStatus.errorType === "empty" && (
+      {validationStatus.error.type !== "none" && (
         <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
-          *필수 입력 값입니다
-        </p>
-      )}
-      {validationStatus.errorType === "invalid" && (
-        <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
-          *{invalidErrorMessage}
+          {validationStatus.error.message}
         </p>
       )}
     </div>

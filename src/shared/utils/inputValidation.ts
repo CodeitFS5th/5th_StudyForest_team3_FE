@@ -1,18 +1,17 @@
-export function isValidEmail(email: string) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
+import { z } from "zod";
+import {
+  userEmailSchema,
+  userPasswordSchema,
+} from "@/shared/schemas/userSchema";
 
-export function isValidPassword(password: string) {
-  const passwordRegex =
-    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  return passwordRegex.test(password);
-}
+export const validateEmail = (email: string) => {
+  const result = userEmailSchema.safeParse(email);
+  if (result.success) return true;
+  return result.error;
+};
 
-export const isValidLength = (
-  text: string,
-  minLength: number,
-  maxLength: number
-): boolean => {
-  return text.length >= minLength && text.length <= maxLength;
+export const validatePassword = (password: string) => {
+  const result = userPasswordSchema.safeParse(password);
+  if (result.success) return true;
+  return result.error;
 };

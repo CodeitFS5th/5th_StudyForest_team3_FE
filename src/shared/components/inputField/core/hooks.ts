@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   InputType,
   UseInputFieldValidationProps,
   InputFieldValidationProps,
   InputErrorType,
 } from "./types";
+import { ZodError } from "zod";
 
 // 입력 필드 유효성 검사 훅
 export const useInputFieldValidation = ({
@@ -12,49 +13,63 @@ export const useInputFieldValidation = ({
   validate,
   isRequired = false,
 }: UseInputFieldValidationProps) => {
+  const isFirstRender = useRef(true);
+
   const [validationStatus, setValidationStatus] =
     useState<InputFieldValidationProps>({
-      isEmpty: value === "" ? true : false,
-      isValid: validate ? validate(value) : true,
-      errorType: "none",
+      isEmpty: !value,
+      isValid: validate ? validate(value) === true : true,
+      error: {
+        type: "none",
+        message: "",
+      },
     });
 
-  const validateField = (value: string) => {
-    const isEmpty = value === "";
-    const isValid = validate ? validate(value) : true;
-
-    return { isEmpty, isValid };
-  };
-
-  // value가 변경될 때마다 유효성 검사 상태 업데이트
   useEffect(() => {
-    const { isEmpty, isValid } = validateField(value);
-
-    setValidationStatus((prev) => ({
-      ...prev,
-      isEmpty,
-      isValid,
-    }));
-  }, [value]);
-
-  // errorType 결정
-  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     let errorType: InputErrorType = "none";
+    let errorMessage = "";
 
-    if (validationStatus.isEmpty && isRequired) {
-      errorType = "empty";
-    } else if (
-      !validationStatus.isValid &&
-      (isRequired || !validationStatus.isEmpty)
-    ) {
-      errorType = "invalid";
+    const isEmpty = !value;
+    let isValid = true;
+
+    if (isEmpty) {
+      errorMessage = "필수 입력 값입니다.";
+      errorType = isRequired ? "empty" : "none";
+    } else if (validate) {
+      const validateResult = validate(value);
+      if (validateResult instanceof ZodError) {
+        isValid = false;
+        errorType = "invalid";
+        errorMessage =
+          validateResult.errors[0]?.message || "유효하지 않은 입력입니다.";
+      } else {
+        isValid = validateResult === true;
+        if (!isValid) {
+          errorType = "invalid";
+          errorMessage = "유효하지 않은 입력입니다.";
+        }
+      }
+    } else {
+      isValid = true;
     }
 
-    setValidationStatus((prev) => ({
-      ...prev,
-      errorType,
-    }));
-  }, [validationStatus.isValid, validationStatus.isEmpty]);
+    setValidationStatus((prev) =>
+      prev.isEmpty === isEmpty &&
+      prev.isValid === isValid &&
+      prev.error.type === errorType &&
+      prev.error.message === errorMessage
+        ? prev
+        : {
+            isEmpty,
+            isValid,
+            error: { type: errorType, message: errorMessage },
+          }
+    );
+  }, [value]);
 
   return { validationStatus };
 };

@@ -1,3 +1,5 @@
+import { ZodError } from "zod";
+
 export type InputType = "text" | "password" | "email" | "number";
 
 export type InputErrorType = "none" | "empty" | "invalid";
@@ -6,9 +8,8 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   type: InputType;
   value: string;
-  invalidErrorMessage?: string;
   isRequired?: boolean;
-  validate?: (value: string) => boolean;
+  validate?: (value: string) => ZodError | boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -18,18 +19,20 @@ export interface TextareaProps
   invalidErrorMessage?: string;
   height?: number;
   isRequired?: boolean;
-  validate?: (value: string) => boolean;
+  validate?: (value: string) => ZodError | boolean;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export interface UseInputFieldValidationProps {
   value: string;
-  validate?: (value: string) => boolean;
+  validate?: (value: string) => ZodError | boolean;
   isRequired?: boolean;
-  errorStatus?: "none" | "empty" | "invalid";
 }
 export interface InputFieldValidationProps {
   isValid: boolean;
   isEmpty: boolean;
-  errorType: InputErrorType;
+  error: {
+    type: InputErrorType;
+    message: string;
+  };
 }

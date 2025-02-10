@@ -17,9 +17,8 @@ const textareaStyleClassName = {
 
 const Textarea = ({
   name,
-  value,
+  value = "",
   placeholder,
-  invalidErrorMessage,
   isRequired = false,
   height,
   validate,
@@ -34,6 +33,8 @@ const Textarea = ({
 
   const textareaHeight = height ? `${height}px` : "98px";
 
+  console.log(name, validationStatus);
+
   return (
     <div className="w-full">
       {name && (
@@ -47,6 +48,7 @@ const Textarea = ({
       <div className="w-full relative">
         <textarea
           id={name}
+          name={name}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
@@ -56,25 +58,20 @@ const Textarea = ({
             ${textareaStyleClassName.common}
             ${
               textareaStyleClassName.nonFocus[
-                validationStatus.errorType !== "none" ? "error" : "basic"
+                validationStatus.error.type !== "none" ? "error" : "basic"
               ]
             }
             ${
               textareaStyleClassName.focus[
-                validationStatus.errorType !== "none" ? "error" : "basic"
+                validationStatus.error.type !== "none" ? "error" : "basic"
               ]
             }
             ${textareaHeight} ${styles["scrollbar-custom"]}
           `}
         />
-        {validationStatus.errorType === "empty" && (
+        {validationStatus.error.type !== "none" && (
           <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
-            *필수 입력 값입니다
-          </p>
-        )}
-        {validationStatus.errorType === "invalid" && (
-          <p className="text-custom-color-red-200 text-[14px] mt-[8px]">
-            *{invalidErrorMessage}
+            {validationStatus.error.message}
           </p>
         )}
       </div>
