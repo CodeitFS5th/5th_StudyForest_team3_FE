@@ -13,7 +13,7 @@ interface ButtonNavProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 function ButtonNav({ children, ...props }: ButtonNavProps) {
   return (
     <button
-      className="rounded-xl border border-custom-color-black-200  py-[8px] md:py-[12px] "
+      className="w-full rounded-xl border border-custom-color-black-200  py-[8px] md:py-[12px] "
       {...props}
     >
       {children}
