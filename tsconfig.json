@@ -22,7 +22,8 @@
       "@/*": ["./src/*"],
       "@modal/*": ["./src/shared/components/modal/*"],
       "@habit/*": ["./src/shared/components/habit/*"],
-      "@popup/*": ["./src/shared/components/popup/*"]
+      "@popup/*": ["./src/shared/components/popup/*"],
+      "@button/*": ["./src/shared/components/button/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

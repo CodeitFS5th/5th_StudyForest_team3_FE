@@ -2,12 +2,14 @@
 
 import NewHabitItems from "./new-habit-items";
 import HabitItems from "./habit-items";
+import { FK, IHabit } from "@/types";
+import { ModalHandle } from "@modal/modal";
 import { useActionState, useEffect } from "react";
 import updateHabitAction from "./core/update-habit.action";
 
 interface IHabitList {
-  studyId: number;
-  onClose: () => void;
+  studyId: FK<IHabit, "studyId">;
+  onClose: ModalHandle["close"];
 }
 
 export default function HabitList({ studyId, onClose }: IHabitList) {
