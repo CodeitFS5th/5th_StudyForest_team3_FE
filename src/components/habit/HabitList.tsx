@@ -1,14 +1,14 @@
 "use client";
 
-import NewHabitItems from "./new-habit-items";
-import HabitItems from "./habit-items";
-import { FK, IHabit } from "@/types";
-import { ModalHandle } from "@modal/modal";
+import NewHabitItems from "./NewHabitItems";
+import HabitItems from "./habitItems";
+import { FK, Habit } from "@/types";
+import { ModalHandle } from "@/components/modal/Modal";
 import { useActionState, useEffect } from "react";
-import updateHabitAction from "./core/update-habit.action";
+import updateHabitAction from "@/lib/actions/update-habit.action";
 
 interface IHabitList {
-  studyId: FK<IHabit, "studyId">;
+  studyId: FK<Habit, "studyId">;
   onClose: ModalHandle["close"];
 }
 

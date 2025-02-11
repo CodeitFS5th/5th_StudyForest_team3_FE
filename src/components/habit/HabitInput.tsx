@@ -1,11 +1,11 @@
 "use client";
 
-import { IHabit, NewHabit, PK } from "@/types";
+import { Habit, NewHabit, PK } from "@/types";
 import { ChangeEvent, useState } from "react";
 
 interface HabitInputProps {
-  habit: IHabit | NewHabit;
-  onUpdate: (id: PK<IHabit>, habitName: IHabit["name"]) => void;
+  habit: Habit | NewHabit;
+  onUpdate: (id: PK<Habit>, habitName: Habit["name"]) => void;
 }
 
 export default function HabitInput({ habit, onUpdate }: HabitInputProps) {

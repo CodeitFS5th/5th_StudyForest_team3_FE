@@ -1,13 +1,13 @@
 "use client";
 
-import { IHabit } from "@/types";
-import HabitItemDeleteButton from "./habit-item-delete-button";
-import HabitInput from "./habit-input";
+import { Habit } from "@/types";
+import HabitItemDeleteButton from "./HabitItemDeleteButton";
+import HabitInput from "./HabitInput";
 import { habitStatus } from "@/types";
 import { useState } from "react";
 
 export default function HabitItems({ studyId }: { studyId: number }) {
-  const [habitList, setHabitList] = useState<IHabit[]>([
+  const [habitList, setHabitList] = useState<Habit[]>([
     {
       id: 1,
       name: "습관1",

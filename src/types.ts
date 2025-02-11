@@ -4,7 +4,7 @@ export enum habitStatus {
 }
 
 // Habit 또는 IHabit 중에 어느 것이 나을지..?
-export interface IHabit {
+export interface Habit {
   id: number;
   name: string;
   status: habitStatus;
@@ -25,7 +25,7 @@ export type FK<T, K extends keyof T> = K extends `${string}Id` ? T[K] : never;
 
 // update시 필요한 속성만 가져옴
 export interface NewHabit {
-  id: PK<IHabit>;
-  name: IHabit["name"];
-  studyId: FK<IHabit, "studyId">;
+  id: PK<Habit>;
+  name: Habit["name"];
+  studyId: FK<Habit, "studyId">;
 }

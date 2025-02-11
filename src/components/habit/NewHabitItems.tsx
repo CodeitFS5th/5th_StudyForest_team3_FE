@@ -1,9 +1,9 @@
 "use client";
 
 import { NewHabit } from "@/types";
-import HabitItemDeleteButton from "./habit-item-delete-button";
-import HabitInput from "./habit-input";
-import HabitItemAddButton from "./new-habit-item-add-button";
+import HabitItemDeleteButton from "./HabitItemDeleteButton";
+import HabitInput from "./HabitInput";
+import HabitItemAddButton from "./NewHabitItemAddButton";
 import { useState } from "react";
 
 let newHabitIdCount = 0;

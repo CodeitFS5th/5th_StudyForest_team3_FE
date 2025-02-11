@@ -1,24 +1,24 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import HabitList from "@habit/habit-list";
-import Modal from "@modal/modal";
-import { useModal } from "@modal/core/useModal";
+
+import Management from "@/components/management/Management";
 
 export default function Page() {
   const params = useParams();
   const id = Number(params.id);
-  const { modalRef, openModal, closeModal } = useModal(); // 모달 여러개일 경우 :별칭 사용해서 변수명만 바꿔주면 됨
 
   return (
     <>
-      <h1>/study/{id}</h1>
-      <button onClick={openModal} className="cursor-pointer ">
-        오늘의 습관
-      </button>
-      <Modal ref={modalRef}>
-        <HabitList studyId={id} onClose={closeModal} />
-      </Modal>
+      <section className="flex flex-row justify-between">
+        <div>이모지 컴포넌트</div>
+        <Management studyId={id} />
+      </section>
+
+      <section>title, 오늘의 습관, 오늘의 집중</section>
+
+      <section>description</section>
+      <section>point</section>
     </>
   );
 }
