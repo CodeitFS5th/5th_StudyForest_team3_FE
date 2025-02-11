@@ -1,5 +1,5 @@
-import { ModalHandle } from "../modal/modal";
-import { ButtonCheck } from "@button/button-rectangle";
+import { ModalHandle } from "@/components/modal/modal";
+import { ButtonCheck } from "@/components/button/button-rectangle";
 
 interface AlertMessageProps {
   message: string;

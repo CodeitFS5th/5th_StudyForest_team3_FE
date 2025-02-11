@@ -1,5 +1,5 @@
 import Button, { ButtonShape, BGColor, ButtonProps } from "./Button";
-import { Label } from "./ButtonLabel";
+import { Label } from "./button-label";
 import { ButtonHTMLAttributes } from "react";
 
 function ButtonRectangle({

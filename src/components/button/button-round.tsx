@@ -1,7 +1,7 @@
 import Image from "next/image";
 import StartIcon from "@/assets/images/icon/ic_play.png";
 import StopIcon from "@/assets/images/icon/ic_stop.png";
-import Button, { ButtonProps, BGColor, ButtonShape } from "./Button";
+import Button, { ButtonProps, BGColor, ButtonShape } from "./button";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
 const IMAGE = {

@@ -1,11 +1,11 @@
 "use client";
 
-import authHabitPasswordAction from "@popup/core/auth-habit-password.action";
+import authHabitPasswordAction from "@/lib/actions/auth-habit-password.action";
 import { useActionState, useEffect, useState } from "react";
 import HabitList from "../habit/habit-list";
 import { FK, IHabit } from "@/types";
-import { ModalHandle } from "@modal/modal";
-import { ButtonModify } from "@button/button-rectangle";
+import { ModalHandle } from "@/components/modal/modal";
+import { ButtonModify } from "@/components/button/button-rectangle";
 
 interface AuthHabitPasswordProps {
   studyId: FK<IHabit, "studyId">;
