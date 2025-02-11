@@ -28,7 +28,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="ko" className={`${pretendard.variable} ${jeju.variable}`}>
+        <html lang="ko" className={`${pretendard.variable} ${jeju.variable} bg-custom-color-background`}>
         <body className="bg-background font-pretendard">
         <main>
             <Header />
