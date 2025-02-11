@@ -4,8 +4,6 @@ export default function FocusLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col w-fit rounded-[20px] bg-white p-[16px]">
-      {children}
-    </div>
+    <div className="flex flex-col items-center justify-center">{children}</div>
   );
 }

@@ -8,9 +8,8 @@ import {
   ButtonStop,
   ButtonStartDisabled,
 } from "@/components/button/ButtonRound";
-import Input from "@/components/inputField/Input";
-import { useInputFieldValue } from "@/hooks/useInputFieldValue";
-import { validateEmail } from "@/lib/utils/inputValidation";
+import Image from "next/image";
+import timerImage from "@/assets/images/icon/ic_timer.png";
 
 const styles = {
   timerColor: {
@@ -21,9 +20,6 @@ const styles = {
 };
 
 export default function FocusPage() {
-  const { value: emailValue, handleChange: handleChangeEmail } =
-    useInputFieldValue("");
-
   const params = useParams();
   const { id } = params;
 
@@ -114,19 +110,25 @@ export default function FocusPage() {
           <p>{study?.point}</p>
         </div>
       </header>
-      <div className="flex flex-col gap-[64px] items-center w-[312px] pt-[24px] py-[16px] pb-[50px] rounded-[12px] border border-custom-color-black-200">
-        <h2 className="text-[24px] font-[800] text-custom-color-black-400">
-          오늘의 집중
-        </h2>
-        <div
-          className={`text-[80px] font-[800] text-center 
+      <div className="flex flex-col items-center justify-between h-[342px] pt-[24px] py-[16px] pb-[27px] rounded-[12px] border border-custom-color-black-200">
+        <div className="flex flex-col flex- w-[280px] h-[236px] items-center gap-[16px]">
+          <h2 className="text-[24px] font-[800] text-custom-color-black-400">
+            오늘의 집중
+          </h2>
+          <div className="flex items-center w-fit gap-[4px] border-[1px] border-custom-color-black-200 rounded-[50px] px-[12px] py-[4px] text-custom-color-black-400">
+            <Image src={timerImage} alt="time" width={19} height={19} />
+            {formatTime(study?.timer ?? 0)}
+          </div>
+          <span
+            className={`text-[80px] font-[800] text-center leading-[95.47px]
             ${
               isFocusSuccess === false
                 ? styles.timerColor.unsuccess
                 : styles.timerColor.success
             }`}
-        >
-          {formatTime(time)}
+          >
+            {formatTime(time)}
+          </span>
         </div>
         <div className="flex gap-[8px]">
           {!isRunning && <ButtonStart onClick={startTimer} />}
