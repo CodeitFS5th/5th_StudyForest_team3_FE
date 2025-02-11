@@ -3,15 +3,12 @@
 import Modal from "@/components/modal/Modal";
 import { Toast } from "@/components/toast/Toast";
 import { useModal } from "@/hooks/useModal";
-import { FK, Habit } from "@/types";
+import { StudyIdInHabit } from "@/types";
 import { useToastMount } from "@/hooks/useToastMount";
 import AuthPassword from "@/components/popup/AuthPassword";
+import { ButtonGreen3D } from "@/components/button/ButtonRectangle";
 
-interface ManagementProps {
-  studyId: FK<Habit, "studyId">;
-}
-
-export default function Management({ studyId }: ManagementProps) {
+export default function Management({ studyId }: StudyIdInHabit) {
   const {
     modalRef: authModalRef,
     openModal: openAuthModal,
@@ -39,33 +36,32 @@ export default function Management({ studyId }: ManagementProps) {
 
   const handleDeleteStudy = () => {
     openAuthModal();
-    alert("스터디 삭제하기");
   };
 
   return (
     <>
-      <div className="flex flex-row gap-2">
-        <p
-          className="text-custom-color-text-green cursor-pointer"
-          onClick={handleShare}
-        >
-          공유하기
-        </p>
-        <span>|</span>
-        <p className="text-custom-color-text-green cursor-pointer">수정하기</p>
-        <span>|</span>
+      <div className="flex flex-row justify-end md:justify-center gap-2 md:gap-4 text-xs md:text-base">
         <p
           className="text-custom-color-black-300 cursor-pointer"
           onClick={handleDeleteStudy}
         >
           스터디 삭제하기
         </p>
+        <span>|</span>
+        <p className="text-custom-color-text-green cursor-pointer">수정하기</p>
+        <span>|</span>
+        <p
+          className="text-custom-color-text-green cursor-pointer"
+          onClick={handleShare}
+        >
+          공유하기
+        </p>
       </div>
 
       {/* Modal */}
       <Modal ref={authModalRef}>
         <AuthPassword studyId={studyId} onClose={closeAuthModal}>
-          <button></button>
+          <ButtonGreen3D onClose={closeAuthModal}>수정하러 가기</ButtonGreen3D>
         </AuthPassword>
       </Modal>
 
