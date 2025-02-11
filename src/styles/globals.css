@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
+}
+
 @theme {
   --font-pretendard: var(--font-pretendard);
   --font-jeju: var(--font-jeju);
