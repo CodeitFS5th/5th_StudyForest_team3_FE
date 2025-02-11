@@ -30,7 +30,10 @@ const Modal = forwardRef<ModalHandle, IModalProps>(function Modal(
   useLayoutEffect(() => {
     // modal-root가 렌더링된 후 포탈을 생성
     const modalRoot = document.getElementById("modal-root");
-    if (!modalRoot) return;
+    if (!modalRoot) {
+      console.error("Modal root element not found");
+      return;
+    }
     setIsPortalReady(true); // modal-root가 존재하면 포탈 준비 완료
     dialogRef.current?.scrollTo({
       top: 0,

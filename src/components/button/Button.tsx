@@ -51,11 +51,11 @@ export default function Button({
   ...props // 맨 마지막에 위치해야 함 (type, disabled, onClick 등의 props를 받기 위함)
 }: ButtonProps) {
   const baseStyle = "w-full py-[12px] md:py-[14px] cursor-pointer";
+  const bgColorStyle = buttonBGColorStyle[bgColor];
   const shapeStyle = buttonShapeStyle[shape];
   const shadowStyle = is3d
     ? `shadow-[0_3px] ${buttonShadowColorStyle[bgColor]}`
-    : ""; // shadow 관련 tailwind style 작성 필요
-  const bgColorStyle = buttonBGColorStyle[bgColor];
+    : "shadow-none";
 
   return (
     <button

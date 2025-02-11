@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
-import Header from "@/components/Header/Header";
+import Header from "@/components/header/Header";
 
 const pretendard = localFont({
-    src: "../assets/fonts/PretendardVariable.woff2",
-    display: "swap",
-    weight: "45 920",
-    variable: "--font-pretendard",
-    //
-})
+  src: "../assets/fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+  variable: "--font-pretendard",
+  //
+});
 
 const jeju = localFont({
-    src: "../assets/fonts/JejuDoldam.woff2",
-    display: "swap",
-    variable: "--font-jeju",
-})
+  src: "../assets/fonts/JejuDoldam.woff2",
+  display: "swap",
+  variable: "--font-jeju",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,18 +23,22 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-                                       children,
-                                   }: {
-    children: React.ReactNode;
+  children,
+}: {
+  children: React.ReactNode;
 }) {
-    return (
-        <html lang="ko" className={`${pretendard.variable} ${jeju.variable} bg-custom-color-background`}>
-        <body className="bg-background font-pretendard">
+  return (
+    <html
+      lang="ko"
+      className={`${pretendard.variable} ${jeju.variable} bg-custom-color-background`}
+    >
+      <body className="bg-background font-pretendard">
         <main>
-            <Header />
-            {children}
+          <Header />
+          {children}
         </main>
-        </body>
-        </html>
-    );
+        <div id="modal-root"></div>
+      </body>
+    </html>
+  );
 }

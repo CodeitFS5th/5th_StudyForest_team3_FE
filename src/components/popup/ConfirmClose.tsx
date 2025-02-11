@@ -1,4 +1,4 @@
-import { ModalHandle } from "@/components/modal/modal";
+import { ModalHandle } from "@/components/modal/Modal";
 
 export default function ConfirmClose(onClose: ModalHandle["close"]) {
   // 버튼은 공통 컴포넌트로 교체하기

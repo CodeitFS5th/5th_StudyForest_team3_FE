@@ -1,15 +1,15 @@
-import { IHabit, FK } from "@/types";
+import { Habit, FK } from "@/types";
 import { API_URL } from "@/constants";
 
 interface ICreateHabitProps {
-  studyId: FK<IHabit, "studyId">;
+  studyId: FK<Habit, "studyId">;
   name?: string;
 }
 
 export default async function createHabit({
   studyId,
   name = "",
-}: ICreateHabitProps): Promise<IHabit> {
+}: ICreateHabitProps): Promise<Habit> {
   try {
     const response = await fetch(`${API_URL}/study/${studyId}/habit`, {
       method: "POST",
@@ -18,7 +18,7 @@ export default async function createHabit({
       },
       body: JSON.stringify({ name }),
     });
-    const newHabit: IHabit = await response.json();
+    const newHabit: Habit = await response.json();
     return newHabit;
   } catch (error) {
     console.error(error);

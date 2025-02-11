@@ -1,26 +1,25 @@
 "use client";
 
 import authHabitPasswordAction from "@/lib/actions/auth-habit-password.action";
-import { useActionState, useEffect, useState } from "react";
-import HabitList from "../habit/habit-list";
-import { FK, IHabit } from "@/types";
-import { ModalHandle } from "@/components/modal/modal";
-import { ButtonModify } from "@/components/button/button-rectangle";
+import { ReactNode, useActionState, useEffect } from "react";
+import { FK, Habit } from "@/types";
+import { ModalHandle } from "@/components/modal/Modal";
 
-interface AuthHabitPasswordProps {
-  studyId: FK<IHabit, "studyId">;
+interface AuthPasswordProps {
+  studyId: FK<Habit, "studyId">;
   onClose: ModalHandle["close"];
+  children: ReactNode;
 }
 
-export default function AuthHabitPassword({
+export default function AuthPassword({
   studyId,
   onClose,
-}: AuthHabitPasswordProps) {
+  children: button,
+}: AuthPasswordProps) {
   const [state, formAction, isPending] = useActionState(
     authHabitPasswordAction,
     null
   );
-  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
     if (state && !state.status) {
@@ -29,7 +28,6 @@ export default function AuthHabitPassword({
       // toast는 민희님 게서 만드시면 그때 추가하기
     } else {
       // status 성공일 때
-      setIsAuth(true);
     }
   }, [state]);
 
@@ -50,7 +48,7 @@ export default function AuthHabitPassword({
           className="w-full border-2 border-custom-color-black-400 p-2 rounded-md"
         />
 
-        <ButtonModify type="submit" disabled={isPending} />
+        {button}
 
         <button
           type="button"
@@ -60,8 +58,6 @@ export default function AuthHabitPassword({
           나가기
         </button>
       </form>
-
-      {isAuth && <HabitList studyId={studyId} onClose={onClose} />}
     </>
   );
 }
