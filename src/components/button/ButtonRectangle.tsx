@@ -15,7 +15,7 @@ function ButtonRectangle({
       is3d={is3d}
       {...props}
     >
-      <Label bgColor={bgColor}>{children}</Label>
+      <Label>{children}</Label>
     </Button>
   );
 }
@@ -100,7 +100,7 @@ export function ButtonModifyComplete({
   );
 }
 
-export function ButtonMaskStudy({
+export function ButtonMakeStudy({
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
