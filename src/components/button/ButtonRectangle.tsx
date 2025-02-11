@@ -1,6 +1,6 @@
 import Button, { ButtonShape, BGColor, ButtonProps } from "./Button";
 import { Label } from "./ButtonLabel";
-import { ButtonHTMLAttributes } from "react";
+import { ReactNode, ButtonHTMLAttributes } from "react";
 
 function ButtonRectangle({
   bgColor,
@@ -17,6 +17,21 @@ function ButtonRectangle({
     >
       <Label>{children}</Label>
     </Button>
+  );
+}
+
+interface ButtonRectangleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
+}
+
+export function ButtonGreen3D({
+  children: label,
+  ...props
+}: ButtonRectangleProps) {
+  return (
+    <ButtonRectangle bgColor={BGColor.GREEN} is3d {...props}>
+      {label}
+    </ButtonRectangle>
   );
 }
 
