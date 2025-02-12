@@ -1,5 +1,6 @@
 import Image from "next/image";
 import pointIcon from '../../../assets/images/icon/point.png'
+import Point from "@/components/Point/Point";
 
 interface Props {
     bg: 'green' | 'yellow' | 'blue' | 'pink' | 'desk' | 'window' | 'tile' | 'leaf';
@@ -49,11 +50,7 @@ export default function Card({
     return (
         <div
             className={`w-[240px] h-[180px] md:w-[312px] xl:w-[358px] xl:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}>
-            <div
-                className={`inline-flex items-center gap-1 px-2 py-1 rounded-3xl xl:absolute xl:right-[30px] ${settings.pointBg}`}>
-                <Image src={pointIcon} alt='point icon' className="w-[14px] h-[14px]"/>
-                <p className={`font-medium text-[12px] ${settings.pointText}`}>{point}P 획득</p>
-            </div>
+            <Point point='10' pointBg={settings.bg} pointText='점 획득중'/>
             <div className="flex gap-0.5 mt-1.5 xl:mt-0">
                 <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>{titleName}</p>
                 <p className={`font-bold xl:text-[18px] ${settings.titleStudyText}`}>{titleStudy}</p>
