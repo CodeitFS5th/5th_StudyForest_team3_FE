@@ -6,7 +6,7 @@ import {
   ButtonStudyHome,
 } from "@/components/button/ButtonToday";
 import Point from "@/components/Point/Point";
-import Timer from "./_components/timer";
+import Timer2 from "./_components/timer2";
 
 export default function FocusPage() {
   const { id } = useParams();
@@ -51,7 +51,7 @@ export default function FocusPage() {
           </div>
         </div>
       </header>
-      <Timer />
+      <Timer2 />
     </div>
   );
 }
