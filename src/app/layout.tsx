@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
-import Header from "@/components/Header/Header";
+import Header from "@/components/header/Header";
 
 const pretendard = localFont({
   src: "../assets/fonts/PretendardVariable.woff2",
   display: "swap",
   weight: "45 920",
   variable: "--font-pretendard",
-  //
 });
 
 const jeju = localFont({
