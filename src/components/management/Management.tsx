@@ -3,12 +3,17 @@
 import Modal from "@/components/modal/Modal";
 import { Toast } from "@/components/toast/Toast";
 import { useModal } from "@/hooks/useModal";
-import { StudyIdInHabit } from "@/types";
+import { FK, StudyIdInHabit, StudyTitle } from "@/types";
 import { useToastMount } from "@/hooks/useToastMount";
 import AuthPassword from "@/components/popup/AuthPassword";
-import { ButtonGreen3D } from "@/components/button/ButtonRectangle";
+import { useState } from "react";
 
-export default function Management({ studyId }: StudyIdInHabit) {
+interface ManagementProps {
+  title: StudyTitle;
+  studyId: FK<StudyIdInHabit, "studyId">;
+}
+
+export default function Management({ title, studyId }: ManagementProps) {
   const {
     modalRef: authModalRef,
     openModal: openAuthModal,
@@ -23,6 +28,8 @@ export default function Management({ studyId }: StudyIdInHabit) {
     mountToast: mountNegativeToast,
   } = useToastMount();
 
+  const [modalType, setModalType] = useState<"delete" | "modify">("modify"); // 모달 상태
+
   const handleShare = async () => {
     try {
       const currentUrl = window.location.href; // 현재 페이지의 URL을 가져오기
@@ -34,7 +41,13 @@ export default function Management({ studyId }: StudyIdInHabit) {
     }
   };
 
-  const handleDeleteStudy = () => {
+  const handleOpenModifyModal = () => {
+    setModalType("modify");
+    openAuthModal();
+  };
+
+  const handleOpenDeleteModal = () => {
+    setModalType("delete");
     openAuthModal();
   };
 
@@ -43,13 +56,22 @@ export default function Management({ studyId }: StudyIdInHabit) {
       <div className="flex flex-row justify-end md:justify-center gap-2 md:gap-4 text-xs md:text-base">
         <p
           className="text-custom-color-black-300 cursor-pointer"
-          onClick={handleDeleteStudy}
+          onClick={handleOpenDeleteModal}
         >
           스터디 삭제하기
         </p>
+
         <span>|</span>
-        <p className="text-custom-color-text-green cursor-pointer">수정하기</p>
+
+        <p
+          className="text-custom-color-text-green cursor-pointer"
+          onClick={handleOpenModifyModal}
+        >
+          수정하기
+        </p>
+
         <span>|</span>
+
         <p
           className="text-custom-color-text-green cursor-pointer"
           onClick={handleShare}
@@ -60,9 +82,12 @@ export default function Management({ studyId }: StudyIdInHabit) {
 
       {/* Modal */}
       <Modal ref={authModalRef}>
-        <AuthPassword studyId={studyId} onClose={closeAuthModal}>
-          <ButtonGreen3D onClose={closeAuthModal}>수정하러 가기</ButtonGreen3D>
-        </AuthPassword>
+        <AuthPassword
+          title={title}
+          studyId={studyId}
+          onClose={closeAuthModal}
+          modalType={modalType}
+        />
       </Modal>
 
       {/* Toast */}

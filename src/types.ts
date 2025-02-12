@@ -42,3 +42,5 @@ export interface NewHabit {
   name: Habit["name"];
   studyId: FK<Habit, "studyId">;
 }
+
+export type StudyTitle = `${string}의 ${string}`;
