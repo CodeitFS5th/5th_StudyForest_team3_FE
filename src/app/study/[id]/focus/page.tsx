@@ -1,7 +1,11 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { ButtonHabit, ButtonHome } from "@/components/button/ButtonNav";
+import {
+  ButtonTodayHabit,
+  ButtonStudyHome,
+} from "@/components/button/ButtonToday";
+import Point from "@/components/Point/Point";
 import Timer from "./_components/timer";
 
 export default function FocusPage() {
@@ -13,7 +17,6 @@ export default function FocusPage() {
       id: "1",
       name: "연우의 개발공장",
       point: 100,
-      timer: 15, // 25분
     },
   ];
 
@@ -28,21 +31,27 @@ export default function FocusPage() {
           </h1>
           <div className="flex gap-[8px]">
             <div className="w-[120px] md:w-[144px]">
-              <ButtonHabit>오늘의 습관</ButtonHabit>
+              <ButtonTodayHabit studyId={Number(id)} />
             </div>
             <div className="w-[58px] md:w-[82px]">
-              <ButtonHome>홈</ButtonHome>
+              <ButtonStudyHome studyId={Number(id)} />
             </div>
           </div>
         </div>
         <div className="flex flex-col gap-[8px]">
-          <p className="text-[16px] md:text-[18px] font-[400] text-custom-color-black-300">
+          <span className="text-[16px] md:text-[18px] font-[400] text-custom-color-black-300">
             현재까지 획득한 포인트
-          </p>
-          <p>{study?.point}</p>
+          </span>
+          <div className="w-fit border border-custom-color-black-200 rounded-[50px]">
+            <Point
+              point={study?.point ?? 0}
+              pointBg="bg-custom-color-blue-100"
+              pointText="text-custom-color-blue-500"
+            />
+          </div>
         </div>
       </header>
-      <Timer studyTimer={study?.timer ?? 0} />
+      <Timer />
     </div>
   );
 }

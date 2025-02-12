@@ -1,5 +1,5 @@
 import Image from "next/image";
-import pointIcon from "*.png";
+import pointIcon from "@/assets/images/icon/point.png";
 
 interface Props {
   point: number | string;
