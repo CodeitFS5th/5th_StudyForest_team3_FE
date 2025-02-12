@@ -1,8 +1,4 @@
-import { z } from "zod";
-import {
-  userEmailSchema,
-  userPasswordSchema,
-} from "@/lib/schemas/userSchema";
+import { userEmailSchema, userPasswordSchema } from "@/lib/schemas/userSchema";
 
 export const validateEmail = (email: string) => {
   const result = userEmailSchema.safeParse(email);
