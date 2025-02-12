@@ -41,7 +41,7 @@ export default async function Page({ params }: PageIdParams) {
     <>
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
         <div>emoji component</div>
-        <Management studyId={id} />
+        <Management title={`${nick}의 ${name}`} studyId={id} />
       </section>
 
       <section className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between mb-4">
