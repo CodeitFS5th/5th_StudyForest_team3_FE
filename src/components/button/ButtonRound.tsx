@@ -2,7 +2,7 @@ import Image from "next/image";
 import StartIcon from "@/assets/images/icon/ic_play.png";
 import StopIcon from "@/assets/images/icon/ic_stop.png";
 import Button, { ButtonProps, BGColor, ButtonShape } from "./Button";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes } from "react";
 
 const IMAGE = {
   START: { ICON: StartIcon, ALT: "시작 버튼" },
@@ -16,7 +16,7 @@ function ButtonRound({
   ...props
 }: Omit<ButtonProps, "shape">) {
   return (
-    <Button shape={ButtonShape.ROUND} bgColor={bgColor} is3d {...props}>
+    <Button shape={ButtonShape.ROUND} bgColor={bgColor} is3d={is3d} {...props}>
       {children}
     </Button>
   );
@@ -48,7 +48,7 @@ export function ButtonStartDisabled({
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <div className="w-[140px] md:w-[333px]">
-      <ButtonRound bgColor={BGColor.DARK_GRAY} disabled {...props}>
+      <ButtonRound bgColor={BGColor.DARK_GRAY} is3d disabled {...props}>
         <div className="flex justify-center items-center gap-5">
           <Image
             src={IMAGE.START.ICON}
