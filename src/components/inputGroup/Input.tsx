@@ -1,10 +1,7 @@
 "use client";
 
-import Inko from "inko";
 import { useState, ChangeEvent, InputHTMLAttributes } from "react";
 import { VALIDATION } from "./validation";
-
-const inko = new Inko();
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -15,11 +12,9 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export default function Input({ label, type, name, ...props }: InputProps) {
   const [value, setValue] = useState("");
   const [isValid, setIsValid] = useState(true);
-  const isPassword = type === "password";
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.trim();
-    const newValue = isPassword ? inko.ko2en(inputValue) : inputValue;
+    const newValue = e.target.value.trim();
     setValue(newValue);
 
     // 유효성 검사
