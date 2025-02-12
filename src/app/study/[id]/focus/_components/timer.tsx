@@ -1,17 +1,16 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import timerImage from "@/assets/images/icon/ic_timer.png";
+import { formatTime } from "../core/utils";
 import {
   ButtonStart,
   ButtonStop,
   ButtonStartDisabled,
 } from "@/components/button/ButtonRound";
 import { ButtonRestart, ButtonPause } from "@/components/button/ButtonCircle";
-import { formatTime } from "../core/utils";
-import { Toast } from "@/components/toast/Toast";
 import { useToastMount } from "@/hooks/useToastMount";
+import Toast from "@/components/toast/Toast";
 
 const styles = {
   timerColor: {
@@ -19,43 +18,83 @@ const styles = {
     success: "text-custom-color-black-300",
     default: "text-custom-color-black-400",
   },
-  toast: {
-    color: {
-      pause: "red",
-      stop: "green",
-    } as const,
-    label: {
-      pause: () => "집중이 중단되었습니다.",
-      stop: (EarnedPoint: number) => `${EarnedPoint}포인트를 획득했습니다!`,
-    },
-  },
 };
 
-export default function Timer() {
-  const [goalTime, setGoalTime] = useState(0);
-  const [time, setTime] = useState(0);
-  const [isFocusStart, setIsFocusStart] = useState(false); // 초기화
-  const [isRunning, setIsRunning] = useState(false); // 재생 / 일시정지
-  const [isSuccess, setIsSuccess] = useState(false); // 성공 여부
+export default function Timer2() {
+  const [goalTimeInput, setGoalTimeInput] = useState({
+    minutes: "00",
+    seconds: "30",
+  });
+
+  const [timeStatus, setTimeStatus] = useState({
+    goalTime: 0,
+    time: 0,
+  });
+
+  const [timerStatus, setTimerStatus] = useState({
+    isFocusStart: false,
+    isRunning: false,
+    isSuccess: false,
+  });
+
   const [toastStyle, setToastStyle] = useState<{
     color: "green" | "red";
     label: string;
   }>({
-    color: styles.toast.color.pause,
-    label: styles.toast.label.pause(),
-  }); // 토스트 스타일
+    color: "red",
+    label: "집중이 중단되었습니다.",
+  });
+
   const { isToastMounted, mountToast } = useToastMount();
 
   const intervalIdRef = useRef<number | null>(null);
 
-  // 재생 or 일시정지
+  const handleGoalTimeInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: "minutes" | "seconds"
+  ) => {
+    // 입력 제한: 숫자만, 2자리로 입력, 최대 99분 59초
+    let value = e.target.value.replace(/\D/g, "");
+
+    if (value.length > 2) {
+      value = value.slice(0, 2);
+    }
+
+    if (type === "minutes" && Number(value) > 99) {
+      value = "99";
+    } else if (type === "seconds" && Number(value) > 59) {
+      value = "59";
+    }
+
+    setGoalTimeInput((prev) => ({
+      ...prev,
+      [type]: value,
+    }));
+  };
+
+  const getTimeMinutes = (time: number) => {
+    const minutes = Math.floor(Math.abs(time) / 60);
+    const sign = time < 0 ? "-" : "";
+    return `${sign}${minutes.toString().padStart(2, "0")}`;
+  };
+
+  const getTimeSeconds = (time: number) => {
+    const seconds = Math.abs(time % 60);
+    return seconds.toString().padStart(2, "0");
+  };
+
+  // 타이머 실행 / 일시정지
   useEffect(() => {
-    if (isRunning) {
+    console.log(timerStatus.isSuccess);
+    if (timerStatus.isRunning) {
       if (intervalIdRef.current !== null) {
         window.clearInterval(intervalIdRef.current);
       }
       intervalIdRef.current = window.setInterval(() => {
-        setTime((prevTime) => (prevTime ?? 0) - 1);
+        setTimeStatus((prev) => ({
+          ...prev,
+          time: prev.time - 1,
+        }));
       }, 1000);
     }
 
@@ -65,88 +104,151 @@ export default function Timer() {
         intervalIdRef.current = null;
       }
     };
-  }, [isRunning]);
+  }, [timerStatus.isRunning]);
 
   // 성공 여부 확인
   useEffect(() => {
-    if (time <= 0) {
-      setIsSuccess(() => true);
+    if (timeStatus.time <= 0) {
+      setTimerStatus((prev) => ({
+        ...prev,
+        isSuccess: true,
+      }));
     }
-  }, [time]);
+  }, [timeStatus.time]);
 
   // 핸들러
   const startTimer = () => {
-    setToastStyle(() => ({
-      color: styles.toast.color.pause,
-      label: styles.toast.label.pause(),
+    const goalTime =
+      Number(goalTimeInput.minutes) * 60 + Number(goalTimeInput.seconds);
+
+    setTimeStatus((prev) => ({
+      goalTime,
+      time: goalTime,
     }));
-    setTime(() => goalTime);
-    setIsFocusStart(() => true);
-    setIsRunning(() => true);
+
+    setTimerStatus((prev) => ({
+      isSuccess: false,
+      isFocusStart: true,
+      isRunning: true,
+    }));
   };
 
   const pauseTimer = () => {
-    setIsRunning(() => false);
+    setTimerStatus((prev) => ({
+      ...prev,
+      isRunning: false,
+    }));
+    setToastStyle(() => ({
+      color: "red",
+      label: "집중이 중단되었습니다.",
+    }));
     mountToast();
   };
 
   const stopTimer = () => {
-    setToastStyle(() => ({
-      color: styles.toast.color.stop,
-      label: styles.toast.label.stop(3 + Math.floor(Math.abs(goalTime) / 60)),
+    setTimerStatus((prev) => ({
+      ...prev,
+      isFocusStart: false,
+      isRunning: false,
+      isSuccess: false,
     }));
-    mountToast();
-    setIsFocusStart(() => false);
-    setIsRunning(() => false);
-    setIsSuccess(() => false);
-    setTime(() => goalTime);
+    setTimeStatus((prev) => ({
+      ...prev,
+      time: prev.goalTime,
+    }));
+
+    if (timerStatus.isSuccess) {
+      // todo: api 호출 - point 획득
+      setToastStyle(() => ({
+        color: "green",
+        label: `${
+          3 + Math.floor(Math.abs(timeStatus.goalTime) / 60)
+        }포인트를 획득했습니다!`,
+      }));
+      mountToast();
+    }
   };
 
-  let timerColor = styles.timerColor.default;
-
-  if (isFocusStart) {
-    if (isSuccess) {
-      timerColor = styles.timerColor.success;
-    } else {
-      timerColor = styles.timerColor.unsuccess;
-    }
-  }
+  let timerColor =
+    (timerStatus.isRunning &&
+      (timerStatus.isSuccess
+        ? styles.timerColor.success
+        : styles.timerColor.unsuccess)) ||
+    styles.timerColor.default;
 
   return (
     <>
-      <div className="flex flex-col items-center h-[342px] pt-[24px] md:pt-[40px] py-[16px] md:py-[24px] pb-[27px] rounded-[20px] border border-custom-color-black-200 md:h-[510px] xl:w-full">
+      <div
+        className="flex flex-col items-center h-[342px] pt-[24px] md:pt-[40px] py-[16px] md:py-[24px] pb-[27px]
+                      rounded-[20px] border border-custom-color-black-200 md:h-[510px] xl:w-full"
+      >
         <h2 className="mb-[16px] text-[24px] font-[800] leading-[28.64px] text-custom-color-black-400 md:mb-[24px]">
           오늘의 집중
         </h2>
         <div
-          className={`flex items-center w-fit px-[12px] py-[4px] mb-[17px] gap-[4px] 
-          border-[1px] border-custom-color-black-200 rounded-[50px] text-custom-color-black-400 md:mb-[55px]
-          ${!isFocusStart ? "opacity-1" : ""}`}
+          className={`flex items-center w-fit px-[12px] py-[4px] gap-[4px] 
+          border-[1px] border-custom-color-black-200 rounded-[50px] text-custom-color-black-400
+          ${!timerStatus.isFocusStart ? "opacity-1" : ""}`}
         >
           <Image src={timerImage} alt="time" width={19} height={19} />
-          {formatTime(goalTime)}
+          {formatTime(timeStatus.goalTime)}
         </div>
-        <span
-          className={`mb-[40px] text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-center leading-[95.47px] md:mb-[115px] 
-        ${timerColor}`}
-        >
-          {formatTime(time)}
-        </span>
+        {!timerStatus.isFocusStart && (
+          <div className="flex justify-center items-center pb-[17px] md:pb-[50px]">
+            <input
+              value={goalTimeInput.minutes}
+              onChange={(e) => handleGoalTimeInputChange(e, "minutes")}
+              className="border-0 outline-none bg-transparent p-0 m-0 text-right
+                        text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400"
+            />
+            <span className="text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400">
+              :
+            </span>
+            <input
+              value={goalTimeInput.seconds}
+              onChange={(e) => handleGoalTimeInputChange(e, "seconds")}
+              className="border-0 outline-none bg-transparent p-0 m-0
+                        text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400"
+            />
+          </div>
+        )}
+        {timerStatus.isFocusStart && (
+          <div className="flex justify-center items-center pb-[17px] md:pb-[50px]">
+            <span
+              className={`text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
+            >
+              {getTimeMinutes(timeStatus.time)}
+            </span>
+            <span
+              className={`text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
+            >
+              :
+            </span>
+            <span
+              className={`text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
+            >
+              {getTimeSeconds(timeStatus.time)}
+            </span>
+          </div>
+        )}
+
         <div className="flex gap-[8px]">
           <div>
-            {isFocusStart && !isSuccess && <ButtonPause onClick={pauseTimer} />}
+            {timerStatus.isFocusStart && !timerStatus.isSuccess && (
+              <ButtonPause onClick={pauseTimer} />
+            )}
           </div>
           <div>
-            {!isFocusStart ? (
+            {!timerStatus.isFocusStart ? (
               <ButtonStart onClick={startTimer} />
-            ) : isSuccess ? (
+            ) : timerStatus.isSuccess ? (
               <ButtonStop onClick={stopTimer} />
             ) : (
               <ButtonStartDisabled />
             )}
           </div>
           <div>
-            {isFocusStart && !isSuccess && (
+            {timerStatus.isFocusStart && !timerStatus.isSuccess && (
               <ButtonRestart onClick={stopTimer} />
             )}
           </div>
