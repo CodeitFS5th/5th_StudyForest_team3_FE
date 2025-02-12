@@ -25,7 +25,7 @@ export default function HabitInput({ habit, onUpdate }: HabitInputProps) {
         id="habit"
         placeholder="습관을 입력해주세요"
         value={habitName}
-        className="w-64 md:w-100 bg-custom-color-black-100 p-4 rounded-3xl text-center text-decoration-line: underline"
+        className=" w-64 md:w-100 bg-custom-color-black-100 p-4 rounded-3xl text-center text-decoration-line: underline"
       />
     </>
   );
