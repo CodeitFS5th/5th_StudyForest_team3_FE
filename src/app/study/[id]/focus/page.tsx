@@ -1,36 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { Study } from "@/types";
 import {
   ButtonTodayHabit,
   ButtonStudyHome,
 } from "@/components/button/ButtonToday";
 import Point from "@/components/Point/Point";
+import Toast from "@/components/toast/Toast";
 import Timer from "./_components/Timer";
-import getStudy from "@/lib/apis/getStudy";
+import { useGetStudy, useFocus } from "./core/hooks";
 
 export default function FocusPage() {
-  const { id } = useParams();
-  const [study, setStudy] = useState<Study | null>(null);
-
-  // study 정보 불러오기
-  useEffect(() => {
-    const fetchStudy = async () => {
-      const studyData = await getStudy({ studyId: Number(id) });
-      setStudy(studyData);
-    };
-
-    fetchStudy();
-  }, [id]);
+  const { id }: { id: string } = useParams();
+  const { study, studyTitle, studyPoint } = useGetStudy({ studyId: id });
+  const {
+    goalTimeInput,
+    timeStatus,
+    timerStatus,
+    getTime,
+    handleGoalTimeInputChange,
+    handleTimer,
+    handlePointIncrease,
+    toastStyle,
+    isToastMounted,
+  } = useFocus({
+    studyPoint,
+    initialMinutes: 25,
+    initialSeconds: 0,
+  });
 
   if (!study) {
     return <div>스터디를 찾을 수 없습니다.</div>;
   }
-
-  const studyTitle = `${study?.nick}의 ${study?.name}`;
-  const studyPoint = study?.point;
 
   return (
     <div className="flex flex-col w-full h-full gap-[16px]">
@@ -61,7 +62,20 @@ export default function FocusPage() {
           </div>
         </div>
       </header>
-      <Timer studyPoint={studyPoint} />
+      <Timer
+        goalTimeInput={goalTimeInput}
+        timeStatus={timeStatus}
+        timerStatus={timerStatus}
+        getTime={getTime}
+        handleGoalTimeInputChange={handleGoalTimeInputChange}
+        handleTimer={handleTimer}
+        handlePointIncrease={handlePointIncrease}
+      />
+      <Toast
+        label={toastStyle.label}
+        color={toastStyle.color}
+        isMounted={isToastMounted}
+      />
     </div>
   );
 }
