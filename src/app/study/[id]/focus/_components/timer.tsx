@@ -20,7 +20,7 @@ const styles = {
   },
 };
 
-export default function Timer2() {
+export default function Timer({ studyPoint }: { studyPoint: number }) {
   const [goalTimeInput, setGoalTimeInput] = useState({
     minutes: "00",
     seconds: "30",
@@ -48,6 +48,7 @@ export default function Timer2() {
   const { isToastMounted, mountToast } = useToastMount();
 
   const intervalIdRef = useRef<number | null>(null);
+  const POINT_INCREASE = 3 + Math.floor(Math.abs(timeStatus.goalTime) / 60);
 
   const handleGoalTimeInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -85,7 +86,6 @@ export default function Timer2() {
 
   // 타이머 실행 / 일시정지
   useEffect(() => {
-    console.log(timerStatus.isSuccess);
     if (timerStatus.isRunning) {
       if (intervalIdRef.current !== null) {
         window.clearInterval(intervalIdRef.current);
@@ -161,9 +161,7 @@ export default function Timer2() {
       // todo: api 호출 - point 획득
       setToastStyle(() => ({
         color: "green",
-        label: `${
-          3 + Math.floor(Math.abs(timeStatus.goalTime) / 60)
-        }포인트를 획득했습니다!`,
+        label: `${POINT_INCREASE}포인트를 획득했습니다!`,
       }));
       mountToast();
     }
@@ -175,6 +173,12 @@ export default function Timer2() {
         ? styles.timerColor.success
         : styles.timerColor.unsuccess)) ||
     styles.timerColor.default;
+
+  // 포인트 증가
+  const handlePointIncrease = async () => {
+    const newPoint = studyPoint + POINT_INCREASE;
+    // updatePoint api 호출
+  };
 
   return (
     <>
