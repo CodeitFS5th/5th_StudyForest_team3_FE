@@ -15,10 +15,12 @@ export interface Study {
   updatedAt: Date;
   deletedAt: Date;
 }
+
 export interface Habit {
   id: number;
   name: string;
   status: habitStatus;
+  logs: Date[];
   studyId: number;
   createdAt: Date;
 }
