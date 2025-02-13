@@ -121,12 +121,12 @@ export default function Timer2() {
     const goalTime =
       Number(goalTimeInput.minutes) * 60 + Number(goalTimeInput.seconds);
 
-    setTimeStatus((prev) => ({
+    setTimeStatus(() => ({
       goalTime,
       time: goalTime,
     }));
 
-    setTimerStatus((prev) => ({
+    setTimerStatus(() => ({
       isSuccess: false,
       isFocusStart: true,
       isRunning: true,
