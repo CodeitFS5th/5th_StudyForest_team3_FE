@@ -55,8 +55,8 @@ export default function FocusPage() {
           <div className="relative w-fit border border-custom-color-black-200 rounded-[50px]">
             <Point
               point={study.point}
-              pointBg="bg-custom-color-blue-100"
-              pointText="text-custom-color-blue-500"
+              pointBg="bg-[#FFFFFF]"
+              pointTextColor="text-custom-color-black-400"
             />
           </div>
         </div>
