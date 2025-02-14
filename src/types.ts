@@ -10,6 +10,7 @@ export interface Study {
   description: string;
   password: string;
   background: string;
+  reactions: Record<string, number>;
   point: number;
   createdAt: Date;
   updatedAt: Date;
@@ -69,3 +70,8 @@ export enum Week {
   토 = "토",
 }
 export type DoneLogs = Record<Week, boolean>;
+
+export type InputData = Pick<
+  Study,
+  "nick" | "name" | "description" | "password" | "background"
+>;
