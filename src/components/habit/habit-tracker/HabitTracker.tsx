@@ -24,11 +24,12 @@ export default async function HabitTracker({ studyId }: HabitTrackerProps) {
         습관 기록표
       </h1>
 
-      <div className="flex justify-end">
+      <div className="grid grid-cols-[repeat(8,auto)]">
+        <div className="w-30 md:w-40 xl:w-60"></div>
         {WEEKDAYS.map((weekday) => (
           <p
             key={weekday}
-            className="text-lg text-custom-color-black-300 px-6 xl:px-12"
+            className="text-lg text-custom-color-black-300 text-center w-16 xl:w-28"
           >
             {weekday}
           </p>

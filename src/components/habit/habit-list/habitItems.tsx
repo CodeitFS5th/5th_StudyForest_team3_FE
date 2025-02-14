@@ -1,30 +1,31 @@
 "use client";
 
-import { Habit } from "@/types";
+import { useEffect, useState } from "react";
+import { API_URL } from "@/constants";
+import { Habit, NewHabit, PK } from "@/types";
 import HabitItemDeleteButton from "./HabitItemDeleteButton";
 import HabitInput from "./HabitInput";
-import { habitStatus } from "@/types";
-import { useState } from "react";
+import fetchData from "@/lib/apis/fetchData";
 
 export default function HabitItems({ studyId }: { studyId: number }) {
-  const [habitList, setHabitList] = useState<Habit[]>([
-    {
-      id: 1,
-      name: "습관1",
-      status: habitStatus.UNDONE,
-      studyId,
-      createdAt: new Date("2022-02-07"),
-    },
-    {
-      id: 2,
-      name: "습관2",
-      status: habitStatus.UNDONE,
-      studyId,
-      createdAt: new Date("2022-02-07"),
-    },
-  ]);
+  const [habitList, setHabitList] = useState<Habit[]>([]);
 
-  const handleUpdate = (id: number, habitName: string) => {
+  useEffect(() => {
+    // fetch habits
+    async function fetchHabits() {
+      const data = await fetchData<Habit[]>(
+        `${API_URL}/study/${studyId}/habit`
+      );
+
+      if (!data) return;
+
+      setHabitList(data);
+    }
+
+    fetchHabits();
+  }, []);
+
+  const handleUpdate = (id: PK<Habit | NewHabit>, habitName: string) => {
     setHabitList((prevList) =>
       prevList.map((habit) =>
         habit.id === id ? { ...habit, name: habitName } : habit
