@@ -10,15 +10,7 @@ import {
 import Emoji from "@/components/emoji/Emoji";
 import EmojiSeeMore from "@/components/emoji/EmojiSeeMore";
 import { TOP_EMOJI_LIMIT } from "@/constants";
-import dynamic from "next/dynamic";
-
-const ButtonAddEmoji = dynamic(
-  () => import("@/components/ButtonAddEmoji/ButtonAddEmoji"),
-  {
-    ssr: false,
-  }
-);
-
+import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
 export async function generateStaticParams() {
   try {
     const studyList = await fetchData<Study[]>(`${API_URL}/study`);
@@ -69,13 +61,17 @@ export default async function Page({ params }: PageIdParams) {
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
         <div className="flex gap-1 relative">
           {sortedEmojiList.slice(0, TOP_EMOJI_LIMIT).map((emoji) => (
-            <Emoji key={emoji.emoji} emoji={emoji.emoji} count={emoji.count} />
+            <Emoji key={emoji.emoji}>
+              <p>
+                {emoji.emoji} {emoji.count}
+              </p>
+            </Emoji>
           ))}
           {emojiSeeMoreCount > 0 && (
             <EmojiSeeMore moreEmojis={sortedEmojiList.slice(TOP_EMOJI_LIMIT)} />
           )}
           <div className="relative">
-            <ButtonAddEmoji />
+            <ButtonAddEmojiWrapper />
           </div>
         </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />

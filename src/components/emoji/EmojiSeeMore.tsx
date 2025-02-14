@@ -27,11 +27,11 @@ export default function EmojiSeeMore({
         <div className="absolute top-[45px] left-[-30px] p-[12px] border border-custom-color-black-200 rounded-[15px] bg-white drop-shadow-lg">
           <div className="grid grid-cols-4 gap-[4px]">
             {moreEmojis.map((emoji) => (
-              <Emoji
-                key={emoji.emoji}
-                emoji={emoji.emoji}
-                count={emoji.count}
-              />
+              <Emoji key={emoji.emoji}>
+                <p>
+                  {emoji.emoji} {emoji.count}
+                </p>
+              </Emoji>
             ))}
           </div>
         </div>

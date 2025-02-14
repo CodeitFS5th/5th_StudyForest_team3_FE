@@ -3,11 +3,16 @@
 
 import dynamic from "next/dynamic";
 
-import ButtonAddEmoji  "@/components/ButtonAddEmoji/ButtonAddEmoji";
+const ButtonAddEmoji = dynamic(
+  () => import("@/components/ButtonAddEmoji/ButtonAddEmoji"),
+  {
+    ssr: false,
+  }
+);
 
-export default function Page() {
+export default function ButtonAddEmojiWrapper() {
   return (
-    <div>
+    <div className="relative">
       <ButtonAddEmoji />
     </div>
   );
