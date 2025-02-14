@@ -2,6 +2,7 @@
 import {ButtonMake} from "@/components/button/ButtonRectangle";
 import CreateInputSet from "@/app/study/create/components/CreateInputSet";
 import {useState} from "react";
+import Point from "@/components/Point/Point";
 
 export default function StudyCreatePage() {
     const [ data, setData ] = useState({
@@ -44,6 +45,7 @@ export default function StudyCreatePage() {
                     placeholder='스터디 이름을 입력해주세요'
                 />
                 <ButtonMake />
+                <Point point={30} pointBg='bg-black/30' pointTextColor='text-white'/>
             </div>
         </div>
     )

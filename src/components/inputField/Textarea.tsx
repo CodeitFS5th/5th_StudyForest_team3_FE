@@ -1,5 +1,5 @@
-import { TextareaProps } from "@/shared/components/inputField/core/types";
-import { useInputFieldValidation } from "@/shared/components/inputField/core/hooks";
+import { TextareaProps } from "@/components/inputField/core/types";
+import { useInputFieldValidation } from "@/components/inputField/core/hooks";
 import styles from "./textarea.module.css";
 
 const textareaStyleClassName = {
