@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Study } from "@/types";
 import { useToastMount } from "@/hooks/useToastMount";
-import getStudy from "@/lib/apis/getStudy";
 import updatePoint from "@/lib/apis/updatePoint";
+import fetchData from "@/lib/apis/fetchData";
+import { API_URL } from "@/constants";
 
 export const useFocus = ({
   studyId,
@@ -68,7 +69,14 @@ export const useFocus = ({
   // 스터디 정보 가져오기
   useEffect(() => {
     const fetchStudy = async () => {
-      const studyData = await getStudy({ studyId: studyId });
+      const studyData = await fetchData<Study>(`${API_URL}/study/${studyId}`, {
+        cache: "no-cache",
+      });
+
+      if (!studyData) {
+        return;
+      }
+
       setStudy(() => ({
         id: studyData.id,
         title: `${studyData.nick}의 ${studyData.name}`,
