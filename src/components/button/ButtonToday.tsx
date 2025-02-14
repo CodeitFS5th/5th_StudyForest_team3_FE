@@ -48,7 +48,7 @@ export function ButtonTodayFocus({ studyId }: StudyIdInHabit) {
 
   return (
     <ButtonToday onClick={() => router.push(`/study/${studyId}/focus`)}>
-      오늘의 습관
+      오늘의 집중
     </ButtonToday>
   );
 }

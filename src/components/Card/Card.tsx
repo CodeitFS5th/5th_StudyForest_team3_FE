@@ -41,6 +41,7 @@ export default function Card({
     descriptionText: isPictureBg ? "text-white" : "text-custom-color-black-400",
   };
 
+
   switch (bg) {
     case "yellow":
       settings.bg = "bg-custom-color-card-yellow";
@@ -57,7 +58,7 @@ export default function Card({
       settings.bg = "bg-custom-color-card-green";
   }
 
-  return (
+return (
     <div
       className={`flex-shrink-0 w-[240px] h-[180px] md:w-[358px] md:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}
     >

@@ -28,10 +28,10 @@ const buttonBGColorStyle = {
 };
 
 const buttonShadowColorStyle = {
-  [BGColor.GREEN]: "bg-custom-color-text-green",
-  [BGColor.DARK_GREEN]: "bg-custom-color-brand",
-  [BGColor.GRAY]: "bg-custom-color-black-300",
-  [BGColor.DARK_GRAY]: "bg-custom-color-black-400",
+  [BGColor.GREEN]: "shadow-custom-color-text-green",
+  [BGColor.DARK_GREEN]: "shadow-custom-color-brand",
+  [BGColor.GRAY]: "shadow-custom-color-black-300",
+  [BGColor.DARK_GRAY]: "shadow-custom-color-black-400",
 };
 
 //extends 타입에서는 제한한다.
