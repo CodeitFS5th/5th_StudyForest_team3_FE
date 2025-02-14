@@ -2,7 +2,7 @@ import Button, { ButtonShape, BGColor, ButtonProps } from "./Button";
 import { Label } from "./ButtonLabel";
 import { ReactNode, ButtonHTMLAttributes } from "react";
 
-function ButtonRectangle({
+export function ButtonRectangle({
   bgColor,
   children,
   is3d,
