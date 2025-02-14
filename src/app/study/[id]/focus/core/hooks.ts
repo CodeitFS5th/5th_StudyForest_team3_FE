@@ -9,7 +9,7 @@ export const useFocus = ({
   initialMinutes,
   initialSeconds,
 }: {
-  studyId: string;
+  studyId: number;
   initialMinutes: number;
   initialSeconds: number;
 }) => {
@@ -68,7 +68,7 @@ export const useFocus = ({
   // 스터디 정보 가져오기
   useEffect(() => {
     const fetchStudy = async () => {
-      const studyData = await getStudy({ studyId: Number(studyId) });
+      const studyData = await getStudy({ studyId: studyId });
       setStudy(() => ({
         id: studyData.id,
         title: `${studyData.nick}의 ${studyData.name}`,

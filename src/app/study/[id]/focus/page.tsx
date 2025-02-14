@@ -9,9 +9,12 @@ import Point from "@/components/Point/Point";
 import Toast from "@/components/toast/Toast";
 import Timer from "./_components/Timer";
 import { useFocus } from "./core/hooks";
+import { useMemo } from "react";
 
 export default function FocusPage() {
   const { id }: { id: string } = useParams();
+  const numericId = useMemo(() => Number(id), [id]);
+
   const {
     study,
     goalTimeInput,
@@ -23,10 +26,20 @@ export default function FocusPage() {
     toastStyle,
     isToastMounted,
   } = useFocus({
-    studyId: id,
+    studyId: numericId,
     initialMinutes: 25,
     initialSeconds: 0,
   });
+
+  const memoizedPoint = useMemo(() => study?.point ?? 0, [study]);
+
+  const memoizedToastStyle = useMemo(
+    () => ({
+      label: toastStyle.label,
+      color: toastStyle.color,
+    }),
+    [toastStyle]
+  );
 
   if (!study) {
     return <div>스터디를 찾을 수 없습니다.</div>;
@@ -54,9 +67,9 @@ export default function FocusPage() {
           </span>
           <div className="relative w-fit border border-custom-color-black-200 rounded-[50px]">
             <Point
-              point={study.point}
+              point={memoizedPoint}
               pointBg="bg-[#FFFFFF]"
-              pointTextColor="text-custom-color-black-400"
+              pointText="text-custom-color-black-400"
             />
           </div>
         </div>
@@ -70,8 +83,8 @@ export default function FocusPage() {
         handleTimer={handleTimer}
       />
       <Toast
-        label={toastStyle.label}
-        color={toastStyle.color}
+        label={memoizedToastStyle.label}
+        color={memoizedToastStyle.color}
         isMounted={isToastMounted}
       />
     </div>
