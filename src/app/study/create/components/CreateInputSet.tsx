@@ -10,13 +10,14 @@ interface Props {
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
+    className?: string;
 
 }
 
-export default function CreateInputSet({ label, inputType, value, onChange, placeholder }: Props) {
+export default function CreateInputSet({ label, inputType, value, onChange, placeholder, className }: Props) {
     return (
-        <div>
-            <p>{label}</p>
+        <div className={`mt-4 font-semibold ${className}`}>
+            <p className='mb-4'>{label}</p>
             <Input type={inputType} value={value} onChange={onChange} placeholder={placeholder} />
         </div>
     )

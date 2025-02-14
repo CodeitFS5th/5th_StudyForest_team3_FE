@@ -13,7 +13,6 @@ interface Props {
 export default function Card({
                                  bg,
                                  isPictureBg = false,
-                                 point = 0,
                                  titleName = '테스트',
                                  titleStudy = "의 테스트 스터디",
                                  streak = 0,
