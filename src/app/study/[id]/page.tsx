@@ -7,8 +7,11 @@ import {
   ButtonTodayFocus,
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
+import ButtonAddEmoji from "@/components/ButtonAddEmoji/ButtonAddEmoji";
+import Emoji from "@/components/emoji/Emoji";
+import EmojiSeeMore from "@/components/emoji/EmojiSeeMore";
+import { TOP_EMOJI_LIMIT } from "@/constants";
 
-// 경로 미리 생성
 export async function generateStaticParams() {
   try {
     const studyList = await fetchData<Study[]>(`${API_URL}/study`);
@@ -26,7 +29,6 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: PageIdParams) {
   const { id } = await params;
-
   const study = await fetchData<Study>(`${API_URL}/study/${id}`, {
     cache: "no-cache",
   });
@@ -37,10 +39,38 @@ export default async function Page({ params }: PageIdParams) {
 
   const { nick, name, description, point } = study;
 
+  const emojiList = [
+    { emoji: "👍", count: 8 },
+    { emoji: "🎯", count: 75 },
+    { emoji: "📚", count: 6 },
+    { emoji: "🧠", count: 56 },
+    { emoji: "💡", count: 41 },
+    { emoji: "✨", count: 3 },
+    { emoji: "😍", count: 2 },
+    { emoji: "🚨", count: 1 },
+  ];
+
+  const sortedEmojiList = emojiList.sort((a, b) => b.count - a.count);
+
+  const emojiSeeMoreCount =
+    sortedEmojiList.length - TOP_EMOJI_LIMIT > 0
+      ? sortedEmojiList.length - TOP_EMOJI_LIMIT
+      : 0;
+
   return (
     <>
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
-        <div>emoji component</div>
+        <div className="flex gap-1 relative">
+          {sortedEmojiList.slice(0, TOP_EMOJI_LIMIT).map((emoji) => (
+            <Emoji key={emoji.emoji} emoji={emoji.emoji} count={emoji.count} />
+          ))}
+          {emojiSeeMoreCount > 0 && (
+            <EmojiSeeMore moreEmojis={sortedEmojiList.slice(TOP_EMOJI_LIMIT)} />
+          )}
+          <div className="relative">
+            <ButtonAddEmoji />
+          </div>
+        </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />
       </section>
 
