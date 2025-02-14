@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 
 interface HabitInputProps {
   habit: Habit | NewHabit;
-  onUpdate: (id: PK<Habit>, habitName: Habit["name"]) => void;
+  onUpdate: (id: PK<Habit | NewHabit>, habitName: Habit["name"]) => void;
 }
 
 export default function HabitInput({ habit, onUpdate }: HabitInputProps) {
@@ -18,6 +18,13 @@ export default function HabitInput({ habit, onUpdate }: HabitInputProps) {
 
   return (
     <>
+      <input
+        name="habit-item"
+        id="habit-item"
+        value={JSON.stringify({ id: habit.id, name: habitName })}
+        hidden
+        readOnly
+      />
       <input
         onChange={handleChange}
         type="text"

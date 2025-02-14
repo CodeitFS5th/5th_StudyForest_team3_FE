@@ -99,7 +99,7 @@ export default async function Page({ params }: PageIdParams) {
         {point} chip component
       </section>
 
-      <section className="p-4 md:p-6 rounded-2xl border border-custom-color-black-200 mt-6 xl:mt-10">
+      <section className="overflow-auto p-4 md:p-6 rounded-2xl border border-custom-color-black-200 mt-6 xl:mt-10">
         <HabitTracker studyId={id} />
       </section>
     </>

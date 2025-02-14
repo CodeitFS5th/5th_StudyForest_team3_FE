@@ -13,6 +13,7 @@ import { useMemo } from "react";
 
 export default function FocusPage() {
   const { id }: { id: string } = useParams();
+
   const numericId = useMemo(() => Number(id), [id]);
 
   const {
@@ -41,7 +42,7 @@ export default function FocusPage() {
     [toastStyle]
   );
 
-  if (!study) {
+  if (study.id === null) {
     return <div>스터디를 찾을 수 없습니다.</div>;
   }
 
@@ -69,7 +70,7 @@ export default function FocusPage() {
             <Point
               point={memoizedPoint}
               pointBg="bg-[#FFFFFF]"
-              pointText="text-custom-color-black-400"
+              pointTextColor="text-custom-color-black-400"
             />
           </div>
         </div>
