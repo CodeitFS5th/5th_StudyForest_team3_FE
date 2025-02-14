@@ -1,8 +1,8 @@
-"use client";
+// "use client";
 import { API_URL } from "@/constants";
 import fetchData from "@/lib/apis/fetchData";
 import { Habit, habitStatus, FK, PK } from "@/types";
-import { useState } from "react";
+// import { useState } from "react";
 
 interface TodayHabitItemProps {
   habit: Habit;
@@ -11,22 +11,22 @@ interface TodayHabitItemProps {
 // 용도 변화줄려고 하는거고
 // api 호출은 한번만
 function TodayHabitItem({ habit }: TodayHabitItemProps) {
-  const [habitStatus, setHabitStatus] = useState(null);
+  // const [habitStatus, setHabitStatus] = useState(null);
 
-  const handleToggle = async (habitId: PK<Habit>) => {
-    try {
-      const res = await fetch(`${API_URL}/study/${habitId}/log/toggle`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = res.json();
-      console.log("data", data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleToggle = async (habitId: PK<Habit>) => {
+  //   try {
+  //     const res = await fetch(`${API_URL}/study/${habitId}/log/toggle`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const data = res.json();
+  //     console.log("data", data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   // const ColorStyle =
   //   data.status === habitStatus.DONE
@@ -36,7 +36,7 @@ function TodayHabitItem({ habit }: TodayHabitItemProps) {
   return (
     <button
       className={`bg-custom-color-brand text-white text-[16px] py-[18px] rounded-3xl cursor-pointer`}
-      onClick={() => handleToggle(habit.id)}
+      // onClick={() => handleToggle(habit.id)}
     >
       {habit.name}
     </button>
