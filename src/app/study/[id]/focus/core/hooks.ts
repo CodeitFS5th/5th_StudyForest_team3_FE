@@ -1,35 +1,28 @@
 import { useState, useEffect, useRef } from "react";
 import { Study } from "@/types";
-import getStudy from "@/lib/apis/getStudy";
 import { useToastMount } from "@/hooks/useToastMount";
-
-export const useGetStudy = ({ studyId }: { studyId: string }) => {
-  const [study, setStudy] = useState<Study | null>(null);
-
-  useEffect(() => {
-    const fetchStudy = async () => {
-      const studyData = await getStudy({ studyId: Number(studyId) });
-      setStudy(() => studyData);
-    };
-
-    fetchStudy();
-  }, [studyId]);
-
-  const studyTitle = `${study?.nick}의 ${study?.name}`;
-  const studyPoint = study?.point ?? 0;
-
-  return { study, studyTitle, studyPoint };
-};
+import getStudy from "@/lib/apis/getStudy";
+import updatePoint from "@/lib/apis/updatePoint";
 
 export const useFocus = ({
-  studyPoint,
+  studyId,
   initialMinutes,
   initialSeconds,
 }: {
-  studyPoint: number;
+  studyId: string;
   initialMinutes: number;
   initialSeconds: number;
 }) => {
+  const [study, setStudy] = useState<{
+    id: number | null;
+    title: string;
+    point: number;
+  }>({
+    id: null,
+    title: "",
+    point: 0,
+  });
+
   const [goalTimeInput, setGoalTimeInput] = useState({
     minutes: initialMinutes.toString().padStart(2, "0"),
     seconds: initialSeconds.toString().padStart(2, "0"),
@@ -71,6 +64,20 @@ export const useFocus = ({
       return seconds.toString().padStart(2, "0");
     },
   };
+
+  // 스터디 정보 가져오기
+  useEffect(() => {
+    const fetchStudy = async () => {
+      const studyData = await getStudy({ studyId: Number(studyId) });
+      setStudy(() => ({
+        id: studyData.id,
+        title: `${studyData.nick}의 ${studyData.name}`,
+        point: studyData.point,
+      }));
+    };
+
+    fetchStudy();
+  }, [studyId]);
 
   // 타이머 실행 / 일시정지
   useEffect(() => {
@@ -128,6 +135,19 @@ export const useFocus = ({
     }));
   };
 
+  // 포인트 증가
+  const handlePointIncrease = async () => {
+    const newPoint = study.point + POINT_INCREASE;
+    const updatedStudy = await updatePoint({
+      studyId: Number(studyId),
+      point: newPoint,
+    });
+    setStudy(() => ({
+      ...study,
+      point: updatedStudy.point,
+    }));
+  };
+
   const handleTimer = {
     start: () => {
       const goalTime =
@@ -172,19 +192,14 @@ export const useFocus = ({
           color: "green",
           label: `${POINT_INCREASE}포인트를 획득했습니다!`,
         }));
+        handlePointIncrease();
         mountToast(); // 성공 Toast
       }
     },
   };
 
-  // 포인트 증가
-  const handlePointIncrease = async () => {
-    const newPoint = studyPoint + POINT_INCREASE;
-    // todo: updatePoint api 호출
-    // setStudyPoint(newPoint);
-  };
-
   return {
+    study,
     goalTimeInput,
     timeStatus,
     timerStatus,
@@ -193,6 +208,5 @@ export const useFocus = ({
     isToastMounted,
     handleGoalTimeInputChange,
     handleTimer,
-    handlePointIncrease,
   };
 };

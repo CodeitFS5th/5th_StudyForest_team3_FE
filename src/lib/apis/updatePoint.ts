@@ -11,12 +11,12 @@ export default async function updatePoint({
   point,
 }: UpdatePointProps): Promise<Study> {
   try {
-    const response = await fetch(`${API_URL}/study/${studyId}/habit`, {
-      method: "PUT",
+    const response = await fetch(`${API_URL}/study/${studyId}/`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ point }),
     });
     const newStudy: Study = await response.json();
     return newStudy;

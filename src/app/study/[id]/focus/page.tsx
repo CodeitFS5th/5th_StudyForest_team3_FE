@@ -8,23 +8,22 @@ import {
 import Point from "@/components/Point/Point";
 import Toast from "@/components/toast/Toast";
 import Timer from "./_components/Timer";
-import { useGetStudy, useFocus } from "./core/hooks";
+import { useFocus } from "./core/hooks";
 
 export default function FocusPage() {
   const { id }: { id: string } = useParams();
-  const { study, studyTitle, studyPoint } = useGetStudy({ studyId: id });
   const {
+    study,
     goalTimeInput,
     timeStatus,
     timerStatus,
     getTime,
     handleGoalTimeInputChange,
     handleTimer,
-    handlePointIncrease,
     toastStyle,
     isToastMounted,
   } = useFocus({
-    studyPoint,
+    studyId: id,
     initialMinutes: 25,
     initialSeconds: 0,
   });
@@ -38,7 +37,7 @@ export default function FocusPage() {
       <header className="flex flex-col gap-[25px]">
         <div className="flex flex-col gap-[17px] md:flex-row md:justify-between">
           <h1 className="text-[24px] font-[800] text-custom-color-black-400 md:text-[32px] ">
-            {studyTitle}
+            {study.title}
           </h1>
           <div className="flex gap-[8px]">
             <div className="w-[120px] md:w-[144px]">
@@ -55,7 +54,7 @@ export default function FocusPage() {
           </span>
           <div className="relative w-fit border border-custom-color-black-200 rounded-[50px]">
             <Point
-              point={studyPoint ?? 0}
+              point={study.point}
               pointBg="bg-custom-color-blue-100"
               pointText="text-custom-color-blue-500"
             />
@@ -69,7 +68,6 @@ export default function FocusPage() {
         getTime={getTime}
         handleGoalTimeInputChange={handleGoalTimeInputChange}
         handleTimer={handleTimer}
-        handlePointIncrease={handlePointIncrease}
       />
       <Toast
         label={toastStyle.label}

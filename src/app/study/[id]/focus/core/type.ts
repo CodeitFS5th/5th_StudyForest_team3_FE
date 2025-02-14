@@ -25,5 +25,4 @@ export interface TimerProps {
     pause: () => void;
     stop: () => void;
   };
-  handlePointIncrease: () => void;
 }
