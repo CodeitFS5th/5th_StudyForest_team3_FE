@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Emoji from "./Emoji";
+import Tag from "./Tag";
 export default function EmojiSeeMore({
   moreEmojis,
 }: {
@@ -24,14 +24,14 @@ export default function EmojiSeeMore({
         <p>+ {moreEmojis.length}..</p>
       </button>
       {isOpen && (
-        <div className="absolute top-[45px] left-[-30px] p-[12px] border border-custom-color-black-200 rounded-[15px] bg-white drop-shadow-lg">
+        <div className="absolute top-[45px] right-[70px] p-[12px] border border-custom-color-black-200 rounded-[15px] bg-white drop-shadow-lg">
           <div className="grid grid-cols-4 gap-[4px]">
             {moreEmojis.map((emoji) => (
-              <Emoji key={emoji.emoji}>
+              <Tag key={emoji.emoji} theme="black">
                 <p>
                   {emoji.emoji} {emoji.count}
                 </p>
-              </Emoji>
+              </Tag>
             ))}
           </div>
         </div>

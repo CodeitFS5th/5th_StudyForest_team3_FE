@@ -7,8 +7,8 @@ import {
   ButtonTodayFocus,
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
-import Emoji from "@/components/emoji/Emoji";
-import EmojiSeeMore from "@/components/emoji/EmojiSeeMore";
+import Tag from "@/components/tag/Tag";
+import EmojiSeeMore from "@/components/tag/EmojiSeeMore";
 import { TOP_EMOJI_LIMIT } from "@/constants";
 import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
 export async function generateStaticParams() {
@@ -61,18 +61,16 @@ export default async function Page({ params }: PageIdParams) {
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
         <div className="flex gap-1 relative">
           {sortedEmojiList.slice(0, TOP_EMOJI_LIMIT).map((emoji) => (
-            <Emoji key={emoji.emoji}>
+            <Tag key={emoji.emoji} theme="black">
               <p>
                 {emoji.emoji} {emoji.count}
               </p>
-            </Emoji>
+            </Tag>
           ))}
           {emojiSeeMoreCount > 0 && (
             <EmojiSeeMore moreEmojis={sortedEmojiList.slice(TOP_EMOJI_LIMIT)} />
           )}
-          <div className="relative">
-            <ButtonAddEmojiWrapper />
-          </div>
+          <ButtonAddEmojiWrapper />
         </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />
       </section>

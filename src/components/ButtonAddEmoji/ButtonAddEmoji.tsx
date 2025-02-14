@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import emojiIcon from "@/assets/images/icon/ic_smile.png";
-import EmojiPickerWrapper from "@/components/emojiPickerWrapper/EmojiPickerWrapper";
 import { useState } from "react";
+import EmojiPicker from "emoji-picker-react";
 
 export default function ButtonAddEmoji() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   console.log(open);
 
@@ -19,7 +19,11 @@ export default function ButtonAddEmoji() {
         <Image src={emojiIcon} alt="emoji icon" className="w-[18px] h-[18px]" />
         <p>추가</p>
       </button>
-      {open && <EmojiPickerWrapper open={open} />}
+      {open && (
+        <div className="absolute top-[45px] p-[12px] border border-custom-color-black-200 rounded-[15px] bg-white drop-shadow-lg">
+          <EmojiPicker open={open} />
+        </div>
+      )}
     </>
   );
 }
