@@ -20,7 +20,7 @@ export interface Habit {
   id: number;
   name: string;
   status: habitStatus;
-  logs: Date[];
+  logs: HabitLog[];
   studyId: number;
   createdAt: Date;
 }
@@ -38,11 +38,34 @@ export type FK<T, K extends keyof T> = K extends `${string}Id` ? T[K] : never;
 
 export type StudyIdInHabit = { studyId: FK<Habit, "studyId"> };
 
+export type UUIDV4 = `${string & { length: 8 }}-${string & {
+  length: 4;
+}}-${string & { length: 4 }}-${string & { length: 4 }}-${string & {
+  length: 12;
+}}`;
+
 // update시 필요한 속성만 가져옴
 export interface NewHabit {
-  id: PK<Habit>;
+  id: UUIDV4;
   name: Habit["name"];
   studyId: FK<Habit, "studyId">;
 }
 
 export type StudyTitle = `${string}의 ${string}`;
+
+export interface HabitLog {
+  id: number;
+  habitId: PK<Habit>;
+  createdAt: Date;
+}
+
+export enum Week {
+  일 = "일",
+  월 = "월",
+  화 = "화",
+  수 = "수",
+  목 = "목",
+  금 = "금",
+  토 = "토",
+}
+export type DoneLogs = Record<Week, boolean>;

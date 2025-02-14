@@ -2,6 +2,7 @@
 
 import Sticker from "@/components/sticker/Sticker";
 import { Habit } from "@/types";
+import extractWeekState from "./core/extractWeekState";
 
 interface HabitLogsProps {
   habitList: Habit[];
@@ -12,16 +13,7 @@ interface HabitLogProps {
 }
 
 function HabitLog({ habit }: HabitLogProps) {
-  // const doneLogs = 함수로 받아오는 것이 맞지만, 테스트를 위해 임시로 작성
-  const doneLogs = {
-    월: true,
-    화: false,
-    수: true,
-    목: false,
-    금: true,
-    토: false,
-    일: true,
-  };
+  const doneLogs = extractWeekState(habit.logs);
 
   return (
     <div
