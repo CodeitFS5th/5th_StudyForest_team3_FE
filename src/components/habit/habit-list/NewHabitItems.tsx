@@ -1,12 +1,11 @@
 "use client";
 
-import { NewHabit } from "@/types";
+import { v4 as uuidv4 } from "uuid";
+import { PK, Habit, NewHabit, UUIDV4 } from "@/types";
 import HabitItemDeleteButton from "./HabitItemDeleteButton";
 import HabitInput from "./HabitInput";
 import HabitItemAddButton from "./NewHabitItemAddButton";
 import { useState } from "react";
-
-let newHabitIdCount = 0;
 
 export default function NewHabitItems({ studyId }: { studyId: number }) {
   const [newHabitList, setNewHabitList] = useState<NewHabit[]>([]);
@@ -14,14 +13,15 @@ export default function NewHabitItems({ studyId }: { studyId: number }) {
   const handleAdd = () => {
     // 새로운 배열에 추가
     const newHabit = {
-      id: newHabitIdCount++,
+      id: uuidv4() as UUIDV4,
       name: "",
       studyId,
     };
+
     setNewHabitList((prevList) => [...prevList, newHabit]);
   };
 
-  const handleUpdate = (id: number, habitName: string) => {
+  const handleUpdate = (id: PK<Habit | NewHabit>, habitName: string) => {
     // 새로운 배열의 habitName 수정
     setNewHabitList((prevList) =>
       prevList.map((habit) =>
@@ -30,7 +30,7 @@ export default function NewHabitItems({ studyId }: { studyId: number }) {
     );
   };
 
-  const handleDelete = (id: number) =>
+  const handleDelete = (id: PK<Habit | NewHabit>) =>
     setNewHabitList((prevList) => prevList.filter((habit) => habit.id !== id));
 
   return (
