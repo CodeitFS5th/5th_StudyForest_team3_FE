@@ -7,10 +7,17 @@ import {
   ButtonTodayFocus,
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
-import ButtonAddEmoji from "@/components/ButtonAddEmoji/ButtonAddEmoji";
 import Emoji from "@/components/emoji/Emoji";
 import EmojiSeeMore from "@/components/emoji/EmojiSeeMore";
 import { TOP_EMOJI_LIMIT } from "@/constants";
+import dynamic from "next/dynamic";
+
+const ButtonAddEmoji = dynamic(
+  () => import("@/components/ButtonAddEmoji/ButtonAddEmoji"),
+  {
+    ssr: false,
+  }
+);
 
 export async function generateStaticParams() {
   try {
