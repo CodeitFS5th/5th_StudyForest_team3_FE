@@ -1,5 +1,3 @@
-import Image from "next/image";
-import pointIcon from '../../../assets/images/icon/point.png'
 import Point from "@/components/Point/Point";
 
 interface Props {
@@ -15,7 +13,6 @@ interface Props {
 export default function Card({
                                  bg,
                                  isPictureBg = false,
-                                 point = 0,
                                  titleName = '테스트',
                                  titleStudy = "의 테스트 스터디",
                                  streak = 0,
@@ -50,7 +47,7 @@ export default function Card({
     return (
         <div
             className={`w-[240px] h-[180px] md:w-[312px] xl:w-[358px] xl:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}>
-            <Point point='10' pointBg={settings.bg} pointText='점 획득중'/>
+            <Point point='10' pointBg={settings.bg} pointTextColor='text-white'/>
             <div className="flex gap-0.5 mt-1.5 xl:mt-0">
                 <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>{titleName}</p>
                 <p className={`font-bold xl:text-[18px] ${settings.titleStudyText}`}>{titleStudy}</p>
