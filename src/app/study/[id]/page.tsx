@@ -7,7 +7,7 @@ import {
   ButtonTodayFocus,
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
-
+import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
 // 경로 미리 생성
 export async function generateStaticParams() {
   try {
@@ -40,7 +40,10 @@ export default async function Page({ params }: PageIdParams) {
   return (
     <>
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
-        <div>emoji component</div>
+        <div className="flex gap-1 relative">
+          <div>emoji component</div>
+          <ButtonAddEmojiWrapper />
+        </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />
       </section>
 
