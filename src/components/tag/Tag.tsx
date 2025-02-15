@@ -27,7 +27,7 @@ export default function Tag({ children, theme }: Props) {
 
   return (
     <div
-      className={`inline-flex items-center justify-center gap-[5px] px-[10px] py-[6px] rounded-[30px] xl:right-[30px] ${style.bgColor} ${style.textColor} text-[16px] ${style.borderColor}`}
+      className={`inline-flex w-fit items-center justify-center gap-[5px] px-[10px] py-[6px] rounded-[30px] xl:right-[30px] ${style.bgColor} ${style.textColor} text-[16px] ${style.borderColor}`}
     >
       {children}
     </div>

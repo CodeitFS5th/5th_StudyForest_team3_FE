@@ -1,29 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { Study } from "@/types";
 import { useToastMount } from "@/hooks/useToastMount";
 import updatePoint from "@/lib/apis/updatePoint";
-import fetchData from "@/lib/apis/fetchData";
-import { API_URL } from "@/constants";
 
 export const useFocus = ({
   studyId,
+  initialPoint,
   initialMinutes,
   initialSeconds,
 }: {
   studyId: number;
+  initialPoint: number;
   initialMinutes: number;
   initialSeconds: number;
 }) => {
-  const [study, setStudy] = useState<{
-    id: number | null;
-    title: string;
-    point: number;
-  }>({
-    id: null,
-    title: "",
-    point: 0,
-  });
-
   const [goalTimeInput, setGoalTimeInput] = useState({
     minutes: initialMinutes.toString().padStart(2, "0"),
     seconds: initialSeconds.toString().padStart(2, "0"),
@@ -39,6 +28,8 @@ export const useFocus = ({
     isRunning: false,
     isSuccess: false,
   });
+
+  const [point, setPoint] = useState(initialPoint);
 
   const [toastStyle, setToastStyle] = useState<{
     color: "green" | "red";
@@ -65,27 +56,6 @@ export const useFocus = ({
       return seconds.toString().padStart(2, "0");
     },
   };
-
-  // 스터디 정보 가져오기
-  useEffect(() => {
-    const fetchStudy = async () => {
-      const studyData = await fetchData<Study>(`${API_URL}/study/${studyId}`, {
-        cache: "no-cache",
-      });
-
-      if (!studyData) {
-        return;
-      }
-
-      setStudy(() => ({
-        id: studyData.id,
-        title: `${studyData.nick}의 ${studyData.name}`,
-        point: studyData.point,
-      }));
-    };
-
-    fetchStudy();
-  }, [studyId]);
 
   // 타이머 실행 / 일시정지
   useEffect(() => {
@@ -145,15 +115,12 @@ export const useFocus = ({
 
   // 포인트 증가
   const handlePointIncrease = async () => {
-    const newPoint = study.point + POINT_INCREASE;
+    const newPoint = point + POINT_INCREASE;
     const updatedStudy = await updatePoint({
       studyId: Number(studyId),
       point: newPoint,
     });
-    setStudy(() => ({
-      ...study,
-      point: updatedStudy.point,
-    }));
+    setPoint(() => point);
   };
 
   const handleTimer = {
@@ -207,13 +174,12 @@ export const useFocus = ({
   };
 
   return {
-    study,
     goalTimeInput,
     timeStatus,
     timerStatus,
-    getTime,
     toastStyle,
     isToastMounted,
+    getTime,
     handleGoalTimeInputChange,
     handleTimer,
   };
