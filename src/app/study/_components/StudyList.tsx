@@ -77,8 +77,9 @@ export default function StudyList() {
               point={study.point}
               titleName={study.nick}
               titleStudy={study.name}
-              streak={0}
+              date={study.createdAt}
               description={study.description}
+              reactions={study.reactions}
             />
           ))
         )}
