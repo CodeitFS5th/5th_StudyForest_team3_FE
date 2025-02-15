@@ -26,7 +26,6 @@ export default function StudyList() {
       const response = await fetch(
         `${API_URL}/study?page=${page}&sort=${sort}&search=${search}`
       );
-      console.log(response);
       const data = await response.json();
 
       if (page === 1) {
@@ -50,7 +49,6 @@ export default function StudyList() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedTerm(searchTerm);
-      console.log(searchTerm);
       fetchStudies(1, "date_desc", searchTerm);
     }, 1000);
 
@@ -126,12 +124,14 @@ export default function StudyList() {
       </div>
       {/* 스터디 목록 영역 */}
       <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {studies.length === 0 ? (
-          isLoading ? (
-            <p>로딩 중...</p>
-          ) : (
-            <p>스터디가 없습니다.</p>
-          )
+        {isLoading ? (
+          <div className="col-span-1 md:col-span-2 xl:col-span-3 h-[600px] flex justify-center items-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#578246]"></div>
+          </div>
+        ) : studies.length === 0 ? (
+          <div className="col-span-1 md:col-span-2 xl:col-span-3 h-[600px] flex justify-center items-center">
+            <p className="text-gray-500">아직 둘러 볼 스터디가 없어요.</p>
+          </div>
         ) : (
           studies.map((study) => (
             <div key={study.id} onClick={() => handleCardClick(study)}>
