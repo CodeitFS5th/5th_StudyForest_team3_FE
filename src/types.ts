@@ -8,13 +8,20 @@ export interface Study {
   nick: string;
   name: string;
   description: string;
-  password: string;
-  background: string;
-  reactions: Record<string, number>;
+  background:
+    | "GREEN"
+    | "YELLOW"
+    | "BLUE"
+    | "RED"
+    | "DESK"
+    | "WINDOW"
+    | "TILE"
+    | "LEAF";
   point: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date;
+  createdAt: string;
+  reactions: {
+    [key: string]: number; // 이모지를 키로 하고 숫자를 값으로 가지는 객체
+  };
 }
 
 export interface Habit {
