@@ -72,7 +72,7 @@ export default function StudyCreatePage() {
                     <BgCard bg="bg-custom-color-card-green" onClick={() => handleBgSelect("green")} />
                     <BgCard bg="bg-custom-color-card-yellow" onClick={() => handleBgSelect("yellow")} />
                     <BgCard bg="bg-custom-color-card-blue" onClick={() => handleBgSelect("blue")} />
-                    <BgCard bg="bg-custom-color-card-pink" onClick={() => handleBgSelect("pink")} />
+                    <BgCard bg="bg-custom-color-card-red" onClick={() => handleBgSelect("red")} />
                     <BgCard bg="bg-[url('/desk.png')]" onClick={() => handleBgSelect("desk")} />
                     <BgCard bg="bg-[url('/window.png')]" onClick={() => handleBgSelect("window")} />
                     <BgCard bg="bg-[url('/tile.png')]" onClick={() => handleBgSelect("tile")} />

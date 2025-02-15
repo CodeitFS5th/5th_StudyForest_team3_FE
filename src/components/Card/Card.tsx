@@ -3,15 +3,16 @@ import pointIcon from "../../../assets/images/icon/point.png";
 import Point from "@/components/Point/Point";
 
 interface Props {
+  // 대문자로 바꿔줘
   bg:
-    | "green"
-    | "yellow"
-    | "blue"
-    | "pink"
-    | "desk"
-    | "window"
-    | "tile"
-    | "leaf";
+    | "GREEN"
+    | "YELLOW"
+    | "BLUE"
+    | "RED"
+    | "DESK"
+    | "WINDOW"
+    | "TILE"
+    | "LEAF";
   isPictureBg: boolean;
   point: string | number;
   titleName: string;
@@ -46,15 +47,20 @@ export default function Card({
     descriptionText: isPictureBg ? "text-white" : "text-custom-color-black-400",
   };
 
+  console.log(bg);
+
   switch (bg) {
-    case "yellow":
+    case "YELLOW":
       settings.bg = "bg-custom-color-card-yellow";
       break;
-    case "blue":
+    case "BLUE":
       settings.bg = "bg-custom-color-card-blue";
       break;
-    case "pink":
-      settings.bg = "bg-custom-color-card-pink";
+    case "GREEN":
+      settings.bg = "bg-custom-color-card-green";
+      break;
+    case "RED":
+      settings.bg = "bg-custom-color-card-red";
       break;
     //아니 백그라운드 이미지 어딨음?
 

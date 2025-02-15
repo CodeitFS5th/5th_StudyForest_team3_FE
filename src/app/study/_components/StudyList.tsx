@@ -61,7 +61,7 @@ export default function StudyList() {
         />
       </div>
       {/* 스터디 목록 영역 */}
-      <div className="mt-4 md:mt-6 bg-amber-200 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {studies.length === 0 ? (
           isLoading ? (
             <p>로딩 중...</p>
@@ -108,14 +108,14 @@ interface Study {
   name: string;
   description: string;
   background:
-    | "green"
-    | "yellow"
-    | "blue"
-    | "pink"
-    | "desk"
-    | "window"
-    | "tile"
-    | "leaf";
+    | "GREEN"
+    | "YELLOW"
+    | "BLUE"
+    | "RED"
+    | "DESK"
+    | "WINDOW"
+    | "TILE"
+    | "LEAF";
   point: number;
   createdAt: string;
   reactions: {
