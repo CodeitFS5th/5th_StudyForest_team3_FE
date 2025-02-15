@@ -3,18 +3,21 @@
 import Card from "@/components/Card/Card";
 import { Menu } from "@/components/menu/Menu";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import { useState, useEffect } from "react";
+import { API_URL } from "@/constants";
+import { useState, useEffect, useRef } from "react";
 
 export default function StudyList() {
   const [studies, setStudies] = useState<Study[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const listEndRef = useRef<HTMLDivElement>(null);
 
   const fetchStudies = async (page: number) => {
     try {
       setIsLoading(true);
-      const response = await fetch(`http://localhost:8000/study?page=${page}`);
+      const response = await fetch(`${API_URL}/study?page=${page}`);
+      console.log(response);
       const data = await response.json();
 
       if (page === 1) {
@@ -35,10 +38,11 @@ export default function StudyList() {
     fetchStudies(1);
   }, []);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    fetchStudies(nextPage);
+    await fetchStudies(nextPage);
+    listEndRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +62,13 @@ export default function StudyList() {
       </div>
       {/* 스터디 목록 영역 */}
       <div className="mt-4 md:mt-6 bg-amber-200 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        {isLoading ? (
-          <p>로딩 중...</p>
-        ) : studies.length > 0 ? (
+        {studies.length === 0 ? (
+          isLoading ? (
+            <p>로딩 중...</p>
+          ) : (
+            <p>스터디가 없습니다.</p>
+          )
+        ) : (
           studies.map((study) => (
             <Card
               key={study.id}
@@ -73,9 +81,8 @@ export default function StudyList() {
               description={study.description}
             />
           ))
-        ) : (
-          <p>스터디가 없습니다.</p>
         )}
+        <div ref={listEndRef} />
       </div>
       {/* 더보기 영역 */}
       <div className="flex justify-center mt-8">
@@ -85,7 +92,7 @@ export default function StudyList() {
             onClick={handleLoadMore}
             disabled={isLoading}
           >
-            {isLoading ? "로딩 중..." : "더보기"}
+            {isLoading && studies.length > 0 ? "로딩 중..." : "더보기"}
           </button>
         )}
       </div>
