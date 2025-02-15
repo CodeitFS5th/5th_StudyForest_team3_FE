@@ -1,22 +1,10 @@
-export enum habitStatus {
-  DONE = "DONE",
-  UNDONE = "UNDONE",
-}
-
 export interface Study {
   id: number;
   nick: string;
   name: string;
+  password: string;
   description: string;
-  background:
-    | "GREEN"
-    | "YELLOW"
-    | "BLUE"
-    | "RED"
-    | "DESK"
-    | "WINDOW"
-    | "TILE"
-    | "LEAF";
+  background: string;
   point: number;
   createdAt: string;
   reactions: {
@@ -27,7 +15,6 @@ export interface Study {
 export interface Habit {
   id: number;
   name: string;
-  status: habitStatus;
   logs: HabitLog[];
   studyId: number;
   createdAt: Date;
@@ -78,7 +65,5 @@ export enum Week {
 }
 export type DoneLogs = Record<Week, boolean>;
 
-export type InputData = Pick<
-  Study,
-  "nick" | "name" | "description" | "password" | "background"
->;
+type InputToCheck = "nick" | "name" | "description" | "password" | "background";
+export type InputData = Pick<Study, InputToCheck>;
