@@ -71,7 +71,5 @@ export enum Week {
 }
 export type DoneLogs = Record<Week, boolean>;
 
-export type InputData = Pick<
-  Study,
-  "nick" | "name" | "description" | "password" | "background"
->;
+type InputToCheck = "nick" | "name" | "description" | "password" | "background";
+export type InputData = Pick<Study, InputToCheck>;

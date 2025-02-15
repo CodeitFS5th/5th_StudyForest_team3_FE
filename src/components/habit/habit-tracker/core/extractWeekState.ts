@@ -1,6 +1,6 @@
 import { DoneLogs, Week, HabitLog } from "@/types";
 
-export default function weekState(habitLogs: HabitLog[]) {
+export default function extractWeekState(habitLogs: HabitLog[]) {
   const today = new Date();
   const todayDayOfWeek = today.getDay();
 
