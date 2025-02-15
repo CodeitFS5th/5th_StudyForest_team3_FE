@@ -30,7 +30,7 @@ export default function StudyCreatePage() {
             ...prevData,
             bg,
         }));
-        console.log(bg)
+        // console.log(bg)
     };
 
     return (

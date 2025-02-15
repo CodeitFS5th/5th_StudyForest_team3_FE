@@ -13,10 +13,12 @@ export default function StudyList() {
   const [currentPage, setCurrentPage] = useState(1);
   const listEndRef = useRef<HTMLDivElement>(null);
 
-  const fetchStudies = async (page: number) => {
+  const fetchStudies = async (page: number, option: string = "date_desc") => {
     try {
       setIsLoading(true);
-      const response = await fetch(`${API_URL}/study?page=${page}`);
+      const response = await fetch(
+        `${API_URL}/study?page=${page}&sort=${option}`
+      );
       console.log(response);
       const data = await response.json();
 
@@ -49,6 +51,30 @@ export default function StudyList() {
     console.log(e.target.value);
   };
 
+  const handleOptionChange = (option: string) => {
+    let sortOption = "";
+
+    switch (option) {
+      case "최신 순":
+        sortOption = "date_desc";
+        break;
+      case "오래된 순":
+        sortOption = "date_asc";
+        break;
+      case "포인트 많은 순":
+        sortOption = "point_desc";
+        break;
+      case "포인트 적은 순":
+        sortOption = "point_asc";
+        break;
+      default:
+        sortOption = "date_desc"; // 기본값
+    }
+
+    console.log(sortOption);
+    fetchStudies(1, sortOption);
+  };
+
   return (
     <div className="max-w-[1200px] mt-10 mb-20 p-10 mx-4 md:mx-6 xl:mx-auto m bg-white rounded-2xl">
       <p className="text-2xl font-extrabold">스터디 둘러보기</p>
@@ -57,7 +83,7 @@ export default function StudyList() {
         <SearchBar onChange={handleSearch} />
         <Menu
           options={["최신 순", "오래된 순", "포인트 많은 순", "포인트 적은 순"]}
-          onOptionChange={() => {}}
+          onOptionChange={handleOptionChange}
         />
       </div>
       {/* 스터디 목록 영역 */}

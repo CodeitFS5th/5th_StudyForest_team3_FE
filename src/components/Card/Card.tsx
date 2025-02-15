@@ -47,8 +47,6 @@ export default function Card({
     descriptionText: isPictureBg ? "text-white" : "text-custom-color-black-400",
   };
 
-  console.log(bg);
-
   switch (bg) {
     case "YELLOW":
       settings.bg = "bg-custom-color-card-yellow";
