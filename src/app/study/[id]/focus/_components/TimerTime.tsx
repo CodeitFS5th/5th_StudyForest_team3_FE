@@ -1,14 +1,16 @@
-export default function Time({
-  isActive,
-  minutes,
-  seconds,
-  timerColor,
-}: {
+type Props = {
   isActive: Boolean;
   minutes: string;
   seconds: string;
   timerColor: string;
-}) {
+};
+
+export default function TimerTime({
+  isActive,
+  minutes,
+  seconds,
+  timerColor,
+}: Props) {
   if (!isActive) return null;
 
   return (

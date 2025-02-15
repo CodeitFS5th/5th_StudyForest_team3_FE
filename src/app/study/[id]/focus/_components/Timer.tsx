@@ -1,7 +1,7 @@
 "use client";
 
-import TimeInput from "./TimeInput";
-import Time from "./Time";
+import TimerInput from "./TimerInput";
+import TimerTime from "./TimerTime";
 import { useFocus } from "../core/hooks";
 import Image from "next/image";
 import timerImage from "@/assets/images/icon/ic_timer.png";
@@ -17,13 +17,12 @@ const styles = {
   },
 };
 
-export default function Timer({
-  studyId,
-  initialPoint,
-}: {
+type Props = {
   studyId: number;
   initialPoint: number;
-}) {
+};
+
+export default function Timer({ studyId, initialPoint }: Props) {
   const {
     goalTimeInput,
     timeStatus,
@@ -67,14 +66,14 @@ export default function Timer({
           {formatTime(timeStatus.goalTime)}
         </div>
 
-        <TimeInput
+        <TimerInput
           isActive={!timerStatus.isFocusStart}
           minutesValue={goalTimeInput.minutes}
           secondsValue={goalTimeInput.seconds}
           onChange={handleGoalTimeInputChange}
         />
 
-        <Time
+        <TimerTime
           isActive={timerStatus.isFocusStart}
           minutes={getTime.minutes(timeStatus.time)}
           seconds={getTime.seconds(timeStatus.time)}

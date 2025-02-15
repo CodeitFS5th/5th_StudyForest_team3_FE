@@ -42,7 +42,7 @@ export const useFocus = ({
   const { isToastMounted, mountToast } = useToastMount();
 
   const intervalIdRef = useRef<number | null>(null);
-  const POINT_INCREASE = 3 + Math.floor(Math.abs(timeStatus.goalTime) / 60);
+  const POINT_INCREASE = 3 + Math.floor(Math.abs(timeStatus.goalTime) / 600);
 
   // 분/초 계산
   const getTime = {

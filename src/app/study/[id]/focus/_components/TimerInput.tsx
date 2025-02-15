@@ -1,11 +1,6 @@
 import { useRef } from "react";
 
-export default function TimeInput({
-  isActive,
-  minutesValue,
-  secondsValue,
-  onChange,
-}: {
+type Props = {
   isActive: boolean;
   minutesValue: string;
   secondsValue: string;
@@ -13,7 +8,14 @@ export default function TimeInput({
     e: React.ChangeEvent<HTMLInputElement>,
     type: "minutes" | "seconds"
   ) => void;
-}) {
+};
+
+export default function TimerInput({
+  isActive,
+  minutesValue,
+  secondsValue,
+  onChange,
+}: Props) {
   const inputRef1 = useRef<HTMLInputElement>(null);
   const inputRef2 = useRef<HTMLInputElement>(null);
 

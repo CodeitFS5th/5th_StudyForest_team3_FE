@@ -1,5 +1,5 @@
 import fetchData from "@/lib/apis/fetchData";
-import { Study } from "@/types";
+import { PageIdParams, Study } from "@/types";
 import { API_URL } from "@/constants";
 import {
   ButtonTodayHabit,
@@ -8,12 +8,8 @@ import {
 import Point from "./_components/Point";
 import Timer from "./_components/Timer";
 
-export default async function FocusPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const studyId = params.id;
+export default async function FocusPage({ params }: PageIdParams) {
+  const { id: studyId } = await params;
 
   const studyData = await fetchData<Study>(`${API_URL}/study/${studyId}`, {
     cache: "no-cache",
