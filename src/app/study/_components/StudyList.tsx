@@ -5,6 +5,7 @@ import { Menu } from "@/components/menu/Menu";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import { API_URL } from "@/constants";
 import { useState, useEffect, useRef } from "react";
+import { Study } from "@/types";
 
 export default function StudyList() {
   const [studies, setStudies] = useState<Study[]>([]);
@@ -93,6 +94,25 @@ export default function StudyList() {
     fetchStudies(1, sortOption);
   };
 
+  // 스터디 카드 처리
+  const handleCardClick = (study: Study) => {
+    // localStorage에서 기존 데이터 가져오기
+    const existingStudies = JSON.parse(
+      localStorage.getItem("recentStudies") || "[]"
+    );
+
+    // 중복 제거 (이미 있는 스터디는 제거)
+    const filteredStudies = existingStudies.filter(
+      (s: Study) => s.id !== study.id
+    );
+
+    // 새로운 스터디를 배열 맨 앞에 추가 (최대 10개 유지)
+    const newStudies = [study, ...filteredStudies].slice(0, 10);
+
+    // localStorage에 저장
+    localStorage.setItem("recentStudies", JSON.stringify(newStudies));
+  };
+
   return (
     <div className="max-w-[1200px] mt-10 mb-20 p-10 mx-4 md:mx-6 xl:mx-auto m bg-white rounded-2xl">
       <p className="text-2xl font-extrabold">스터디 둘러보기</p>
@@ -114,17 +134,19 @@ export default function StudyList() {
           )
         ) : (
           studies.map((study) => (
-            <Card
-              key={study.id}
-              bg={study.background}
-              isPictureBg={false}
-              point={study.point}
-              titleName={study.nick}
-              titleStudy={study.name}
-              date={study.createdAt}
-              description={study.description}
-              reactions={study.reactions}
-            />
+            <div key={study.id} onClick={() => handleCardClick(study)}>
+              <Card
+                id={study.id}
+                bg={study.background}
+                isPictureBg={false}
+                point={study.point}
+                titleName={study.nick}
+                titleStudy={study.name}
+                date={study.createdAt}
+                description={study.description}
+                reactions={study.reactions}
+              />
+            </div>
           ))
         )}
         <div ref={listEndRef} />
@@ -143,26 +165,4 @@ export default function StudyList() {
       </div>
     </div>
   );
-}
-
-// Study 타입 정의
-interface Study {
-  id: number;
-  nick: string;
-  name: string;
-  description: string;
-  background:
-    | "GREEN"
-    | "YELLOW"
-    | "BLUE"
-    | "RED"
-    | "DESK"
-    | "WINDOW"
-    | "TILE"
-    | "LEAF";
-  point: number;
-  createdAt: string;
-  reactions: {
-    [key: string]: number; // 이모지를 키로 하고 숫자를 값으로 가지는 객체
-  };
 }

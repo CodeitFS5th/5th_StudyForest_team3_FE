@@ -1,18 +1,12 @@
 import Image from "next/image";
 import pointIcon from "../../../assets/images/icon/point.png";
 import Point from "@/components/Point/Point";
+import Link from "next/link";
 
 interface Props {
+  id: number;
   // 대문자로 바꿔줘
-  bg:
-    | "GREEN"
-    | "YELLOW"
-    | "BLUE"
-    | "RED"
-    | "DESK"
-    | "WINDOW"
-    | "TILE"
-    | "LEAF";
+  bg: "GREEN" | "YELLOW" | "BLUE" | "RED" | "DESK" | "WINDOW" | "TILE" | "LEAF";
   isPictureBg: boolean;
   point: string | number;
   titleName: string;
@@ -25,6 +19,7 @@ interface Props {
 }
 
 export default function Card({
+  id,
   bg,
   isPictureBg = false,
   point = 0,
@@ -77,38 +72,40 @@ export default function Card({
     .slice(0, 3);
 
   return (
-    <div
-      className={`flex-shrink-0 w-[240px] h-[180px] md:w-[358px] md:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}
-    >
-      <Point
-        point={point}
-        pointBg={settings.bg}
-        pointTextColor={settings.pointTextColor}
-      />
-      <div className="flex gap-0.5 mt-1.5 xl:mt-0">
-        <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>
-          {titleName}
-        </p>
-        <p className={`font-bold xl:text-[18px] ${settings.titleStudyText}`}>
-          {titleStudy}
-        </p>
-      </div>
-      <p
-        className={`${settings.streakText} mt-1 xl:mt-[10px] text-[12px] xl:text-[14px]`}
+    <Link href={`/study/${id}`}>
+      <div
+        className={`flex-shrink-0 w-[240px] h-[180px] md:w-[358px] md:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}
       >
-        {coutinueDays}일째 진행 중
-      </p>
-      <p
-        className={`${settings.descriptionText} mt-3 xl:mt-[30px] text-[12px] xl:text-[14px]`}
-      >
-        {description}
-      </p>
-      {/* 하단 3개 칩 가로로 나열 */}
-      <div className="flex gap-1 mt-3">
-        {/* {top3Reactions.map(([reaction, count]) => (
+        <Point
+          point={point}
+          pointBg={settings.bg}
+          pointTextColor={settings.pointTextColor}
+        />
+        <div className="flex gap-0.5 mt-1.5 xl:mt-0">
+          <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>
+            {titleName}
+          </p>
+          <p className={`font-bold xl:text-[18px] ${settings.titleStudyText}`}>
+            {titleStudy}
+          </p>
+        </div>
+        <p
+          className={`${settings.streakText} mt-1 xl:mt-[10px] text-[12px] xl:text-[14px]`}
+        >
+          {coutinueDays}일째 진행 중
+        </p>
+        <p
+          className={`${settings.descriptionText} mt-3 xl:mt-[30px] text-[12px] xl:text-[14px]`}
+        >
+          {description}
+        </p>
+        {/* 하단 3개 칩 가로로 나열 */}
+        <div className="flex gap-1 mt-3">
+          {/* {top3Reactions.map(([reaction, count]) => (
           // <Tag
         ))} */}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
