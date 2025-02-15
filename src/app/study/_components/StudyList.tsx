@@ -12,12 +12,18 @@ export default function StudyList() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const listEndRef = useRef<HTMLDivElement>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedTerm, setDebouncedTerm] = useState("");
 
-  const fetchStudies = async (page: number, option: string = "date_desc") => {
+  const fetchStudies = async (
+    page: number = 1,
+    sort: string = "date_desc",
+    search: string = ""
+  ) => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `${API_URL}/study?page=${page}&sort=${option}`
+        `${API_URL}/study?page=${page}&sort=${sort}&search=${search}`
       );
       console.log(response);
       const data = await response.json();
@@ -40,6 +46,18 @@ export default function StudyList() {
     fetchStudies(1);
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedTerm(searchTerm);
+      console.log(searchTerm);
+      fetchStudies(1, "date_desc", searchTerm);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchTerm]);
+
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
@@ -48,7 +66,7 @@ export default function StudyList() {
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setSearchTerm(e.target.value);
   };
 
   const handleOptionChange = (option: string) => {
@@ -80,7 +98,7 @@ export default function StudyList() {
       <p className="text-2xl font-extrabold">스터디 둘러보기</p>
       {/* 검색, 메뉴 영역 */}
       <div className="flex flex-col md:flex-row justify-between items-center mt-4 md:mt-6 gap-4 md:gap-0">
-        <SearchBar onChange={handleSearch} />
+        <SearchBar onChange={handleSearch} value={searchTerm} />
         <Menu
           options={["최신 순", "오래된 순", "포인트 많은 순", "포인트 적은 순"]}
           onOptionChange={handleOptionChange}
