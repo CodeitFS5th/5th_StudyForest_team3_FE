@@ -41,7 +41,7 @@ export default function TimerInput({
         value={minutesValue}
         onChange={(e) => onChange(e, "minutes")}
         onKeyDown={handleKeyDown}
-        className="border-0 outline-none bg-transparent p-0 m-0 text-right w-[120px] md:w-[200px] xl:w-[250px] text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400"
+        className="w-[3ch] border-0 outline-none bg-transparent p-0 m-0 text-right text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400"
       />
       <span className="text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400">
         :
@@ -51,7 +51,7 @@ export default function TimerInput({
         value={secondsValue}
         onChange={(e) => onChange(e, "seconds")}
         onKeyDown={handleKeyDown}
-        className="border-0 outline-none bg-transparent p-0 m-0 w-[120px] md:w-[200px] xl:w-[250px] text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400"
+        className="w-[3ch] border-0 outline-none bg-transparent p-0 m-0 text-[80px] md:text-[120px] xl:text-[150px] font-[800] text-custom-color-black-400"
       />
     </div>
   );

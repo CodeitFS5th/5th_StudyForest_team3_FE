@@ -14,19 +14,23 @@ export default function TimerTime({
   if (!isActive) return null;
 
   return (
-    <div className="flex justify-center items-center pb-[17px] md:pb-[50px]">
+    <div
+      className={`flex justify-center items-center pb-[17px] md:pb-[50px] ${
+        minutes[0] === "-" ? "translate-x-[20px] xl:translate-x-[30px]" : ""
+      }`}
+    >
       <span
-        className={`text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
+        className={`w-[3ch] text-right text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
       >
         {minutes}
       </span>
       <span
-        className={`text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
+        className={`text-center text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
       >
         :
       </span>
       <span
-        className={`text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
+        className={`w-[3ch] text-left text-[80px] md:text-[120px] xl:text-[150px] font-[800] ${timerColor}`}
       >
         {seconds}
       </span>
