@@ -14,7 +14,7 @@ export default function HabitItemDeleteButton({
     <button
       type="button"
       onClick={onDelete}
-      className="bg-custom-color-card-pink p-3 rounded-full cursor-pointer"
+      className="bg-custom-color-card-red p-3 rounded-full cursor-pointer"
     >
       <Image src={icon_trash} width={24} height={24} alt="습관 삭제 버튼" />
     </button>
