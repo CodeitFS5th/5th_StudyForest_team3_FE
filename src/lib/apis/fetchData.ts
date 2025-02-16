@@ -1,6 +1,15 @@
-const fetchData = async <T>(url: string): Promise<T | null> => {
+type Cache =
+  | { cache: "no-store" | "no-cache" | "force-cache" }
+  | { next: { revalidate: number } }
+  | { next: { tags: string[] } };
+
+const fetchData = async <T>(
+  url: string,
+  cache: Cache = { cache: "no-store" }
+): Promise<T | null> => {
   try {
-    const data: T = await fetch(url).then((response) => response.json());
+    const response = await fetch(url, cache);
+    const data: T = await response.json();
     return data;
   } catch (error) {
     console.error(error);
