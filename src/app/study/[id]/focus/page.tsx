@@ -12,7 +12,7 @@ export default async function FocusPage({ params }: PageIdParams) {
   const { id: studyId } = await params;
 
   const studyData = await fetchData<Study>(`${API_URL}/study/${studyId}`, {
-    cache: "no-cache",
+    next: { tags: [`study-${studyId}`] },
   });
 
   if (!studyData) {

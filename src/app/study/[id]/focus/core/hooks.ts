@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useToastMount } from "@/hooks/useToastMount";
-import updatePoint from "@/lib/apis/updatePoint";
+import updateStudyPointAction from "@/lib/actions/update-study-point.action";
 
 export const useFocus = ({
   studyId,
@@ -116,7 +116,7 @@ export const useFocus = ({
   // 포인트 증가
   const handlePointIncrease = async () => {
     const newPoint = point + POINT_INCREASE;
-    const updatedStudy = await updatePoint({
+    await updateStudyPointAction({
       studyId: Number(studyId),
       point: newPoint,
     });
