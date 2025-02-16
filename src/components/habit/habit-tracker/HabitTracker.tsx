@@ -7,7 +7,7 @@ interface HabitTrackerProps {
   studyId: FK<Habit, "studyId">;
 }
 
-const WEEKDAYS = ["월", "화", "수", "목", "금", "토", "일"];
+const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default async function HabitTracker({ studyId }: HabitTrackerProps) {
   const habitList = await fetchData<Habit[]>(
