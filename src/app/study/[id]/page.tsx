@@ -8,13 +8,14 @@ import {
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
 import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
+
 // 경로 미리 생성
 export async function generateStaticParams() {
   try {
     const studyList = await fetchData<Study[]>(`${API_URL}/study`);
 
     if (!studyList) {
-      return;
+      return { id: 1 };
     }
 
     return studyList.map((study) => ({ id: study.id }));
