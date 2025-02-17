@@ -1,4 +1,4 @@
-import { PageIdParams, Study } from "@/types";
+import { PageIdParams, Study, Reaction } from "@/types";
 import Management from "@/components/management/Management";
 import { API_URL } from "@/constants";
 import fetchData from "@/lib/apis/fetchData";
@@ -8,24 +8,20 @@ import {
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
 import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
-import TagReactions from "@/components/tag/TagReactions";
+import Top3Reactions from "@/components/tag/Top3Reactions";
 import Point from "@/components/tag/Point";
+import RestReactions from "@/components/tag/RestReactions";
 
-// 경로 미리 생성
-export async function generateStaticParams() {
-  try {
-    const studyList = await fetchData<Study[]>(`${API_URL}/study`);
+// 반응을 top3 필터링하는 함수
+const filterReactions = (reactions: Reaction) => {
+  const filtered = Object.entries(reactions).sort(([, a], [, b]) => b - a);
 
-    if (!studyList) {
-      return { id: 1 };
-    }
+  const lastIndex = filtered.length < 3 ? filtered.length : 3;
+  const top3Reactions = Object.fromEntries(filtered.slice(0, lastIndex));
+  const restReactions = Object.fromEntries(filtered.slice(3)) || {};
 
-    return studyList.map((study) => ({ id: study.id }));
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
+  return { top3Reactions, restReactions };
+};
 
 export default async function Page({ params }: PageIdParams) {
   const { id } = await params;
@@ -39,12 +35,14 @@ export default async function Page({ params }: PageIdParams) {
   }
 
   const { nick, name, description, point, reactions } = study;
+  const { top3Reactions, restReactions } = filterReactions(reactions);
 
   return (
     <>
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
         <div className="flex gap-1 relative">
-          <TagReactions reactions={reactions} />
+          <Top3Reactions reactions={top3Reactions} />
+          <RestReactions reactions={restReactions} />
           <ButtonAddEmojiWrapper />
         </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />
@@ -60,7 +58,7 @@ export default async function Page({ params }: PageIdParams) {
         </div>
       </section>
 
-      <section className="mb-6 ">
+      <section className="mb-6">
         <h3 className="text-custom-color-black-300 text-lg mb-2">소개</h3>
         <p className="text-custom-color-black-400">{description}</p>
       </section>
