@@ -44,11 +44,11 @@ const Input = ({
     useInputPasswordVisibility(type);
 
   return (
-    <div className="w-full">
+    <div className="w-full mt-[8px] mb-[8px]">
       {name && (
         <label
           htmlFor={name}
-          className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]"
+          className="inline-block mb-[16px] text-custom-color-black-400 text-[16px] font-[600]"
         >
           {name}
         </label>

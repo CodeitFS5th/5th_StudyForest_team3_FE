@@ -9,7 +9,7 @@ export interface InputProps
   type: InputType;
   value: string;
   isRequired?: boolean;
-  validate?: (value: string) => ZodError | boolean;
+  validate?: (value: string) => Error | boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -25,7 +25,7 @@ export interface TextareaProps
 
 export interface UseInputFieldValidationProps {
   value: string;
-  validate?: (value: string) => ZodError | boolean;
+  validate?: (value: string) => Error | boolean;
   isRequired?: boolean;
 }
 export interface InputFieldValidationProps {
