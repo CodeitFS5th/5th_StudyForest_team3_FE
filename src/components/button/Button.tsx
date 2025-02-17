@@ -28,10 +28,10 @@ const buttonBGColorStyle = {
 };
 
 const buttonShadowColorStyle = {
-  [BGColor.GREEN]: "shadow-custom-color-text-green",
-  [BGColor.DARK_GREEN]: "shadow-custom-color-brand",
-  [BGColor.GRAY]: "shadow-custom-color-black-300",
-  [BGColor.DARK_GRAY]: "shadow-custom-color-black-400",
+  [BGColor.GREEN]: "bg-custom-color-text-green",
+  [BGColor.DARK_GREEN]: "bg-custom-color-brand",
+  [BGColor.GRAY]: "bg-custom-color-black-300",
+  [BGColor.DARK_GRAY]: "bg-custom-color-black-400",
 };
 
 //extends 타입에서는 제한한다.
@@ -51,11 +51,11 @@ export default function Button({
   ...props // 맨 마지막에 위치해야 함 (type, disabled, onClick 등의 props를 받기 위함)
 }: ButtonProps) {
   const baseStyle = "w-full py-[12px] md:py-[14px] cursor-pointer";
-  const bgColorStyle = buttonBGColorStyle[bgColor];
   const shapeStyle = buttonShapeStyle[shape];
   const shadowStyle = is3d
     ? `shadow-[0_3px] ${buttonShadowColorStyle[bgColor]}`
-    : "shadow-none";
+    : ""; // shadow 관련 tailwind style 작성 필요
+  const bgColorStyle = buttonBGColorStyle[bgColor];
 
   return (
     <button

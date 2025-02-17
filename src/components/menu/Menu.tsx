@@ -56,7 +56,7 @@ const DropDownList = ({
   options: string[];
 }) => {
   return (
-    <ul className="absolute left-0 mt-2 w-[180px] bg-white border border-gray-300 rounded-[15px] shadow-lg z-10">
+    <ul className="absolute left-0 mt-2 w-[180px] bg-white border border-gray-300 rounded-[15px] shadow-lg">
       {options.map((item, index) => (
         <li key={index} className="relative">
           <button

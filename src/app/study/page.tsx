@@ -1,5 +1,5 @@
 
-export default function StudyCreatePage() {
+export default function StudyPage() {
   return (
       <div>
 
