@@ -67,3 +67,5 @@ export type DoneLogs = Record<Week, boolean>;
 
 type InputToCheck = "nick" | "name" | "description" | "password" | "background";
 export type InputData = Pick<Study, InputToCheck>;
+
+export type Reaction = Record<string, number>;

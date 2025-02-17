@@ -54,7 +54,7 @@ export default async function createStudyAction(
     return {
       status: false,
       message: "스터디 생성에 실패하였습니다.",
-      path: "/study/create",
+      path: "",
     };
   }
 }
