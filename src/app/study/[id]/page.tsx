@@ -27,7 +27,7 @@ export default async function Page({ params }: PageIdParams) {
   const { id } = await params;
 
   const study = await fetchData<Study>(`${API_URL}/study/${id}`, {
-    cache: "no-cache",
+    next: { tags: [`study-${id}`] },
   });
 
   if (!study) {
@@ -43,7 +43,7 @@ export default async function Page({ params }: PageIdParams) {
         <div className="flex gap-1 relative">
           <Top3Reactions reactions={top3Reactions} />
           <RestReactions reactions={restReactions} />
-          <ButtonAddEmojiWrapper />
+          <ButtonAddEmojiWrapper studyId={id} />
         </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />
       </section>
