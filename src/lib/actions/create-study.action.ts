@@ -40,10 +40,13 @@ export default async function createStudyAction(
       }),
     });
 
+    const study = await response.json();
+
     if (response.ok) {
       return {
         status: true,
         message: "스터디가 생성되었습니다.",
+        path: `/study/${study.id}`,
       };
     }
   } catch (error) {
@@ -51,6 +54,7 @@ export default async function createStudyAction(
     return {
       status: false,
       message: "스터디 생성에 실패하였습니다.",
+      path: "/study/create",
     };
   }
 }

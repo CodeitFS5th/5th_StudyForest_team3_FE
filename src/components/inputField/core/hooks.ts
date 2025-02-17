@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import {
@@ -15,7 +15,7 @@ export const useInputFieldValidation = ({
   validate,
   isRequired = false,
 }: UseInputFieldValidationProps) => {
-  const isFirstRender = useRef(true);
+  const previousValue = useRef(value);
 
   const [validationStatus, setValidationStatus] =
     useState<InputFieldValidationProps>({
@@ -28,10 +28,15 @@ export const useInputFieldValidation = ({
     });
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
+    if (previousValue.current === "") {
+      previousValue.current = value;
       return;
     }
+
+    if (previousValue.current !== value) {
+      previousValue.current = value;
+    }
+
     let errorType: InputErrorType = "none";
     let errorMessage = "";
 

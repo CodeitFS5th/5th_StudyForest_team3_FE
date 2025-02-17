@@ -38,7 +38,7 @@ const Textarea = ({
       {name && (
         <label
           htmlFor={name}
-          className="mb-[16px] text-custom-color-black-400 text-[18px] font-[600]"
+          className="inline-block mb-[16px] text-custom-color-black-400 text-[16px] font-[600]"
         >
           {name}
         </label>
