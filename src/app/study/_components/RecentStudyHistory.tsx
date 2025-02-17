@@ -29,28 +29,7 @@ export default function RecentStudyHistory() {
         ) : (
           <div className="flex flex-row flex-nowrap overflow-x-auto gap-x-6 w-full h-[180px] md:h-[270px]">
             {studies.map((study) => (
-              <Card
-                id={study.id}
-                key={study.id}
-                bg={
-                  study.background.toUpperCase() as
-                    | "GREEN"
-                    | "YELLOW"
-                    | "BLUE"
-                    | "RED"
-                    | "DESK"
-                    | "WINDOW"
-                    | "TILE"
-                    | "LEAF"
-                }
-                isPictureBg={false}
-                point={study.point}
-                titleName={study.nick}
-                titleStudy={study.name}
-                date={study.createdAt}
-                description={study.description}
-                reactions={study.reactions}
-              />
+              <Card key={study.id} study={study} />
             ))}
           </div>
         )}
