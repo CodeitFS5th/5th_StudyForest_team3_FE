@@ -6,7 +6,7 @@ type Props = {
   point: number;
 };
 
-export default function Point({ point }: Props) {
+export default function TimerPoint({ point }: Props) {
   return (
     <section className="flex flex-col gap-[8px]">
       <span className="text-[16px] md:text-[18px] font-[400] text-custom-color-black-300">

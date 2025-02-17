@@ -5,7 +5,7 @@ import {
   ButtonTodayHabit,
   ButtonStudyHome,
 } from "@/components/button/ButtonToday";
-import Point from "./_components/Point";
+import TimerPoint from "./_components/TimerPoint";
 import Timer from "./_components/Timer";
 
 export default async function FocusPage({ params }: PageIdParams) {
@@ -39,7 +39,7 @@ export default async function FocusPage({ params }: PageIdParams) {
             </div>
           </div>
         </section>
-        <Point point={studyPoint} />
+        <TimerPoint point={studyPoint} />
         <Timer studyId={Number(studyId)} initialPoint={studyPoint} />
       </div>
     </div>
