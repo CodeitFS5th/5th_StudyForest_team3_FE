@@ -8,6 +8,8 @@ import {
   ButtonTodayHabit,
 } from "@/components/button/ButtonToday";
 import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
+import TagReactions from "@/components/tag/TagReactions";
+import Point from "@/components/tag/Point";
 
 // 경로 미리 생성
 export async function generateStaticParams() {
@@ -36,13 +38,13 @@ export default async function Page({ params }: PageIdParams) {
     return <div>스터디를 찾을 수 없습니다.</div>;
   }
 
-  const { nick, name, description, point } = study;
+  const { nick, name, description, point, reactions } = study;
 
   return (
     <>
       <section className="flex flex-col-reverse gap-4 md:flex-row justify-between mb-6">
         <div className="flex gap-1 relative">
-          <div>emoji component</div>
+          <TagReactions reactions={reactions} />
           <ButtonAddEmojiWrapper />
         </div>
         <Management title={`${nick}의 ${name}`} studyId={id} />
@@ -63,12 +65,7 @@ export default async function Page({ params }: PageIdParams) {
         <p className="text-custom-color-black-400">{description}</p>
       </section>
 
-      <section>
-        <h3 className="text-custom-color-black-300 text-lg mb-2">
-          현재까지 획득한 포인트
-        </h3>
-        {point} chip component
-      </section>
+      <Point point={point} />
 
       <section className="overflow-auto p-4 md:p-6 rounded-2xl border border-custom-color-black-200 mt-6 xl:mt-10">
         <HabitTracker studyId={id} />
