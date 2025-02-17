@@ -119,9 +119,9 @@ export function ButtonMakeStudy({
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <div className="w-[106px] md:w-[160px] xl:w-[252px]">
+    <div className="w-[106px]  md:w-[160px] xl:w-[252px]">
       <ButtonRectangle bgColor={BGColor.GREEN} {...props}>
-        스터디 만들기
+        <span className="text-[12px] md:text-[18px]">스터디 만들기</span>
       </ButtonRectangle>
     </div>
   );

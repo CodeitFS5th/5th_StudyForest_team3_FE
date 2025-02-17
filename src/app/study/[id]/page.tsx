@@ -12,6 +12,7 @@ import Top3Reactions from "@/components/tag/Top3Reactions";
 import Point from "@/components/tag/Point";
 import RestReactions from "@/components/tag/RestReactions";
 
+
 // 반응을 top3 필터링하는 함수
 const filterReactions = (reactions: Reaction) => {
   const filtered = Object.entries(reactions).sort(([, a], [, b]) => b - a);

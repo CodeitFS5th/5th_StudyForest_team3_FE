@@ -9,7 +9,6 @@ import {
 } from "./types";
 import { ZodError } from "zod";
 
-// 입력 필드 유효성 검사 훅
 export const useInputFieldValidation = ({
   value,
   validate,
@@ -76,7 +75,7 @@ export const useInputFieldValidation = ({
             error: { type: errorType, message: errorMessage },
           }
     );
-  }, [value]);
+  }, [value, isRequired, validate]);
 
   return { validationStatus };
 };
@@ -87,7 +86,7 @@ export const useInputPasswordVisibility = (initialType: InputType) => {
   const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => {
-    setIsInputVisible(() => !isInputVisible);
+    setIsInputVisible(() => !inputType);
     setInputType(() => (inputType === "password" ? "text" : "password"));
   };
 

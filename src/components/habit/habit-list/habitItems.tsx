@@ -23,7 +23,7 @@ export default function HabitItems({ studyId }: { studyId: number }) {
     }
 
     fetchHabits();
-  }, []);
+  }, [studyId]);
 
   const handleUpdate = (id: PK<Habit | NewHabit>, habitName: string) => {
     setHabitList((prevList) =>

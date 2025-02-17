@@ -49,13 +49,16 @@ export default function StudyList() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedTerm(searchTerm);
-      fetchStudies(1, "date_desc", searchTerm);
     }, 1000);
 
     return () => {
       clearTimeout(timer);
     };
   }, [searchTerm]);
+
+  useEffect(() => {
+    fetchStudies(1, "date_desc", debouncedTerm);
+  }, [debouncedTerm]);
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
@@ -92,22 +95,17 @@ export default function StudyList() {
     fetchStudies(1, sortOption);
   };
 
-  // 스터디 카드 처리
   const handleCardClick = (study: Study) => {
-    // localStorage에서 기존 데이터 가져오기
     const existingStudies = JSON.parse(
       localStorage.getItem("recentStudies") || "[]"
     );
 
-    // 중복 제거 (이미 있는 스터디는 제거)
     const filteredStudies = existingStudies.filter(
       (s: Study) => s.id !== study.id
     );
 
-    // 새로운 스터디를 배열 맨 앞에 추가 (최대 10개 유지)
     const newStudies = [study, ...filteredStudies].slice(0, 10);
 
-    // localStorage에 저장
     localStorage.setItem("recentStudies", JSON.stringify(newStudies));
   };
 
@@ -137,7 +135,17 @@ export default function StudyList() {
             <div key={study.id} onClick={() => handleCardClick(study)}>
               <Card
                 id={study.id}
-                bg={study.background}
+                bg={
+                  study.background.toUpperCase() as
+                    | "GREEN"
+                    | "YELLOW"
+                    | "BLUE"
+                    | "RED"
+                    | "DESK"
+                    | "WINDOW"
+                    | "TILE"
+                    | "LEAF"
+                }
                 isPictureBg={false}
                 point={study.point}
                 titleName={study.nick}
