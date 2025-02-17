@@ -1,4 +1,5 @@
-import Point from "@/components/Point/Point";
+import Point from "@/components/tag/Point";
+
 import Link from "next/link";
 
 interface Props {
@@ -64,21 +65,12 @@ Props) {
     (new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24)
   );
 
-  // // reactions 객체에서 좋아요 개수가 많은 상위 3개를 추출
-  // const top3Reactions = Object.entries(reactions)
-  //   .sort((a, b) => b[1] - a[1])
-  //   .slice(0, 3);
-
   return (
     <Link href={`/study/${id}`}>
       <div
         className={`flex-shrink-0 w-[240px] h-[180px] md:w-[358px] md:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}
       >
-        <Point
-          point={point}
-          pointBg={settings.bg}
-          pointTextColor={settings.pointTextColor}
-        />
+        <Point point={+point} />
         <div className="flex gap-0.5 mt-1.5 xl:mt-0">
           <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>
             {titleName}

@@ -1,6 +1,7 @@
 // app/page.tsx (Server Component)
 "use client";
 
+import { PK, Study } from "@/types";
 import dynamic from "next/dynamic";
 
 const ButtonAddEmoji = dynamic(
@@ -10,10 +11,14 @@ const ButtonAddEmoji = dynamic(
   }
 );
 
-export default function ButtonAddEmojiWrapper() {
+export default function ButtonAddEmojiWrapper({
+  studyId,
+}: {
+  studyId: PK<Study>;
+}) {
   return (
     <div className="relative">
-      <ButtonAddEmoji />
+      <ButtonAddEmoji studyId={studyId} />
     </div>
   );
 }
