@@ -1,5 +1,3 @@
-import Image from "next/image";
-import pointIcon from "../../../assets/images/icon/point.png";
 import Point from "@/components/Point/Point";
 import Link from "next/link";
 
@@ -27,8 +25,8 @@ export default function Card({
   titleStudy = "의 테스트 스터디",
   date = "",
   description = "테스트 설명",
-  reactions = {},
-}: Props) {
+}: // reactions = {},
+Props) {
   const settings = {
     bg: "bg-custom-color-card-green",
     pointText: isPictureBg ? "text-white" : "text-custom-color-black-400",
@@ -66,10 +64,10 @@ export default function Card({
     (new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24)
   );
 
-  // reactions 객체에서 좋아요 개수가 많은 상위 3개를 추출
-  const top3Reactions = Object.entries(reactions)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3);
+  // // reactions 객체에서 좋아요 개수가 많은 상위 3개를 추출
+  // const top3Reactions = Object.entries(reactions)
+  //   .sort((a, b) => b[1] - a[1])
+  //   .slice(0, 3);
 
   return (
     <Link href={`/study/${id}`}>

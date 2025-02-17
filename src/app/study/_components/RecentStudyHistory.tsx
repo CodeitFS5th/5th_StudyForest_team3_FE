@@ -32,7 +32,17 @@ export default function RecentStudyHistory() {
               <Card
                 id={study.id}
                 key={study.id}
-                bg={study.background}
+                bg={
+                  study.background.toUpperCase() as
+                    | "GREEN"
+                    | "YELLOW"
+                    | "BLUE"
+                    | "RED"
+                    | "DESK"
+                    | "WINDOW"
+                    | "TILE"
+                    | "LEAF"
+                }
                 isPictureBg={false}
                 point={study.point}
                 titleName={study.nick}

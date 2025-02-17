@@ -1,5 +1,5 @@
 type Props = {
-  isActive: Boolean;
+  isActive: boolean;
   minutes: string;
   seconds: string;
   timerColor: string;

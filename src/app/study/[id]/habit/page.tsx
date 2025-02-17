@@ -1,4 +1,4 @@
-import { PageIdParams, Habit, Study } from "@/types";
+import { PageIdParams, Study } from "@/types";
 import TodayHabitHead from "@/components/habit/habit-today/TodayHabitHead";
 import TodayHabitItems from "@/components/habit/habit-today/TodayHabitItems";
 import CurrentTime from "@/components/habit/habit-today/currentTime";

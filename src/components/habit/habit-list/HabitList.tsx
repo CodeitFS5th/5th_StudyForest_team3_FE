@@ -22,7 +22,7 @@ export default function HabitList({ studyId, onClose }: IHabitList) {
     if (state && !isPending) {
       onClose();
     }
-  }, [state]);
+  }, [state, isPending, onClose]);
 
   return (
     <form

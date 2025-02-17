@@ -9,22 +9,6 @@ import {
 } from "@/components/button/ButtonToday";
 import ButtonAddEmojiWrapper from "@/components/ButtonAddEmoji/ButtonAddEmojiWrapper";
 
-// 경로 미리 생성
-export async function generateStaticParams() {
-  try {
-    const studyList = await fetchData<Study[]>(`${API_URL}/study`);
-
-    if (!studyList) {
-      return { id: 1 };
-    }
-
-    return studyList.map((study) => ({ id: study.id }));
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
 export default async function Page({ params }: PageIdParams) {
   const { id } = await params;
 

@@ -54,7 +54,14 @@ export default function AuthPassword({
       mountPositiveToast(); // 성공 토스트
       router.push(state?.path); // 경로 이동
     }
-  }, [state]);
+  }, [
+    state,
+    isPending,
+    onClose,
+    mountNegativeToast,
+    mountPositiveToast,
+    router,
+  ]);
 
   return (
     <>
