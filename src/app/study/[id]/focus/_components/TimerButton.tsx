@@ -5,11 +5,7 @@ import {
 } from "@/components/button/ButtonRound";
 import { ButtonRestart, ButtonPause } from "@/components/button/ButtonCircle";
 
-export default function TimerButton({
-  isFocusStart,
-  isSuccess,
-  handleTimer,
-}: {
+type Props = {
   isFocusStart: boolean;
   isSuccess: boolean;
   handleTimer: {
@@ -17,7 +13,13 @@ export default function TimerButton({
     pause: () => void;
     stop: () => void;
   };
-}) {
+};
+
+export default function TimerButton({
+  isFocusStart,
+  isSuccess,
+  handleTimer,
+}: Props) {
   return (
     <div className="flex gap-[8px]">
       <div>

@@ -14,7 +14,7 @@ export const Toast = ({
   const style = {
     color: {
       green: "bg-custom-color-card-green text-custom-color-text-green",
-      red: "bg-custom-color-card-pink text-custom-color-red-200",
+      red: "bg-custom-color-card-red text-custom-color-red-200",
     },
     emoji: {
       green: "🎉",

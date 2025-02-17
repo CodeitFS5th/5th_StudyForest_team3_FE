@@ -1,22 +1,18 @@
 import fetchData from "@/lib/apis/fetchData";
-import { Study } from "@/types";
+import { PageIdParams, Study } from "@/types";
 import { API_URL } from "@/constants";
 import {
   ButtonTodayHabit,
   ButtonStudyHome,
 } from "@/components/button/ButtonToday";
-import Point from "./_components/Point";
+import TimerPoint from "./_components/TimerPoint";
 import Timer from "./_components/Timer";
 
-export default async function FocusPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const studyId = params.id;
+export default async function FocusPage({ params }: PageIdParams) {
+  const { id: studyId } = await params;
 
   const studyData = await fetchData<Study>(`${API_URL}/study/${studyId}`, {
-    cache: "no-cache",
+    next: { tags: [`study-${studyId}`] },
   });
 
   if (!studyData) {
@@ -43,7 +39,7 @@ export default async function FocusPage({
             </div>
           </div>
         </section>
-        <Point point={studyPoint} />
+        <TimerPoint point={studyPoint} />
         <Timer studyId={Number(studyId)} initialPoint={studyPoint} />
       </div>
     </div>
