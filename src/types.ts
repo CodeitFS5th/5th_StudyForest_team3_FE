@@ -16,6 +16,7 @@ export interface Habit {
   id: number;
   name: string;
   logs: HabitLog[];
+  isConfirm: boolean;
   studyId: number;
   createdAt: Date;
 }
@@ -49,7 +50,7 @@ export interface NewHabit {
 export type StudyTitle = `${string}의 ${string}`;
 
 export interface HabitLog {
-  id: number;
+  id?: number;
   habitId: PK<Habit>;
   createdAt: Date;
 }

@@ -11,7 +11,7 @@ const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default async function HabitTracker({ studyId }: HabitTrackerProps) {
   const habitList = await fetchData<Habit[]>(
-    `${API_URL}/study/${studyId}/habit`
+    `${API_URL}/study/${studyId}/habit-log-list`
   );
 
   if (!habitList) {
