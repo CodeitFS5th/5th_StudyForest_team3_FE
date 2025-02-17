@@ -1,59 +1,64 @@
-// "use client";
+"use client";
+
 import { API_URL } from "@/constants";
 import fetchData from "@/lib/apis/fetchData";
-import { Habit, habitStatus, FK, PK } from "@/types";
-// import { useState } from "react";
-
-interface TodayHabitItemProps {
-  habit: Habit;
-}
-
-// 용도 변화줄려고 하는거고
-// api 호출은 한번만
-function TodayHabitItem({ habit }: TodayHabitItemProps) {
-  // const [habitStatus, setHabitStatus] = useState(null);
-
-  // const handleToggle = async (habitId: PK<Habit>) => {
-  //   try {
-  //     const res = await fetch(`${API_URL}/study/${habitId}/log/toggle`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //     const data = res.json();
-  //     console.log("data", data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const ColorStyle =
-  //   data.status === habitStatus.DONE
-  //     ? "bg-custom-color-brand text-white"
-  //     : "bg-custom-color-black-100 text-custom-color-black-300";
-
-  return (
-    <button
-      className={`bg-custom-color-brand text-white text-[16px] py-[18px] rounded-3xl cursor-pointer`}
-      // onClick={() => handleToggle(habit.id)}
-    >
-      {habit.name}
-    </button>
-  );
-}
+import { Habit } from "@/types";
+import TodayHabitItem from "./TodayHabitItem";
+import { useState, useEffect } from "react";
 
 interface TodayHabitItemsProps {
   studyId: number;
 }
 
-//습관 목록 ui
-export default async function TodayHabitItems({
-  studyId,
-}: TodayHabitItemsProps) {
-  const habitList = await fetchData<Habit[]>(
-    `${API_URL}/study/${studyId}/habit`
+// 🚀 클라이언트 컴포넌트 (상태 관리 & API 요청)
+export default function TodayHabitItems({ studyId }: TodayHabitItemsProps) {
+  const [habitList, setHabitList] = useState<Habit[]>([]);
+  const [activeStates, setActiveStates] = useState<{ [key: number]: boolean }>(
+    {}
   );
+
+  useEffect(() => {
+    const fetchHabits = async () => {
+      const data = await fetchData<Habit[]>(
+        `${API_URL}/study/${studyId}/habit`
+      );
+      if (!data) {
+        return [];
+      }
+      setHabitList(data);
+      console.log("data", data);
+      const initialStates: { [key: number]: boolean } = {};
+      data.forEach((habit) => {
+        initialStates[habit.id] = false;
+      });
+      setActiveStates(initialStates);
+    };
+
+    fetchHabits();
+  }, [studyId]);
+
+  const handleToggle = async (habit: Habit) => {
+    try {
+      const res = await fetch(`${API_URL}/study/${studyId}/habit`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([
+          { id: habit.id, name: habit.name, studyId: habit.studyId },
+        ]),
+      });
+      console.log("res", res);
+      if (!res.ok) throw new Error("습관 상태 변경 실패");
+
+      setActiveStates((prev) => ({
+        ...prev,
+        [habit.id]: !prev[habit.id],
+      }));
+    } catch (error) {
+      console.error("습관 상태 변경 오류:", error);
+    }
+  };
 
   if (!habitList || habitList.length < 1) {
     return (
@@ -63,13 +68,17 @@ export default async function TodayHabitItems({
       </div>
     );
   }
+
   return (
-    <>
-      <div className="flex flex-col justify-center   w-[280px] md:w-[400px] gap-[12px] md:gap-[20px]">
-        {habitList.map((habit) => (
-          <TodayHabitItem key={habit.id} habit={habit} />
-        ))}
-      </div>
-    </>
+    <div className="flex flex-col justify-center w-[280px] md:w-[400px] gap-[12px] md:gap-[20px]">
+      {habitList.map((habit) => (
+        <TodayHabitItem
+          key={habit.id}
+          habit={habit}
+          isActive={activeStates[habit.id]}
+          onClick={() => handleToggle(habit)}
+        />
+      ))}
+    </div>
   );
 }
