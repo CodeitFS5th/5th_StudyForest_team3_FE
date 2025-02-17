@@ -33,8 +33,6 @@ const Textarea = ({
 
   const textareaHeight = height ? `${height}px` : "98px";
 
-  console.log(name, validationStatus);
-
   return (
     <div className="w-full">
       {name && (

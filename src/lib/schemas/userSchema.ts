@@ -7,8 +7,6 @@ export const userEmailSchema = z
 
 export const userPasswordSchema = z
   .string()
-  .min(8, "비밀번호는 최소 8자 이상이어야 합니다.")
-  .regex(/[A-Z]/, "대문자를 최소 1개 포함해야 합니다.")
-  .regex(/[a-z]/, "소문자를 최소 1개 포함해야 합니다.")
-  .regex(/[0-9]/, "숫자를 최소 1개 포함해야 합니다.")
-  .regex(/[\W_]/, "특수문자를 최소 1개 포함해야 합니다.");
+  .min(12, "비밀번호는 최소 12자 이상이어야 합니다.");
+
+export const userPasswordConfirmSchema = z.string();
