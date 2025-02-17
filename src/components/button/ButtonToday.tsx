@@ -1,10 +1,8 @@
-"use client";
-
 import Image from "next/image";
 import ArrowIcon from "@/assets/images/icon/ic_arrow_right.png";
 import { ButtonHTMLAttributes, ReactNode } from "react";
-import { useRouter } from "next/navigation";
 import { StudyIdInHabit } from "@/types";
+import Link from "next/link";
 
 const IMAGE = {
   ARROW: { ICON: ArrowIcon, ALT: "방향 버튼" },
@@ -34,31 +32,25 @@ export default function ButtonToday({ children, ...props }: ButtonTodayProps) {
 }
 
 export function ButtonTodayHabit({ studyId }: StudyIdInHabit) {
-  const router = useRouter();
-
   return (
-    <ButtonToday onClick={() => router.push(`/study/${studyId}/habit`)}>
-      오늘의 습관
-    </ButtonToday>
+    <Link href={`/study/${studyId}/habit`}>
+      <ButtonToday>오늘의 습관</ButtonToday>
+    </Link>
   );
 }
 
 export function ButtonTodayFocus({ studyId }: StudyIdInHabit) {
-  const router = useRouter();
-
   return (
-    <ButtonToday onClick={() => router.push(`/study/${studyId}/focus`)}>
-      오늘의 집중
-    </ButtonToday>
+    <Link href={`/study/${studyId}/focus`}>
+      <ButtonToday>오늘의 집중</ButtonToday>
+    </Link>
   );
 }
 
 export function ButtonStudyHome({ studyId }: StudyIdInHabit) {
-  const router = useRouter();
-
   return (
-    <ButtonToday onClick={() => router.push(`/study/${studyId}/`)}>
-      홈
-    </ButtonToday>
+    <Link href={`/study/${studyId}/`}>
+      <ButtonToday>홈</ButtonToday>
+    </Link>
   );
 }
