@@ -53,7 +53,7 @@ export default function ButtonAddEmoji({ studyId }: { studyId: number }) {
       </button>
 
       {open && (
-        <div className="absolute top-[45px] p-[12px] border border-custom-color-black-200 rounded-[15px] bg-white drop-shadow-lg">
+        <div className="absolute top-[45px] border border-custom-color-black-200 rounded-[15px] bg-white drop-shadow-lg">
           <EmojiPicker open={open} onEmojiClick={handleEmojiClick} />
           {isPending && <div>loading...</div>}
         </div>

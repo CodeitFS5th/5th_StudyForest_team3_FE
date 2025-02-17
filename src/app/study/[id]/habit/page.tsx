@@ -35,7 +35,7 @@ export default async function Page({ params }: PageIdParams) {
       </section>
 
       <section className="flex flex-col justify-center items-center gap-[24px] p-4 md:p-6 rounded-2xl border border-custom-color-black-200 mt-6 xl:mt-10">
-        <TodayHabitHead />
+        <TodayHabitHead studyId={id} />
         <TodayHabitItems studyId={id} />
       </section>
     </>
