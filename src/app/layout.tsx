@@ -19,6 +19,9 @@ const jeju = localFont({
 export const metadata: Metadata = {
   title: "공부의 숲",
   description: "CodeIt 5기 3팀",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
