@@ -1,4 +1,3 @@
-import Point from "@/components/tag/Point";
 import { Study } from "@/types";
 import Link from "next/link";
 import Image from "next/image";

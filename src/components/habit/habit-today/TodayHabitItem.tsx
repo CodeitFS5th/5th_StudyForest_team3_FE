@@ -4,11 +4,7 @@ import { API_URL } from "@/constants";
 import { Habit } from "@/types";
 import { useState } from "react";
 
-interface TodayHabitItemProps {
-  habitList: Habit[];
-}
-
-export default function TodayHabitItem({ habitList }: TodayHabitItemProps) {
+export default function TodayHabitItem({ habitList }: { habitList: Habit[] }) {
   const [updatedHabitList, setUpdatedHabitList] = useState<Habit[]>(habitList);
 
   const handleToggle = async (habit: Habit) => {

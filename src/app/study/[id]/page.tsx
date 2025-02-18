@@ -12,6 +12,36 @@ import Top3Reactions from "@/components/tag/Top3Reactions";
 import Point from "@/components/tag/Point";
 import RestReactions from "@/components/tag/RestReactions";
 
+export async function generateMetadata({ params }: PageIdParams) {
+  const { id } = await params;
+
+  const response = await fetch(`${API_URL}/study/${id}`, {
+    cache: "force-cache",
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const study: Study = await response.json();
+
+  return {
+    title: `공부의 숲: ${study.nick}의 ${study.name}`,
+    description: study.description,
+    openGraph: {
+      title: `${study.nick}의 ${study.name}`,
+      description: study.description,
+      images: [
+        {
+          url: "/og-image.webp", // OG 이미지의 URL
+          width: 1200, // OG 이미지의 너비
+          height: 630, // OG 이미지의 높이
+          alt: "OG Image", // 대체 텍스트
+        },
+      ],
+    },
+  };
+}
 
 // 반응을 top3 필터링하는 함수
 const filterReactions = (reactions: Reaction) => {
