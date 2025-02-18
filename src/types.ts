@@ -16,6 +16,7 @@ export interface Habit {
   id: number;
   name: string;
   logs: HabitLog[];
+  isDone?: boolean;
   studyId: number;
   createdAt: Date;
 }
