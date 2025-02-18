@@ -25,7 +25,7 @@ export default async function TodayHabitItems({
 
   return (
     <div className="flex flex-col justify-center w-[280px] md:w-[400px] gap-[12px] md:gap-[20px]">
-      <TodayHabitItem habitList={habitList} studyId={studyId} />
+      <TodayHabitItem habitList={habitList} />
     </div>
   );
 }

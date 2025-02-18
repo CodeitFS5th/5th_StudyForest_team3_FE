@@ -6,23 +6,19 @@ import { useState } from "react";
 
 interface TodayHabitItemProps {
   habitList: Habit[];
-  studyId: number;
 }
 
-export default function TodayHabitItem({
-  habitList,
-  studyId,
-}: TodayHabitItemProps) {
+export default function TodayHabitItem({ habitList }: TodayHabitItemProps) {
   const [updatedHabitList, setUpdatedHabitList] = useState<Habit[]>(habitList);
 
   const handleToggle = async (habit: Habit) => {
     const newHabitList = updatedHabitList.map((h) =>
-      h.id === habit.id ? { ...h, isConfirm: !h.isConfirm } : h
+      h.id === habit.id ? { ...h, isDone: !h.isDone } : h
     );
 
     try {
       console.log(updatedHabitList);
-      const res = await fetch(`${API_URL}/study/${habit.id}/log/toggle`, {
+      const res = await fetch(`${API_URL}/habit/${habit.id}/log/toggle`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +40,7 @@ export default function TodayHabitItem({
         <button
           key={habit.id}
           className={`text-[16px] py-[18px] rounded-3xl cursor-pointer transition-colors ${
-            habit.isConfirm
+            habit.isDone
               ? "bg-custom-color-brand text-white"
               : "bg-custom-color-black-100 text-custom-color-black-300"
           }`}
