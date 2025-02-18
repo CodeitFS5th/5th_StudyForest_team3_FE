@@ -1,4 +1,4 @@
-import { PageIdParams, Study } from "@/types";
+import { Habit, PageIdParams, Study } from "@/types";
 import TodayHabitHead from "@/components/habit/habit-today/TodayHabitHead";
 import TodayHabitItems from "@/components/habit/habit-today/TodayHabitItems";
 import CurrentTime from "@/components/habit/habit-today/currentTime";
@@ -12,7 +12,10 @@ import { API_URL } from "@/constants";
 export default async function Page({ params }: PageIdParams) {
   const { id } = await params;
   const study = await fetchData<Study>(`${API_URL}/study/${id}`, {
-    cache: "no-cache",
+    next: { revalidate: 3 },
+  });
+  const habitList = await fetchData<Habit[]>(`${API_URL}/study/${id}/habit`, {
+    next: { tags: ["habit-list"] },
   });
 
   if (!study) return <div>Loading.......</div>;
@@ -36,7 +39,7 @@ export default async function Page({ params }: PageIdParams) {
 
       <section className="flex flex-col justify-center items-center gap-[24px] p-4 md:p-6 rounded-2xl border border-custom-color-black-200 mt-6 xl:mt-10">
         <TodayHabitHead studyId={id} />
-        <TodayHabitItems studyId={id} />
+        <TodayHabitItems habitList={habitList || []} />
       </section>
     </>
   );

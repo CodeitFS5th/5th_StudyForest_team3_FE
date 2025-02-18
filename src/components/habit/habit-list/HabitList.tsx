@@ -19,10 +19,11 @@ export default function HabitList({ studyId, onClose }: IHabitList) {
   );
 
   useEffect(() => {
-    if (state && !isPending) {
-      onClose();
+    if (state && !state.status) {
+      console.log(state.message);
     }
-  }, [state, isPending, onClose]);
+    onClose();
+  }, [state]);
 
   return (
     <form
@@ -47,12 +48,8 @@ export default function HabitList({ studyId, onClose }: IHabitList) {
         >
           취소
         </button>
-        <button
-          type="submit"
-          onClick={() => onClose()}
-          className="cursor-pointer"
-        >
-          수정완료
+        <button type="submit" className="cursor-pointer">
+          {isPending ? "로딩중..." : "수정완료"}
         </button>
       </div>
     </form>

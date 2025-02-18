@@ -1,19 +1,11 @@
-import { API_URL } from "@/constants";
-import fetchData from "@/lib/apis/fetchData";
 import { Habit } from "@/types";
 import TodayHabitItem from "./TodayHabitItem";
 
-interface TodayHabitItemsProps {
-  studyId: number;
-}
-
 export default async function TodayHabitItems({
-  studyId,
-}: TodayHabitItemsProps) {
-  const habitList = await fetchData<Habit[]>(
-    `${API_URL}/study/${studyId}/habit`
-  );
-
+  habitList,
+}: {
+  habitList: Habit[];
+}) {
   if (!habitList || habitList.length < 1) {
     return (
       <div className="flex flex-col justify-center h-[637px] text-[16px] md:text-[20px] text-custom-color-black-300 text-center">
