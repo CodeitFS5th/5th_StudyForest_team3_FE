@@ -133,27 +133,7 @@ export default function StudyList() {
         ) : (
           studies.map((study) => (
             <div key={study.id} onClick={() => handleCardClick(study)}>
-              <Card
-                id={study.id}
-                bg={
-                  study.background.toUpperCase() as
-                    | "GREEN"
-                    | "YELLOW"
-                    | "BLUE"
-                    | "RED"
-                    | "DESK"
-                    | "WINDOW"
-                    | "TILE"
-                    | "LEAF"
-                }
-                isPictureBg={false}
-                point={study.point}
-                titleName={study.nick}
-                titleStudy={study.name}
-                date={study.createdAt}
-                description={study.description}
-                reactions={study.reactions}
-              />
+              <Card study={study} />
             </div>
           ))
         )}

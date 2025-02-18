@@ -1,33 +1,38 @@
 import Point from "@/components/tag/Point";
-
+import { Study } from "@/types";
 import Link from "next/link";
+import Image from "next/image";
+import pointIcon from "@/assets/images/icon/point.png";
 
 interface Props {
-  id: number;
-  // 대문자로 바꿔줘
-  bg: "GREEN" | "YELLOW" | "BLUE" | "RED" | "DESK" | "WINDOW" | "TILE" | "LEAF";
-  isPictureBg: boolean;
-  point: string | number;
-  titleName: string;
-  titleStudy: string;
-  date: string;
-  description: string;
-  reactions: {
-    [key: string]: number;
-  };
+  study: Study;
 }
 
-export default function Card({
-  id,
-  bg,
-  isPictureBg = false,
-  point = 0,
-  titleName = "테스트",
-  titleStudy = "의 테스트 스터디",
-  date = "",
-  description = "테스트 설명",
-}: // reactions = {},
-Props) {
+export default function Card({ study }: Props) {
+  const {
+    id,
+    background,
+    point,
+    nick: titleName,
+    name: titleStudy,
+    createdAt: date,
+    description,
+    reactions,
+  } = study;
+
+  const isPictureBg = ["DESK", "WINDOW", "TILE", "LEAF"].includes(
+    background.toUpperCase()
+  );
+  const bg = background.toUpperCase() as
+    | "GREEN"
+    | "YELLOW"
+    | "BLUE"
+    | "RED"
+    | "DESK"
+    | "WINDOW"
+    | "TILE"
+    | "LEAF";
+
   const settings = {
     bg: "bg-custom-color-card-green",
     pointText: isPictureBg ? "text-white" : "text-custom-color-black-400",
@@ -65,19 +70,38 @@ Props) {
     (new Date().getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24)
   );
 
+  // 최상위 3개 리액션
+  const top3Reactions = Object.entries(reactions)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
   return (
     <Link href={`/study/${id}`}>
       <div
-        className={`flex-shrink-0 w-[240px] h-[180px] md:w-[358px] md:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}
+        className={`flex flex-col flex-shrink-0 w-[240px] h-[180px] md:w-[358px] md:h-[243px] rounded-3xl p-4 xl:p-[30px] relative ${settings.bg} cursor-pointer hover:scale-102 transition`}
       >
-        <Point point={+point} />
-        <div className="flex gap-0.5 mt-1.5 xl:mt-0">
-          <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>
-            {titleName}
-          </p>
-          <p className={`font-bold xl:text-[18px] ${settings.titleStudyText}`}>
-            {titleStudy}
-          </p>
+        <div className="flex justify-between gap-0.5 mt-1.5 xl:mt-0">
+          {/* 스터디 제목 */}
+          <div className="flex">
+            <p className={`font-bold xl:text-[18px] ${settings.titleNameText}`}>
+              {titleName}
+            </p>
+            <p
+              className={`font-bold xl:text-[18px] text-custom-color-black-600 truncate`}
+            >
+              의 {titleStudy}
+            </p>
+          </div>
+          {/* 포인트 */}
+          <div className="flex flex-row items-center gap-1 bg-[rgba(255,255,255,0.3)] rounded-full px-2 border border-[rgba(0,0,0,0.1)] truncate">
+            <Image
+              src={pointIcon}
+              alt="point icon"
+              className="w-[14px] h-[14px]"
+            />
+            <p className={`font-medium text-[12px] whitespace-nowrap`}>
+              {point}P 획득
+            </p>
+          </div>
         </div>
         <p
           className={`${settings.streakText} mt-1 xl:mt-[10px] text-[12px] xl:text-[14px]`}
@@ -89,11 +113,18 @@ Props) {
         >
           {description}
         </p>
+        <div className="flex-grow" />
         {/* 하단 3개 칩 가로로 나열 */}
-        <div className="flex gap-1 mt-3">
-          {/* {top3Reactions.map(([reaction, count]) => (
-          // <Tag
-        ))} */}
+        <div className="flex gap-1">
+          {top3Reactions.map(([reaction, count]) => (
+            <div
+              key={reaction}
+              className="flex items-center justify-center gap-1 w-[48px] h-[26px] p-1.5 rounded-full bg-[rgba(0,0,0,0.4)] text-white text-[12px]"
+            >
+              <p className="font-medium">{reaction}</p>
+              <p>{count}</p>
+            </div>
+          ))}
         </div>
       </div>
     </Link>
